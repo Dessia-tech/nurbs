@@ -5,10 +5,10 @@
 """
 
 # Library version
-__version__ = "5.3.1"
+__version__ = "0.0.1"
 
 # Author and license
-__author__ = "Onur Rauf Bingol"
+__author__ = "Onur Rauf Bingol & Dessia Technologies"
 __license__ = "MIT"
 
 # Optional variables

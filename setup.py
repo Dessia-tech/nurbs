@@ -49,9 +49,9 @@ def get_property(prop, project):
 class InstallCommand(install_command):
     """ Overrides pip install command to control generation of optional Cython-compiled library core module """
     user_options = install_command.user_options + [
-        ('use-cython', None, 'Cythonize and compile geomdl.core'),
-        ('use-source', None, 'Compile geomdl.core from the source files'),
-        ('core-only', None, 'Compile and install geomdl.core only'),
+        ('use-cython', None, 'Cythonize and compile nurbs.core'),
+        ('use-source', None, 'Compile nurbs.core from the source files'),
+        ('core-only', None, 'Compile and install nurbs.core only'),
     ]
 
     def initialize_options(self):
@@ -95,7 +95,7 @@ class SetuptoolsClean(clean_command):
         clean_command.run(self)
 
         # Clean setuptools-generated directories
-        st_dirs = ['dist', 'build', 'geomdl.egg-info', 'geomdl.core.egg-info']
+        st_dirs = ['dist', 'build', 'nurbs.egg-info', 'nurbs.core.egg-info']
 
         print("Removing setuptools-generated directories")
         for d in st_dirs:
@@ -103,7 +103,7 @@ class SetuptoolsClean(clean_command):
             shutil.rmtree(d_path, ignore_errors=True)
 
         # Find list of files with .c extension
-        flist_c, flist_c_path = read_files("geomdl", ".c")
+        flist_c, flist_c_path = read_files("nurbs", ".c")
 
         # Clean files with .c extensions
         if flist_c_path:
@@ -113,7 +113,7 @@ class SetuptoolsClean(clean_command):
                 os.unlink(f_path)
 
         # Find list of files with .cpp extension
-        flist_cpp, flist_cpp_path = read_files("geomdl", ".cpp")
+        flist_cpp, flist_cpp_path = read_files("nurbs", ".cpp")
 
         # Clean files with .cpp extensions
         if flist_cpp_path:
@@ -160,9 +160,9 @@ def make_dir(project):
     os.mkdir(project_path)
     # We need a __init__.py file inside the directory
     with open(os.path.join(project_path, '__init__.py'), 'w') as fp:
-        fp.write('__version__ = "' + str(get_property('__version__', 'geomdl')) + '"\n')
-        fp.write('__author__ = "' + str(get_property('__author__', 'geomdl')) + '"\n')
-        fp.write('__license__ = "' + str(get_property('__license__', 'geomdl')) + '"\n')
+        fp.write('__version__ = "' + str(get_property('__version__', 'nurbs')) + '"\n')
+        fp.write('__author__ = "' + str(get_property('__author__', 'nurbs')) + '"\n')
+        fp.write('__license__ = "' + str(get_property('__license__', 'nurbs')) + '"\n')
 
 
 def in_argv(arg_list):
@@ -179,14 +179,14 @@ possible_cmds = ['install', 'build', 'bdist']
 
 # Use geomdl.core package only
 if "--core-only" in sys.argv:
-    package_name = "geomdl.core"
-    package_dir = "geomdl/core"
+    package_name = "nurbs.core"
+    package_dir = "nurbs/core"
     packages = []
     sys.argv.remove('--core-only')
     sys.argv.append('--use-cython')
 else:
-    package_name = package_dir = "geomdl"
-    packages = ['geomdl', 'geomdl.visualization']
+    package_name = package_dir = "nurbs"
+    packages = ['nurbs', 'nurbs.visualization']
 
 # geomdl.core compilation
 # Ref: https://gist.github.com/ctokheim/6c34dc1d672afca0676a
@@ -216,13 +216,13 @@ if BUILD_FROM_CYTHON or BUILD_FROM_SOURCE:
     file_ext = '.py' if BUILD_FROM_CYTHON else '.c'
 
     # Create Cython-compiled module directory
-    make_dir('geomdl/core')
+    make_dir('nurbs/core')
 
     # Create extensions
     optional_extensions = []
-    fnames, fnames_path = read_files('geomdl', file_ext)
+    fnames, fnames_path = read_files('nurbs', file_ext)
     for fname, fpath in zip(fnames, fnames_path):
-        temp = Extension('geomdl.core.' + str(fname), sources=[fpath])
+        temp = Extension('nurbs.core.' + str(fname), sources=[fpath])
         optional_extensions.append(temp)
 
     # Call Cython when "python setup.py build_ext --use-cython" is executed
@@ -234,7 +234,7 @@ if BUILD_FROM_CYTHON or BUILD_FROM_SOURCE:
         ext_modules = optional_extensions
 
     # Add Cython-compiled module to the packages list
-    packages.append('geomdl.core')
+    packages.append('nurbs.core')
 
 # Input for setuptools.setup
 data = dict(
