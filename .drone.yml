@@ -4,7 +4,7 @@ type: docker
 name: default
 
 steps:
-- name: merge master on testing
+- name: merge master on dev
   image: alpine/git
   when:
     event: push
@@ -14,24 +14,9 @@ steps:
   - git clone $DRONE_GIT_HTTP_URL
   - cd nurbs
   - git checkout master
-  - git fetch origin testing
-  - git checkout testing
-  - git merge master
-  - git push
-
-- name: merge testing on dev
-  image: alpine/git
-  when:
-    event: push
-    branch: testing
-  commands:
-  - cd /tmp
-  - git clone $DRONE_GIT_HTTP_URL
-  - cd nurbs
-  - git checkout testing
   - git fetch origin dev
   - git checkout dev
-  - git merge testing
+  - git merge master
   - git push
 
 - name: notify by email
