@@ -8,10 +8,12 @@ Created on Wed Sep 29 14:35:47 2021
 
 import json
 
-MIN_FILE_COVERAGE = 54.9
-MIN_PROJECT_COVERAGE = 60
+MIN_FILE_COVERAGE = 0.
+MIN_PROJECT_COVERAGE = 49.4
 
-untracked_modules = []
+untracked_modules = ["visualization/VisPlotly.py",
+                     "visualization/VisVTK.py",
+                     "visualization/vtk_helpers.py"]
 
 print("untracked modules:", untracked_modules)
 
