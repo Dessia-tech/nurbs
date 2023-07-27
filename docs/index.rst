@@ -5,13 +5,13 @@ NURBS-Python v5.x Documentation
 
 |TRAVISCI|_ |APPVEYOR|_ |CIRCLECI|_
 
-Welcome to the **NURBS-Python (geomdl) v5.x** documentation!
+Welcome to the **NURBS-Python (nurbs) v5.x** documentation!
 
-NURBS-Python (geomdl) is a cross-platform (pure Python), object-oriented B-Spline and NURBS library.
+NURBS-Python (nurbs) is a cross-platform (pure Python), object-oriented B-Spline and NURBS library.
 It is compatible with Python versions 2.7.x, 3.4.x and later.
 It supports rational and non-rational curves, surfaces and volumes.
 
-NURBS-Python (geomdl) provides easy-to-use data structures for storing geometry descriptions
+NURBS-Python (nurbs) provides easy-to-use data structures for storing geometry descriptions
 in addition to the fundamental and advanced evaluation algorithms.
 
 This documentation is organized into a couple sections:
@@ -67,11 +67,11 @@ This documentation is organized into a couple sections:
 .. |DOI| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.815010.svg
 .. _DOI: https://doi.org/10.5281/zenodo.815010
 
-.. |PYPI| image:: https://img.shields.io/pypi/v/geomdl.svg
-.. _PYPI: https://pypi.org/project/geomdl/
+.. |PYPI| image:: https://img.shields.io/pypi/v/nurbs.svg
+.. _PYPI: https://pypi.org/project/nurbs/
 
-.. |ANACONDA| image:: https://anaconda.org/orbingol/geomdl/badges/version.svg
-.. _ANACONDA: https://anaconda.org/orbingol/geomdl
+.. |ANACONDA| image:: https://anaconda.org/orbingol/nurbs/badges/version.svg
+.. _ANACONDA: https://anaconda.org/orbingol/nurbs
 
 .. |TRAVISCI| image:: https://travis-ci.org/orbingol/NURBS-Python.svg?branch=5.x
 .. _TRAVISCI: https://travis-ci.org/orbingol/NURBS-Python

@@ -10,7 +10,7 @@ This module provides `VTK <https://www.vtk.org/>`_ visualization implementation 
 Class Reference
 ===============
 
-.. automodule:: geomdl.visualization.VisVTK
+.. automodule:: nurbs.visualization.VisVTK
     :members:
     :undoc-members:
     :inherited-members:

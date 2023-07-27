@@ -1,10 +1,10 @@
 Curve & Surface Fitting
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-``geomdl`` includes 2 fitting methods for curves and surfaces: approximation and interpolation. Please refer to the
+``nurbs`` includes 2 fitting methods for curves and surfaces: approximation and interpolation. Please refer to the
 :doc:`module_fitting` page for more details on the curve and surface fitting API.
 
-The following sections explain 2-dimensional curve fitting using the included fitting methods. ``geomdl`` also supports
+The following sections explain 2-dimensional curve fitting using the included fitting methods. ``nurbs`` also supports
 3-dimensional curve and surface fitting (not shown here). Please refer to the :doc:`examples_repo` for more examples on
 curve and surface fitting.
 
@@ -16,8 +16,8 @@ The following code snippet and the figure illustrate interpolation for a 2-dimen
 .. code-block:: python
     :linenos:
 
-    from geomdl import fitting
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import fitting
+    from nurbs.visualization import VisMPL as vis
 
     # The NURBS Book Ex9.1
     points = ((0, 0), (3, 4), (-1, 4), (-4, 0), (-4, -3))
@@ -34,8 +34,8 @@ The following code snippet and the figure illustrate interpolation for a 2-dimen
 
 .. plot::
 
-    from geomdl import fitting
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import fitting
+    from nurbs.visualization import VisMPL as vis
 
     # The NURBS Book Ex9.1
     points = ((0, 0), (3, 4), (-1, 4), (-4, 0), (-4, -3))
@@ -53,8 +53,8 @@ The following figure displays the input data (sample) points in red and the eval
 
 .. plot::
 
-    from geomdl import fitting
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import fitting
+    from nurbs.visualization import VisMPL as vis
     import numpy as np
     import matplotlib.pyplot as plt
 
@@ -83,8 +83,8 @@ The following code snippet and the figure illustrate approximation method for a 
 .. code-block:: python
     :linenos:
 
-    from geomdl import fitting
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import fitting
+    from nurbs.visualization import VisMPL as vis
 
     # The NURBS Book Ex9.1
     points = ((0, 0), (3, 4), (-1, 4), (-4, 0), (-4, -3))
@@ -101,8 +101,8 @@ The following code snippet and the figure illustrate approximation method for a 
 
 .. plot::
 
-    from geomdl import fitting
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import fitting
+    from nurbs.visualization import VisMPL as vis
 
     # The NURBS Book Ex9.1
     points = ((0, 0), (3, 4), (-1, 4), (-4, 0), (-4, -3))
@@ -120,8 +120,8 @@ The following figure displays the input data (sample) points in red and the eval
 
 .. plot::
 
-    from geomdl import fitting
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import fitting
+    from nurbs.visualization import VisMPL as vis
     import numpy as np
     import matplotlib.pyplot as plt
 

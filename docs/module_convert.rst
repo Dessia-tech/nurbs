@@ -6,5 +6,5 @@ Geometry Converters
 Function Reference
 ==================
 
-.. automodule:: geomdl.convert
+.. automodule:: nurbs.convert
     :members:

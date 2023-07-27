@@ -21,9 +21,9 @@ Curves
 
 .. plot::
 
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs.visualization import VisMPL
 
     # Create a B-Spline curve
     curve = BSpline.Curve()
@@ -46,9 +46,9 @@ Curves
 
 .. plot::
 
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs.visualization import VisMPL
 
     ctrlpts = [[5.0, 5.0, 0.0], [5.0, 10.0, 0.0], [10.0, 10.0, 5.0], [10.0, 5.0, 5.0], [5.0, 5.0, 5.0], [5.0, 10.0, 10.0], [10.0, 10.0, 10.0], [10.0, 5.0, 10.0], [5.0, 5.0, 15.0], [5.0, 10.0, 15.0], [10.0, 10.0, 15.0], [10.0, 5.0, 20.0], [5.0, 5.0, 20.0]]
 
@@ -75,8 +75,8 @@ Surfaces
 
 .. plot::
 
-    from geomdl import BSpline
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs.visualization import VisMPL
 
     # Control points
     ctrlpts = [
@@ -119,8 +119,8 @@ Surfaces
 
 .. plot::
 
-    from geomdl import NURBS
-    from geomdl.visualization import VisMPL
+    from nurbs import NURBS
+    from nurbs.visualization import VisMPL
 
     ctrlpts = [
         [[1.0, 0.0, 0.0, 1.0], [0.7071, 0.7071, 0.0, 0.7071], [0.0, 1.0, 0.0, 1.0], [-0.7071, 0.7071, 0.0, 0.7071], [-1.0, 0.0, 0.0, 1.0], [-0.7071, -0.7071, 0.0, 0.7071], [0.0, -1.0, 0.0, 1.0], [0.7071, -0.7071, 0.0, 0.7071], [1.0, 0.0, 0.0, 1.0]],
@@ -153,12 +153,12 @@ Volumes
 
 .. plot::
 
-    from geomdl import BSpline
-    from geomdl import CPGen
-    from geomdl import multi
-    from geomdl import utilities
-    from geomdl import construct
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import CPGen
+    from nurbs import multi
+    from nurbs import utilities
+    from nurbs import construct
+    from nurbs.visualization import VisMPL
 
     # Generate control points grid for Surface #1
     sg01 = CPGen.Grid(15, 10, z_value=0.0)

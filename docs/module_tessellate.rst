@@ -7,8 +7,8 @@ scenario of the tessellation algorithms with surfaces.
 .. code-block:: python
     :linenos:
 
-    from geomdl import NURBS
-    from geomdl import tessellate
+    from nurbs import NURBS
+    from nurbs import tessellate
 
     # Create a surface instance
     surf = NURBS.Surface()
@@ -32,7 +32,7 @@ Class Reference
 Abstract Tessellator
 --------------------
 
-.. autoclass:: geomdl.tessellate.AbstractTessellate
+.. autoclass:: nurbs.tessellate.AbstractTessellate
     :members:
     :undoc-members:
     :inherited-members:
@@ -41,7 +41,7 @@ Abstract Tessellator
 Triangular Tessellator
 ----------------------
 
-.. autoclass:: geomdl.tessellate.TriangularTessellate
+.. autoclass:: nurbs.tessellate.TriangularTessellate
     :members:
     :undoc-members:
     :inherited-members:
@@ -52,7 +52,7 @@ Trim Tessellator
 
 .. versionadded:: 5.0
 
-.. autoclass:: geomdl.tessellate.TrimTessellate
+.. autoclass:: nurbs.tessellate.TrimTessellate
     :members:
     :undoc-members:
     :inherited-members:
@@ -63,7 +63,7 @@ Quadrilateral Tessellator
 
 .. versionadded:: 5.2
 
-.. autoclass:: geomdl.tessellate.QuadTessellate
+.. autoclass:: nurbs.tessellate.QuadTessellate
     :members:
     :undoc-members:
     :inherited-members:
@@ -72,15 +72,15 @@ Quadrilateral Tessellator
 Function Reference
 ==================
 
-.. autofunction:: geomdl.tessellate.make_triangle_mesh
+.. autofunction:: nurbs.tessellate.make_triangle_mesh
 
-.. autofunction:: geomdl.tessellate.polygon_triangulate
+.. autofunction:: nurbs.tessellate.polygon_triangulate
 
-.. autofunction:: geomdl.tessellate.make_quad_mesh
+.. autofunction:: nurbs.tessellate.make_quad_mesh
 
 Helper Functions
 ================
 
-.. autofunction:: geomdl.tessellate.surface_tessellate
+.. autofunction:: nurbs.tessellate.surface_tessellate
 
-.. autofunction:: geomdl.tessellate.surface_trim_tessellate
+.. autofunction:: nurbs.tessellate.surface_trim_tessellate

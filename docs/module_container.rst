@@ -30,12 +30,12 @@ arbitrary color.
 Inheritance Diagram
 ===================
 
-.. inheritance-diagram:: geomdl.multi
+.. inheritance-diagram:: nurbs.multi
 
 Abstract Container
 ==================
 
-.. autoclass:: geomdl.multi.AbstractContainer
+.. autoclass:: nurbs.multi.AbstractContainer
     :members:
     :inherited-members:
     :show-inheritance:
@@ -43,7 +43,7 @@ Abstract Container
 Curve Container
 ===============
 
-.. autoclass:: geomdl.multi.CurveContainer
+.. autoclass:: nurbs.multi.CurveContainer
     :members:
     :inherited-members:
     :show-inheritance:
@@ -51,7 +51,7 @@ Curve Container
 Surface Container
 =================
 
-.. autoclass:: geomdl.multi.SurfaceContainer
+.. autoclass:: nurbs.multi.SurfaceContainer
     :members:
     :inherited-members:
     :show-inheritance:
@@ -59,7 +59,7 @@ Surface Container
 Volume Container
 =================
 
-.. autoclass:: geomdl.multi.VolumeContainer
+.. autoclass:: nurbs.multi.VolumeContainer
     :members:
     :inherited-members:
     :show-inheritance:

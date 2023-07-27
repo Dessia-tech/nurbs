@@ -6,5 +6,5 @@ This module contains conversion operations related to control points, such as fl
 Function Reference
 ==================
 
-.. automodule:: geomdl.compatibility
+.. automodule:: nurbs.compatibility
     :members:

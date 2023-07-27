@@ -36,5 +36,5 @@ be found using the following formula:
 Function Reference
 ==================
 
-.. automodule:: geomdl.fitting
+.. automodule:: nurbs.fitting
     :members:

@@ -1,7 +1,7 @@
 Core Modules
 ^^^^^^^^^^^^
 
-The following are the lists of modules included in NURBS-Python (geomdl) Core Library. They are split into separate
+The following are the lists of modules included in NURBS-Python (nurbs) Core Library. They are split into separate
 groups to make the documentation more understandable.
 
 User API

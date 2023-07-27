@@ -12,7 +12,7 @@ class references for more details.
 Class Reference
 ===============
 
-.. automodule:: geomdl.control_points
+.. automodule:: nurbs.control_points
     :members:
     :inherited-members:
     :exclude-members: next

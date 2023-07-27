@@ -14,9 +14,9 @@ the name of the file to be saved and ``plot`` flag controls the visibility of th
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs.visualization import VisMPL
 
     # Create a 3D B-Spline curve instance (Bezier Curve)
     curve = BSpline.Curve()

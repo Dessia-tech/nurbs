@@ -16,5 +16,5 @@ Function Reference
 
     Please contact the author if you encounter any problems.
 
-.. automodule:: geomdl.trimming
+.. automodule:: nurbs.trimming
     :members:
