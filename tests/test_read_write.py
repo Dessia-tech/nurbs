@@ -9,7 +9,7 @@
 import os
 
 import pytest
-from geomdl import NURBS, BSpline, compatibility, exchange, exchange_vtk, multi, operations
+from nurbs import NURBS, BSpline, compatibility, exchange, exchange_vtk, multi, operations
 
 FILE_NAME = "testing"
 SAMPLE_SIZE = 25

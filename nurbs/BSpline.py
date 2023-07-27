@@ -39,7 +39,7 @@ class Curve(abstract.Curve):
 
     .. code-block:: python
 
-        from geomdl import BSpline
+        from nurbs import BSpline
 
         # Create a 3-dimensional B-spline Curve
         curve = BSpline.Curve()
@@ -360,7 +360,7 @@ class Surface(abstract.Surface):
     .. code-block:: python
         :linenos:
 
-        from geomdl import BSpline
+        from nurbs import BSpline
 
         # Create a BSpline surface instance (Bezier surface)
         surf = BSpline.Surface()

@@ -9,7 +9,7 @@
 
 import random
 
-from geomdl import linalg
+from nurbs import linalg
 
 # Preserve the knot vector functions for compatibility
 from . import knotvector

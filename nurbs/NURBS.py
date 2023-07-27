@@ -46,7 +46,7 @@ class Curve(BSpline.Curve):
 
     .. code-block:: python
 
-        from geomdl import NURBS
+        from nurbs import NURBS
 
         # Create a 3-dimensional B-spline Curve
         curve = NURBS.Curve()
@@ -244,7 +244,7 @@ class Surface(BSpline.Surface):
     .. code-block:: python
         :linenos:
 
-        from geomdl import NURBS
+        from nurbs import NURBS
 
         # Create a NURBS surface instance
         surf = NURBS.Surface()

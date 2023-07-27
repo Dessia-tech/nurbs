@@ -6,7 +6,7 @@
     Tests B-Spline to NURBS conversions. Requires "pytest" to run.
 """
 
-from geomdl import BSpline, convert
+from nurbs import BSpline, convert
 
 SAMPLE_SIZE = 5
 C_DEGREE = 2

@@ -1,7 +1,7 @@
 """
 .. module:: _shortcuts
     :platform: Unix, Windows
-    :synopsis: Provides shortcut functions for creating new instances of the geomdl classes
+    :synopsis: Provides shortcut functions for creating new instances of the nurbs classes
 
 .. moduleauthor:: Onur Rauf Bingol <orbingol@gmail.com>
 

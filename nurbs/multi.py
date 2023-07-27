@@ -599,8 +599,8 @@ class SurfaceContainer(AbstractContainer):
         .. code-block:: python
             :linenos:
 
-            from geomdl import multi
-            from geomdl import tessellate
+            from nurbs import multi
+            from nurbs import tessellate
 
             # Create the surface container
             surf_container = multi.SurfaceContainer(surf_list)

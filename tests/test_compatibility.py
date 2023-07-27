@@ -3,10 +3,10 @@
     Released under The MIT License. See LICENSE file for details.
     Copyright (c) 2018 Onur Rauf Bingol
 
-    Tests geomdl.compatibility module. Requires "pytest" to run.
+    Tests nurbs.compatibility module. Requires "pytest" to run.
 """
 
-from geomdl import compatibility
+from nurbs import compatibility
 
 P = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 W = [0.5, 2, 1]

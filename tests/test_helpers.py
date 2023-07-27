@@ -6,7 +6,7 @@
     Requires "pytest" to run.
 """
 
-from geomdl import helpers
+from nurbs import helpers
 
 GEOMDL_DELTA = 10e-8
 

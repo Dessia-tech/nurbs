@@ -10,10 +10,10 @@ import os
 
 import matplotlib
 import pytest
-from geomdl import BSpline, multi, operations
+from nurbs import BSpline, multi, operations
 
 matplotlib.use("agg")
-from geomdl.visualization import VisMPL
+from nurbs.visualization import VisMPL
 
 SAMPLE_SIZE = 5
 

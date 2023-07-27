@@ -3,12 +3,12 @@
     Released under The MIT License. See LICENSE file for details.
     Copyright (c) 2018 Onur Rauf Bingol
 
-    Tests geomdl.utilities module. Requires "pytest" to run.
+    Tests nurbs.utilities module. Requires "pytest" to run.
 """
 
 import pytest
-from geomdl import control_points, knotvector, utilities
-from geomdl.exceptions import GeomdlException
+from nurbs import control_points, knotvector, utilities
+from nurbs.exceptions import GeomdlException
 
 GEOMDL_DELTA = 10e-6
 

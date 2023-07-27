@@ -3,11 +3,11 @@
     Released under The MIT License. See LICENSE file for details.
     Copyright (c) 2018 Onur Rauf Bingol
 
-    Tests geomdl.linalg module. Requires "pytest" to run.
+    Tests nurbs.linalg module. Requires "pytest" to run.
 """
 
 import pytest
-from geomdl import linalg
+from nurbs import linalg
 
 GEOMDL_DELTA = 10e-6
 

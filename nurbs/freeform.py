@@ -7,7 +7,7 @@
 
 """
 
-from geomdl import abstract
+from nurbs import abstract
 
 
 class Freeform(abstract.Geometry):

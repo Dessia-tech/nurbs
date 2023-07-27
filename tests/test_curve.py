@@ -6,7 +6,7 @@
     Requires "pytest" to run.
 """
 
-from geomdl import BSpline, convert, evaluators, helpers, linalg, operations
+from nurbs import BSpline, convert, evaluators, helpers, linalg, operations
 from pytest import fixture, mark
 
 GEOMDL_DELTA = 0.001

@@ -20,7 +20,7 @@ from .exceptions import GeomdlException
 
 @utl.add_metaclass(abc.ABCMeta)
 class GeomdlBase(object):
-    """Abstract base class for defining geomdl objects.
+    """Abstract base class for defining nurbs objects.
 
     This class provides the following properties:
 
@@ -710,7 +710,7 @@ class Curve(SplineGeometry):
     .. code-block:: python
         :linenos:
 
-        from geomdl import abstract
+        from nurbs import abstract
 
         class MyCurveClass(abstract.Curve):
             def __init__(self, **kwargs):
@@ -1199,7 +1199,7 @@ class Surface(SplineGeometry):
     .. code-block:: python
         :linenos:
 
-        from geomdl import abstract
+        from nurbs import abstract
 
         class MySurfaceClass(abstract.Surface):
             def __init__(self, **kwargs):
@@ -1761,7 +1761,7 @@ class Surface(SplineGeometry):
         .. code-block:: python
             :linenos:
 
-            from geomdl import tessellate
+            from nurbs import tessellate
 
             # Assuming that "surf" variable stores the surface instance
             surf.tessellator = tessellate.TrimTessellate()
@@ -2179,7 +2179,7 @@ class Volume(SplineGeometry):
     .. code-block:: python
         :linenos:
 
-        from geomdl import abstract
+        from nurbs import abstract
 
         class MyVolumeClass(abstract.Volume):
             def __init__(self, **kwargs):
