@@ -12,7 +12,7 @@ steps:
   commands:
   - cd /tmp
   - git clone $DRONE_GIT_HTTP_URL
-  - cd volmdlr
+  - cd nurbs
   - git checkout master
   - git fetch origin testing
   - git checkout testing
@@ -27,7 +27,7 @@ steps:
   commands:
   - cd /tmp
   - git clone $DRONE_GIT_HTTP_URL
-  - cd volmdlr
+  - cd nurbs
   - git checkout testing
   - git fetch origin dev
   - git checkout dev
