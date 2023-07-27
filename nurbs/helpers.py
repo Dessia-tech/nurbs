@@ -9,8 +9,10 @@
 
 import os
 from copy import deepcopy
+
 from . import linalg
 from .exceptions import GeomdlException
+
 try:
     from functools import lru_cache
 except ImportError:
@@ -18,7 +20,7 @@ except ImportError:
 
 
 def find_span_binsearch(degree, knot_vector, num_ctrlpts, knot, **kwargs):
-    """ Finds the span of the knot over the input knot vector using binary search.
+    """Finds the span of the knot over the input knot vector using binary search.
 
     Implementation of Algorithm A2.1 from The NURBS Book by Piegl & Tiller.
 
@@ -37,7 +39,7 @@ def find_span_binsearch(degree, knot_vector, num_ctrlpts, knot, **kwargs):
     :rtype: int
     """
     # Get tolerance value
-    tol = kwargs.get('tol', 10e-6)
+    tol = kwargs.get("tol", 10e-6)
 
     # In The NURBS Book; number of knots = m + 1, number of control points = n + 1, p = degree
     # All knot vectors should follow the rule: m = p + n + 1
@@ -69,7 +71,7 @@ def find_span_binsearch(degree, knot_vector, num_ctrlpts, knot, **kwargs):
 
 
 def find_span_linear(degree, knot_vector, num_ctrlpts, knot, **kwargs):
-    """ Finds the span of a single knot over the knot vector using linear search.
+    """Finds the span of a single knot over the knot vector using linear search.
 
     Alternative implementation for the Algorithm A2.1 from The NURBS Book by Piegl & Tiller.
 
@@ -92,7 +94,7 @@ def find_span_linear(degree, knot_vector, num_ctrlpts, knot, **kwargs):
 
 
 def find_spans(degree, knot_vector, num_ctrlpts, knots, func=find_span_linear):
-    """ Finds spans of a list of knots over the knot vector.
+    """Finds spans of a list of knots over the knot vector.
 
     :param degree: degree, :math:`p`
     :type degree: int
@@ -113,7 +115,7 @@ def find_spans(degree, knot_vector, num_ctrlpts, knots, func=find_span_linear):
 
 
 def find_multiplicity(knot, knot_vector, **kwargs):
-    """ Finds knot multiplicity over the knot vector.
+    """Finds knot multiplicity over the knot vector.
 
     Keyword Arguments:
         * ``tol``: tolerance (delta) value for equality checking
@@ -126,7 +128,7 @@ def find_multiplicity(knot, knot_vector, **kwargs):
     :rtype: int
     """
     # Get tolerance value
-    tol = kwargs.get('tol', 10e-8)
+    tol = kwargs.get("tol", 10e-8)
 
     mult = 0  # initial multiplicity
 
@@ -138,7 +140,7 @@ def find_multiplicity(knot, knot_vector, **kwargs):
 
 
 def basis_function(degree, knot_vector, span, knot):
-    """ Computes the non-vanishing basis functions for a single parameter.
+    """Computes the non-vanishing basis functions for a single parameter.
 
     Implementation of Algorithm A2.2 from The NURBS Book by Piegl & Tiller.
     Uses recurrence to compute the basis functions, also known as Cox - de
@@ -173,7 +175,7 @@ def basis_function(degree, knot_vector, span, knot):
 
 
 def basis_function_one(degree, knot_vector, span, knot):
-    """ Computes the value of a basis function for a single parameter.
+    """Computes the value of a basis function for a single parameter.
 
     Implementation of Algorithm 2.4 from The NURBS Book by Piegl & Tiller.
 
@@ -189,8 +191,11 @@ def basis_function_one(degree, knot_vector, span, knot):
     :rtype: float
     """
     # Special case at boundaries
-    if (span == 0 and knot == knot_vector[0]) or \
-            (span == len(knot_vector) - degree - 2) and knot == knot_vector[len(knot_vector) - 1]:
+    if (
+        (span == 0 and knot == knot_vector[0])
+        or (span == len(knot_vector) - degree - 2)
+        and knot == knot_vector[len(knot_vector) - 1]
+    ):
         return 1.0
 
     # Knot is outside of span range
@@ -228,7 +233,7 @@ def basis_function_one(degree, knot_vector, span, knot):
 
 
 def basis_functions(degree, knot_vector, spans, knots):
-    """ Computes the non-vanishing basis functions for a list of parameters.
+    """Computes the non-vanishing basis functions for a list of parameters.
 
     Wrapper for :func:`.helpers.basis_function` to process multiple span
     and knot values. Uses recurrence to compute the basis functions, also
@@ -252,7 +257,7 @@ def basis_functions(degree, knot_vector, spans, knots):
 
 
 def basis_function_all(degree, knot_vector, span, knot):
-    """ Computes all non-zero basis functions of all degrees from 0 up to the input degree for a single parameter.
+    """Computes all non-zero basis functions of all degrees from 0 up to the input degree for a single parameter.
 
     A slightly modified version of Algorithm A2.2 from The NURBS Book by Piegl & Tiller.
     Wrapper for :func:`.helpers.basis_function` to compute multiple basis functions.
@@ -283,7 +288,7 @@ def basis_function_all(degree, knot_vector, span, knot):
 
 
 def basis_function_ders(degree, knot_vector, span, knot, order):
-    """ Computes derivatives of the basis functions for a single parameter.
+    """Computes derivatives of the basis functions for a single parameter.
 
     Implementation of Algorithm A2.3 from The NURBS Book by Piegl & Tiller.
 
@@ -350,10 +355,10 @@ def basis_function_ders(degree, knot_vector, span, knot, order):
                 j2 = degree - r
             for j in range(j1, j2 + 1):
                 a[s2][j] = (a[s1][j] - a[s1][j - 1]) / ndu[pk + 1][rk + j]
-                d += (a[s2][j] * ndu[rk + j][pk])
+                d += a[s2][j] * ndu[rk + j][pk]
             if r <= pk:
                 a[s2][k] = -a[s1][k - 1] / ndu[pk + 1][r]
-                d += (a[s2][k] * ndu[r][pk])
+                d += a[s2][k] * ndu[r][pk]
             ders[k][r] = d
 
             # Switch rows
@@ -366,14 +371,14 @@ def basis_function_ders(degree, knot_vector, span, knot, order):
     for k in range(1, order + 1):
         for j in range(0, degree + 1):
             ders[k][j] *= r
-        r *= (degree - k)
+        r *= degree - k
 
     # Return the basis function derivatives list
     return ders
 
 
 def basis_function_ders_one(degree, knot_vector, span, knot, order):
-    """ Computes the derivative of one basis functions for a single parameter.
+    """Computes the derivative of one basis functions for a single parameter.
 
     Implementation of Algorithm A2.5 from The NURBS Book by Piegl & Tiller.
 
@@ -469,7 +474,7 @@ def basis_function_ders_one(degree, knot_vector, span, knot, order):
 
 
 def basis_functions_ders(degree, knot_vector, spans, knots, order):
-    """ Computes derivatives of the basis functions for a list of parameters.
+    """Computes derivatives of the basis functions for a list of parameters.
 
     Wrapper for :func:`.helpers.basis_function_ders` to process multiple span
     and knot values.
@@ -494,7 +499,7 @@ def basis_functions_ders(degree, knot_vector, spans, knots, order):
 
 
 def knot_insertion(degree, knotvector, ctrlpts, u, **kwargs):
-    """ Computes the control points of the rational/non-rational spline after knot insertion.
+    """Computes the control points of the rational/non-rational spline after knot insertion.
 
     Part of Algorithm A5.1 of The NURBS Book by Piegl & Tiller, 2nd Edition.
 
@@ -515,9 +520,9 @@ def knot_insertion(degree, knotvector, ctrlpts, u, **kwargs):
     :rtype: list
     """
     # Get keyword arguments
-    num = kwargs.get('num', 1)  # number of knot insertions
-    s = kwargs.get('s', find_multiplicity(u, knotvector))  # multiplicity
-    k = kwargs.get('span', find_span_linear(degree, knotvector, len(ctrlpts), u))  # knot span
+    num = kwargs.get("num", 1)  # number of knot insertions
+    s = kwargs.get("s", find_multiplicity(u, knotvector))  # multiplicity
+    k = kwargs.get("span", find_span_linear(degree, knotvector, len(ctrlpts), u))  # knot span
 
     # Initialize variables
     np = len(ctrlpts)
@@ -548,8 +553,9 @@ def knot_insertion(degree, knotvector, ctrlpts, u, **kwargs):
                 temp[i][:] = [alpha * elem2 + (1.0 - alpha) * elem1 for elem1, elem2 in zip(temp[i], temp[i + 1])]
             else:
                 for idx in range(len(temp[i])):
-                    temp[i][idx][:] = [alpha * elem2 + (1.0 - alpha) * elem1 for elem1, elem2 in
-                                       zip(temp[i][idx], temp[i + 1][idx])]
+                    temp[i][idx][:] = [
+                        alpha * elem2 + (1.0 - alpha) * elem1 for elem1, elem2 in zip(temp[i][idx], temp[i + 1][idx])
+                    ]
         ctrlpts_new[L] = deepcopy(temp[0])
         ctrlpts_new[k + num - j - s] = deepcopy(temp[degree - j - s])
 
@@ -562,9 +568,9 @@ def knot_insertion(degree, knotvector, ctrlpts, u, **kwargs):
     return ctrlpts_new
 
 
-@lru_cache(maxsize=os.environ['GEOMDL_CACHE_SIZE'] if "GEOMDL_CACHE_SIZE" in os.environ else 128)
+@lru_cache(maxsize=os.environ["GEOMDL_CACHE_SIZE"] if "GEOMDL_CACHE_SIZE" in os.environ else 128)
 def knot_insertion_alpha(u, knotvector, span, idx, leg):
-    """ Computes :math:`\\alpha` coefficient for knot insertion algorithm.
+    """Computes :math:`\\alpha` coefficient for knot insertion algorithm.
 
     :param u: knot
     :type u: float
@@ -583,7 +589,7 @@ def knot_insertion_alpha(u, knotvector, span, idx, leg):
 
 
 def knot_insertion_kv(knotvector, u, span, r):
-    """ Computes the knot vector of the rational/non-rational spline after knot insertion.
+    """Computes the knot vector of the rational/non-rational spline after knot insertion.
 
     Part of Algorithm A5.1 of The NURBS Book by Piegl & Tiller, 2nd Edition.
 
@@ -615,7 +621,7 @@ def knot_insertion_kv(knotvector, u, span, r):
 
 
 def knot_removal(degree, knotvector, ctrlpts, u, **kwargs):
-    """ Computes the control points of the rational/non-rational spline after knot removal.
+    """Computes the control points of the rational/non-rational spline after knot removal.
 
     Implementation based on Algorithm A5.8 and Equation 5.28 of The NURBS Book by Piegl & Tiller
 
@@ -633,10 +639,10 @@ def knot_removal(degree, knotvector, ctrlpts, u, **kwargs):
     :return: updated control points
     :rtype: list
     """
-    tol = kwargs.get('tol', 10e-4)  # Refer to Eq 5.30 for the meaning
-    num = kwargs.get('num', 1)  # number of same knot removals
-    s = kwargs.get('s', find_multiplicity(u, knotvector))  # multiplicity
-    r = kwargs.get('span', find_span_linear(degree, knotvector, len(ctrlpts), u))  # knot span
+    tol = kwargs.get("tol", 10e-4)  # Refer to Eq 5.30 for the meaning
+    num = kwargs.get("num", 1)  # number of same knot removals
+    s = kwargs.get("s", find_multiplicity(u, knotvector))  # multiplicity
+    r = kwargs.get("span", find_span_linear(degree, knotvector, len(ctrlpts), u))  # knot span
 
     # Edge case
     if num < 1:
@@ -675,10 +681,12 @@ def knot_removal(degree, knotvector, ctrlpts, u, **kwargs):
             alpha_j = knot_removal_alpha_j(u, degree, tuple(knotvector), t, j)
             if is_volume:
                 for idx in range(len(ctrlpts[0])):
-                    temp[ii][idx] = [(cpt - (1.0 - alpha_i) * ti) / alpha_i for cpt, ti
-                                     in zip(ctrlpts[i][idx], temp[ii - 1][idx])]
-                    temp[jj][idx] = [(cpt - alpha_j * tj) / (1.0 - alpha_j) for cpt, tj
-                                     in zip(ctrlpts[j][idx], temp[jj + 1][idx])]
+                    temp[ii][idx] = [
+                        (cpt - (1.0 - alpha_i) * ti) / alpha_i for cpt, ti in zip(ctrlpts[i][idx], temp[ii - 1][idx])
+                    ]
+                    temp[jj][idx] = [
+                        (cpt - alpha_j * tj) / (1.0 - alpha_j) for cpt, tj in zip(ctrlpts[j][idx], temp[jj + 1][idx])
+                    ]
             else:
                 temp[ii] = [(cpt - (1.0 - alpha_i) * ti) / alpha_i for cpt, ti in zip(ctrlpts[i], temp[ii - 1])]
                 temp[jj] = [(cpt - alpha_j * tj) / (1.0 - alpha_j) for cpt, tj in zip(ctrlpts[j], temp[jj + 1])]
@@ -722,14 +730,14 @@ def knot_removal(degree, knotvector, ctrlpts, u, **kwargs):
     t += 1
 
     # Shift control points (refer to p.183 of The NURBS Book, 2nd Edition)
-    j = int((2*r - s - degree) / 2)  # first control point out
+    j = int((2 * r - s - degree) / 2)  # first control point out
     i = j
     for k in range(1, t):
         if k % 2 == 1:
             i += 1
         else:
             j -= 1
-    for k in range(i+1, len(ctrlpts)):
+    for k in range(i + 1, len(ctrlpts)):
         ctrlpts_new[j] = ctrlpts[k]
         j += 1
 
@@ -739,9 +747,9 @@ def knot_removal(degree, knotvector, ctrlpts, u, **kwargs):
     return ctrlpts_new
 
 
-@lru_cache(maxsize=os.environ['GEOMDL_CACHE_SIZE'] if "GEOMDL_CACHE_SIZE" in os.environ else 128)
+@lru_cache(maxsize=os.environ["GEOMDL_CACHE_SIZE"] if "GEOMDL_CACHE_SIZE" in os.environ else 128)
 def knot_removal_alpha_i(u, degree, knotvector, num, idx):
-    """ Computes :math:`\\alpha_{i}` coefficient for knot removal algorithm.
+    """Computes :math:`\\alpha_{i}` coefficient for knot removal algorithm.
 
     Please refer to Eq. 5.29 of The NURBS Book by Piegl & Tiller, 2nd Edition, p.184 for details.
 
@@ -761,9 +769,9 @@ def knot_removal_alpha_i(u, degree, knotvector, num, idx):
     return (u - knotvector[idx]) / (knotvector[idx + degree + 1 + num] - knotvector[idx])
 
 
-@lru_cache(maxsize=os.environ['GEOMDL_CACHE_SIZE'] if "GEOMDL_CACHE_SIZE" in os.environ else 128)
+@lru_cache(maxsize=os.environ["GEOMDL_CACHE_SIZE"] if "GEOMDL_CACHE_SIZE" in os.environ else 128)
 def knot_removal_alpha_j(u, degree, knotvector, num, idx):
-    """ Computes :math:`\\alpha_{j}` coefficient for knot removal algorithm.
+    """Computes :math:`\\alpha_{j}` coefficient for knot removal algorithm.
 
     Please refer to Eq. 5.29 of The NURBS Book by Piegl & Tiller, 2nd Edition, p.184 for details.
 
@@ -784,7 +792,7 @@ def knot_removal_alpha_j(u, degree, knotvector, num, idx):
 
 
 def knot_removal_kv(knotvector, span, r):
-    """ Computes the knot vector of the rational/non-rational spline after knot removal.
+    """Computes the knot vector of the rational/non-rational spline after knot removal.
 
     Part of Algorithm A5.8 of The NURBS Book by Piegl & Tiller, 2nd Edition.
 
@@ -816,7 +824,7 @@ def knot_removal_kv(knotvector, span, r):
 
 
 def knot_refinement(degree, knotvector, ctrlpts, **kwargs):
-    """ Computes the knot vector and the control points of the rational/non-rational spline after knot refinement.
+    """Computes the knot vector and the control points of the rational/non-rational spline after knot refinement.
 
     Implementation of Algorithm A5.4 of The NURBS Book by Piegl & Tiller, 2nd Edition.
 
@@ -849,11 +857,11 @@ def knot_refinement(degree, knotvector, ctrlpts, **kwargs):
     :rtype: tuple
     """
     # Get keyword arguments
-    tol = kwargs.get('tol', 10e-8)  # tolerance value for zero equality checking
-    check_num = kwargs.get('check_num', True)  # enables/disables input validity checking
-    knot_list = kwargs.get('knot_list', knotvector[degree:-degree])
-    add_knot_list = kwargs.get('add_knot_list', list())
-    density = kwargs.get('density', 1)
+    tol = kwargs.get("tol", 10e-8)  # tolerance value for zero equality checking
+    check_num = kwargs.get("check_num", True)  # enables/disables input validity checking
+    knot_list = kwargs.get("knot_list", knotvector[degree:-degree])
+    add_knot_list = kwargs.get("add_knot_list", list())
+    density = kwargs.get("density", 1)
 
     # Input validity checking
     if check_num:
@@ -940,12 +948,15 @@ def knot_refinement(degree, knotvector, ctrlpts, **kwargs):
             else:
                 alpha = alpha / (new_kv[k + l] - knotvector[i - degree + l])
                 if isinstance(ctrlpts[0][0], float):
-                    new_ctrlpts[idx - 1] = [alpha * p1 + (1.0 - alpha) * p2 for p1, p2 in
-                                            zip(new_ctrlpts[idx - 1], new_ctrlpts[idx])]
+                    new_ctrlpts[idx - 1] = [
+                        alpha * p1 + (1.0 - alpha) * p2 for p1, p2 in zip(new_ctrlpts[idx - 1], new_ctrlpts[idx])
+                    ]
                 else:
                     for idx2 in range(len(ctrlpts[0])):
-                        new_ctrlpts[idx - 1][idx2] = [alpha * p1 + (1.0 - alpha) * p2 for p1, p2 in
-                                                      zip(new_ctrlpts[idx - 1][idx2], new_ctrlpts[idx][idx2])]
+                        new_ctrlpts[idx - 1][idx2] = [
+                            alpha * p1 + (1.0 - alpha) * p2
+                            for p1, p2 in zip(new_ctrlpts[idx - 1][idx2], new_ctrlpts[idx][idx2])
+                        ]
         new_kv[k] = X[j]
         k = k - 1
         j -= 1
@@ -955,7 +966,7 @@ def knot_refinement(degree, knotvector, ctrlpts, **kwargs):
 
 
 def degree_elevation(degree, ctrlpts, **kwargs):
-    """ Computes the control points of the rational/non-rational spline after degree elevation.
+    """Computes the control points of the rational/non-rational spline after degree elevation.
 
     Implementation of Eq. 5.36 of The NURBS Book by Piegl & Tiller, 2nd Edition, p.205
 
@@ -972,8 +983,8 @@ def degree_elevation(degree, ctrlpts, **kwargs):
     :rtype: list
     """
     # Get keyword arguments
-    num = kwargs.get('num', 1)  # number of degree elevations
-    check_op = kwargs.get('check_num', True)  # enable/disable input validation checks
+    num = kwargs.get("num", 1)  # number of degree elevations
+    check_op = kwargs.get("check_num", True)  # enable/disable input validation checks
 
     if check_op:
         if degree + 1 != len(ctrlpts):
@@ -999,7 +1010,7 @@ def degree_elevation(degree, ctrlpts, **kwargs):
 
 
 def degree_reduction(degree, ctrlpts, **kwargs):
-    """ Computes the control points of the rational/non-rational spline after degree reduction.
+    """Computes the control points of the rational/non-rational spline after degree reduction.
 
     Implementation of Eqs. 5.41 and 5.42 of The NURBS Book by Piegl & Tiller, 2nd Edition, p.220
 
@@ -1015,7 +1026,7 @@ def degree_reduction(degree, ctrlpts, **kwargs):
     :rtype: list
     """
     # Get keyword arguments
-    check_op = kwargs.get('check_num', True)  # enable/disable input validation checks
+    check_op = kwargs.get("check_num", True)  # enable/disable input validation checks
 
     if check_op:
         if degree + 1 != len(ctrlpts):
@@ -1060,7 +1071,7 @@ def degree_reduction(degree, ctrlpts, **kwargs):
 
 
 def curve_deriv_cpts(dim, degree, kv, cpts, rs, deriv_order=0):
-    """ Compute control points of curve derivatives.
+    """Compute control points of curve derivatives.
 
     Implementation of Algorithm A3.3 from The NURBS Book by Piegl & Tiller.
 
@@ -1090,16 +1101,17 @@ def curve_deriv_cpts(dim, degree, kv, cpts, rs, deriv_order=0):
     for k in range(1, deriv_order + 1):
         tmp = degree - k + 1
         for i in range(0, r - k + 1):
-            PK[k][i][:] = [tmp * (elem1 - elem2) /
-                           (kv[rs[0] + i + degree + 1] - kv[rs[0] + i + k]) for elem1, elem2
-                           in zip(PK[k - 1][i + 1], PK[k - 1][i])]
+            PK[k][i][:] = [
+                tmp * (elem1 - elem2) / (kv[rs[0] + i + degree + 1] - kv[rs[0] + i + k])
+                for elem1, elem2 in zip(PK[k - 1][i + 1], PK[k - 1][i])
+            ]
 
     # Return control points (as a 2-dimensional list of points)
     return PK
 
 
 def surface_deriv_cpts(dim, degree, kv, cpts, cpsize, rs, ss, deriv_order=0):
-    """ Compute control points of surface derivatives.
+    """Compute control points of surface derivatives.
 
     Implementation of Algorithm A3.7 from The NURBS Book by Piegl & Tiller.
 
@@ -1123,9 +1135,13 @@ def surface_deriv_cpts(dim, degree, kv, cpts, cpsize, rs, ss, deriv_order=0):
     :rtype: list
     """
     # Initialize return value (control points)
-    PKL = [[[[[None for _ in range(dim)]
-              for _ in range(cpsize[1])] for _ in range(cpsize[0])]
-            for _ in range(deriv_order + 1)] for _ in range(deriv_order + 1)]
+    PKL = [
+        [
+            [[[None for _ in range(dim)] for _ in range(cpsize[1])] for _ in range(cpsize[0])]
+            for _ in range(deriv_order + 1)
+        ]
+        for _ in range(deriv_order + 1)
+    ]
 
     du = min(degree[0], deriv_order)
     dv = min(degree[1], deriv_order)
@@ -1135,12 +1151,14 @@ def surface_deriv_cpts(dim, degree, kv, cpts, cpsize, rs, ss, deriv_order=0):
 
     # Control points of the U derivatives of every U-curve
     for j in range(ss[0], ss[1] + 1):
-        PKu = curve_deriv_cpts(dim=dim,
-                               degree=degree[0],
-                               kv=kv[0],
-                               cpts=[cpts[j + (cpsize[1] * i)] for i in range(cpsize[0])],
-                               rs=rs,
-                               deriv_order=du)
+        PKu = curve_deriv_cpts(
+            dim=dim,
+            degree=degree[0],
+            kv=kv[0],
+            cpts=[cpts[j + (cpsize[1] * i)] for i in range(cpsize[0])],
+            rs=rs,
+            deriv_order=du,
+        )
 
         # Copy into output as the U partial derivatives
         for k in range(0, du + 1):
@@ -1152,12 +1170,9 @@ def surface_deriv_cpts(dim, degree, kv, cpts, cpsize, rs, ss, deriv_order=0):
         for i in range(0, r - k + 1):
             dd = min(deriv_order - k, dv)
 
-            PKuv = curve_deriv_cpts(dim=dim,
-                                    degree=degree[1],
-                                    kv=kv[1][ss[0]:],
-                                    cpts=PKL[k][0][i],
-                                    rs=(0, s),
-                                    deriv_order=dd)
+            PKuv = curve_deriv_cpts(
+                dim=dim, degree=degree[1], kv=kv[1][ss[0] :], cpts=PKL[k][0][i], rs=(0, s), deriv_order=dd
+            )
 
             # Copy into output
             for l in range(1, dd + 1):

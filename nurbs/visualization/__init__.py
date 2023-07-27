@@ -9,5 +9,4 @@ __version__ = "2.0.0"
 __license__ = "MIT"
 
 # Import core library visualization module
-from .. import linalg
-from .. import vis
+from .. import linalg, vis

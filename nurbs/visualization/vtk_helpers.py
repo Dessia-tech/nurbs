@@ -7,12 +7,13 @@
 
 """
 
-from . import linalg
 import vtk
+
+from . import linalg
 
 
 def create_render_window(actors, callbacks, **kwargs):
-    """ Creates VTK render window with an interactor.
+    """Creates VTK render window with an interactor.
 
     :param actors: list of VTK actors
     :type actors: list, tuple
@@ -20,10 +21,10 @@ def create_render_window(actors, callbacks, **kwargs):
     :type callbacks: dict
     """
     # Get keyword arguments
-    figure_size = kwargs.get('figure_size', (800, 600))
-    camera_position = kwargs.get('camera_position', (0, 0, 100))
-    display_plot = kwargs.get('display_plot', True)
-    image_filename = kwargs.get('image_filename', "screenshot.png")
+    figure_size = kwargs.get("figure_size", (800, 600))
+    camera_position = kwargs.get("camera_position", (0, 0, 100))
+    display_plot = kwargs.get("display_plot", True)
+    image_filename = kwargs.get("image_filename", "screenshot.png")
 
     # Find camera focal point
     center_points = []
@@ -64,7 +65,9 @@ def create_render_window(actors, callbacks, **kwargs):
 
         # Add event observers
         for cb in callbacks:
-            window_interactor.AddObserver(cb, callbacks[cb][0], callbacks[cb][1])  # cb name, cb function ref, cb priority
+            window_interactor.AddObserver(
+                cb, callbacks[cb][0], callbacks[cb][1]
+            )  # cb name, cb function ref, cb priority
 
         # Use trackball camera
         interactor_style = vtk.vtkInteractorStyleTrackballCamera()
@@ -86,7 +89,7 @@ def create_render_window(actors, callbacks, **kwargs):
 
 
 def create_color(color):
-    """ Creates VTK-compatible RGB color from a color string.
+    """Creates VTK-compatible RGB color from a color string.
 
     :param color: color
     :type color: str
@@ -95,7 +98,7 @@ def create_color(color):
     """
     if color[0] == "#":
         # Convert hex string to RGB
-        return [int(color[i:i + 2], 16) / 255 for i in range(1, 7, 2)]
+        return [int(color[i : i + 2], 16) / 255 for i in range(1, 7, 2)]
     else:
         # Create a named colors instance
         nc = vtk.vtkNamedColors()
@@ -103,7 +106,7 @@ def create_color(color):
 
 
 def create_actor_pts(pts, color, **kwargs):
-    """ Creates a VTK actor for rendering scatter plots.
+    """Creates a VTK actor for rendering scatter plots.
 
     :param pts: points
     :type pts: vtkFloatArray
@@ -113,10 +116,10 @@ def create_actor_pts(pts, color, **kwargs):
     :rtype: vtkActor
     """
     # Keyword arguments
-    array_name = kwargs.get('name', "")
-    array_index = kwargs.get('index', 0)
-    point_size = kwargs.get('size', 5)
-    point_sphere = kwargs.get('point_as_sphere', True)
+    array_name = kwargs.get("name", "")
+    array_index = kwargs.get("index", 0)
+    point_size = kwargs.get("size", 5)
+    point_sphere = kwargs.get("point_as_sphere", True)
 
     # Create points
     points = vtk.vtkPoints()
@@ -148,7 +151,7 @@ def create_actor_pts(pts, color, **kwargs):
 
 
 def create_actor_polygon(pts, color, **kwargs):
-    """ Creates a VTK actor for rendering polygons.
+    """Creates a VTK actor for rendering polygons.
 
     :param pts: points
     :type pts: vtkFloatArray
@@ -158,9 +161,9 @@ def create_actor_polygon(pts, color, **kwargs):
     :rtype: vtkActor
     """
     # Keyword arguments
-    array_name = kwargs.get('name', "")
-    array_index = kwargs.get('index', 0)
-    line_width = kwargs.get('size', 1.0)
+    array_name = kwargs.get("name", "")
+    array_index = kwargs.get("index", 0)
+    line_width = kwargs.get("size", 1.0)
 
     # Create points
     points = vtk.vtkPoints()
@@ -199,7 +202,7 @@ def create_actor_polygon(pts, color, **kwargs):
 
 
 def create_actor_mesh(pts, lines, color, **kwargs):
-    """ Creates a VTK actor for rendering quadrilateral plots.
+    """Creates a VTK actor for rendering quadrilateral plots.
 
     :param pts: points
     :type pts: vtkFloatArray
@@ -211,9 +214,9 @@ def create_actor_mesh(pts, lines, color, **kwargs):
     :rtype: vtkActor
     """
     # Keyword arguments
-    array_name = kwargs.get('name', "")
-    array_index = kwargs.get('index', 0)
-    line_width = kwargs.get('size', 0.5)
+    array_name = kwargs.get("name", "")
+    array_index = kwargs.get("index", 0)
+    line_width = kwargs.get("size", 0.5)
 
     # Create points
     points = vtk.vtkPoints()
@@ -251,7 +254,7 @@ def create_actor_mesh(pts, lines, color, **kwargs):
 
 
 def create_actor_tri(pts, tris, color, **kwargs):
-    """ Creates a VTK actor for rendering triangulated surface plots.
+    """Creates a VTK actor for rendering triangulated surface plots.
 
     :param pts: points
     :type pts: vtkFloatArray
@@ -263,8 +266,8 @@ def create_actor_tri(pts, tris, color, **kwargs):
     :rtype: vtkActor
     """
     # Keyword arguments
-    array_name = kwargs.get('name', "")
-    array_index = kwargs.get('index', 0)
+    array_name = kwargs.get("name", "")
+    array_index = kwargs.get("index", 0)
 
     # Create points
     points = vtk.vtkPoints()
@@ -299,7 +302,7 @@ def create_actor_tri(pts, tris, color, **kwargs):
 
 
 def create_actor_hexahedron(grid, color, **kwargs):
-    """ Creates a VTK actor for rendering voxels using hexahedron elements.
+    """Creates a VTK actor for rendering voxels using hexahedron elements.
 
     :param grid: grid
     :type grid: ndarray
@@ -309,8 +312,8 @@ def create_actor_hexahedron(grid, color, **kwargs):
     :rtype: vtkActor
     """
     # Keyword arguments
-    array_name = kwargs.get('name', "")
-    array_index = kwargs.get('index', 0)
+    array_name = kwargs.get("name", "")
+    array_index = kwargs.get("index", 0)
 
     # Create hexahedron elements
     points = vtk.vtkPoints()
@@ -349,7 +352,7 @@ def create_actor_hexahedron(grid, color, **kwargs):
 
 
 def create_actor_delaunay(pts, color, **kwargs):
-    """ Creates a VTK actor for rendering triangulated plots using Delaunay triangulation.
+    """Creates a VTK actor for rendering triangulated plots using Delaunay triangulation.
 
     Keyword Arguments:
         * ``d3d``: flag to choose between Delaunay2D (``False``) and Delaunay3D (``True``). *Default: False*
@@ -362,8 +365,8 @@ def create_actor_delaunay(pts, color, **kwargs):
     :rtype: vtkActor
     """
     # Keyword arguments
-    array_name = kwargs.get('name', "")
-    array_index = kwargs.get('index', 0)
+    array_name = kwargs.get("name", "")
+    array_index = kwargs.get("index", 0)
     use_delaunay3d = kwargs.get("d3d", False)
 
     # Create points

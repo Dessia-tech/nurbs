@@ -8,15 +8,15 @@
 """
 
 from copy import deepcopy
-from . import linalg
-from . import construct
-from .exceptions import GeomdlException
+
+from . import construct, linalg
 from ._utilities import export
+from .exceptions import GeomdlException
 
 
 @export
 def sweep_vector(obj, vec, **kwargs):
-    """ Sweeps spline geometries along a vector.
+    """Sweeps spline geometries along a vector.
 
     This API call generates
 

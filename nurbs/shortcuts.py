@@ -7,11 +7,7 @@
 
 """
 
-from . import BSpline
-from . import NURBS
-from . import multi
-from . import freeform
-
+from . import NURBS, BSpline, freeform, multi
 
 # Initialize an empty __all__ for controlling imports
 __all__ = []

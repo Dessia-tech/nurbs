@@ -9,16 +9,32 @@ print(f"Pydocstyle version: {pydocstyle.__version__}")
 
 file_list = filter(
     lambda z: not z.endswith("__init__.py"),
-    [y for x in os.walk("./volmdlr") for y in glob(os.path.join(x[0], "*.py"))],
+    [y for x in os.walk("./nurbs") for y in glob(os.path.join(x[0], "*.py"))],
 )
 
 UNWATCHED_ERRORS = [
     # Do not watch these errors
-    'D100', 'D104', 'D105', 'D107',
-    'D200', 'D202', 'D203', 'D204', 'D206', 'D210', 'D212',
-    'D301', 'D302',
-    'D401', 'D402', 'D407', 'D408', 'D409',
-    'D412', 'D415', 'D418'
+    "D100",
+    "D104",
+    "D105",
+    "D107",
+    "D200",
+    "D202",
+    "D203",
+    "D204",
+    "D206",
+    "D210",
+    "D212",
+    "D301",
+    "D302",
+    "D401",
+    "D402",
+    "D407",
+    "D408",
+    "D409",
+    "D412",
+    "D415",
+    "D418",
 ]
 
 MAX_ERROR_BY_TYPE = {
@@ -26,23 +42,23 @@ MAX_ERROR_BY_TYPE = {
     # http://www.pydocstyle.org/en/stable/error_codes.html
     "D101": 53,
     "D102": 402,
-
+    "D103": 2,
     "D205": 77,
-
     "D400": 67,
+    "D417": 2,
 }
 
 error_detected = False
 error_over_ratchet_limit = False
-EFFECTIVE_DATE = date(2022, 11, 28)
+EFFECTIVE_DATE = date(2023, 8, 1)
 DAYS_TIME_EFFECT_LIMITING = 21
 
 limit_time_effect = False
-if os.environ.get('DRONE_BRANCH', '') in ['master', 'testing']:
+if os.environ.get("DRONE_BRANCH", "") in ["master", "testing"]:
     limit_time_effect = True
     print(f"Limiting time effect of 21 days as we are on {os.environ['DRONE_BRANCH']}")
 
-if os.environ.get('DRONE_TARGET_BRANCH', '') in ['master', 'testing']:
+if os.environ.get("DRONE_TARGET_BRANCH", "") in ["master", "testing"]:
     limit_time_effect = True
     print(f"Limiting time effect of 21 days as we are targetting {os.environ['DRONE_TARGET_BRANCH']}")
 
@@ -72,9 +88,7 @@ for error_code, number_errors in code_to_number.items():
             print(f"\nFix some {error_code} errors: {number_errors}/{max_errors}")
 
             errors = code_to_errors[error_code]
-            errors_to_show = sorted(
-                random.sample(errors, min(30, len(errors))), key=lambda m: (m.filename, m.line)
-            )
+            errors_to_show = sorted(random.sample(errors, min(30, len(errors))), key=lambda m: (m.filename, m.line))
             for error in errors_to_show:
                 print(f"{error.filename} line {error.line}: {error.message}")
 

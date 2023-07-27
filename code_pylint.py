@@ -1,77 +1,90 @@
+import math
 import os
 import random
 import sys
 from datetime import date, timedelta
-import math
 
 from pylint import __version__
 from pylint.lint import Run
 
 MIN_NOTE = 9.6
 
-UNWATCHED_ERRORS = ['fixme', 'trailing-whitespace', 'import-error', 'missing-final-newline']
+UNWATCHED_ERRORS = ["fixme", "trailing-whitespace", "import-error", "missing-final-newline"]
 
-EFFECTIVE_DATE = date(2023, 1, 31)
+EFFECTIVE_DATE = date(2023, 8, 1)
 
 WEEKLY_DECREASE = 0.03
 
 MAX_ERROR_BY_TYPE = {
-                     "wrong-spelling-in-comment": 199,
-                     "wrong-spelling-in-docstring": 143,
-                     'invalid-name': 184,
-                     'no-member': 3,
-                     'inconsistent-return-statements': 4,
-                     'unused-variable': 22,
-                     'arguments-differ': 62,
-                     'too-many-locals': 75,
-                     'unused-argument': 32,
-                     'too-many-arguments': 34,
-                     'line-too-long': 12,
-                     'too-many-branches': 26,
-                     'too-many-statements': 18,
-                     'super-init-not-called': 15,
-                     'no-name-in-module': 11,
-                     'abstract-method': 32,
-                     'duplicate-code': 10,
-                     'arguments-renamed': 52,
-                     'too-many-ancestors': 24,
-                     'too-few-public-methods': 2,
-                     'too-many-public-methods': 12,
-                     'too-many-instance-attributes': 15,
-                     'protected-access': 4,
-                     'undefined-loop-variable': 2,
-                     'unspecified-encoding': 1,
-                     'too-many-function-args': 4,
-                     'too-many-nested-blocks': 7,
-                     'too-many-return-statements': 3,
-                     'cyclic-import': 1,
-                     'undefined-variable': 0,  # 2 when gmsh is fixed
-                     'broad-except': 1,
-                     "broad-exception-caught": 2,
-                     'too-many-boolean-expressions': 2,
-                     'too-many-lines': 4,
-                     'consider-using-with': 1,
-                     'unnecessary-dunder-call': 2,
-                     'chained-comparison': 2,
-                     'consider-using-generator': 1,
-                     'import-outside-toplevel': 5,
-                     'unsubscriptable-object': 1,
-                     'signature-differs': 1}
+    "invalid-name": 184,
+    "no-member": 3,
+    "inconsistent-return-statements": 4,
+    "unused-variable": 22,
+    "arguments-differ": 62,
+    "too-many-locals": 75,
+    "unused-argument": 32,
+    "too-many-arguments": 34,
+    "line-too-long": 12,
+    "too-many-branches": 26,
+    "too-many-statements": 18,
+    "no-name-in-module": 11,
+    "duplicate-code": 8,
+    "arguments-renamed": 52,
+    "too-many-ancestors": 24,
+    "too-few-public-methods": 4,
+    "too-many-public-methods": 2,
+    "too-many-instance-attributes": 15,
+    "protected-access": 4,
+    "undefined-loop-variable": 2,
+    "unspecified-encoding": 1,
+    "too-many-function-args": 4,
+    "too-many-nested-blocks": 1,
+    "global-variable-undefined": 2,
+    "too-many-return-statements": 3,
+    "no-else-break errors": 1,
+    "consider-iterating-dictionary": 2,
+    "no-else-raise": 2,
+    "dangerous-default-value": 1,
+    "redefined-builtin": 1,
+    "single-string-used-for-slots": 1,
+    "cyclic-import": 1,
+    "undefined-variable": 0,
+    "too-many-boolean-expressions": 2,
+    "too-many-lines": 4,
+    "unnecessary-dunder-call": 2,
+    "chained-comparison": 2,
+    "consider-using-generator": 1,
+    "import-outside-toplevel": 5,
+}
 
-ERRORS_WITHOUT_TIME_DECREASE = ["too-many-locals", "too-many-branches", "too-many-arguments", "too-many-statements",
-                                "too-many-nested-blocks", "too-many-instance-attributes", "abstract-method",
-                                "no-name-in-module", "too-many-public-methods", "too-many-ancestors",
-                                "protected-access", "cyclic-import", "line-too-long", "too-many-lines", "no-member",
-                                "too-few-public-methods", "duplicate-code", "too-many-return-statements",
-                                "import-outside-toplevel", "arguments-differ", "arguments-renamed",
-                                "too-many-boolean-expressions"]
+ERRORS_WITHOUT_TIME_DECREASE = [
+    "too-many-locals",
+    "too-many-branches",
+    "too-many-arguments",
+    "too-many-statements",
+    "too-many-nested-blocks",
+    "too-many-instance-attributes",
+    "no-name-in-module",
+    "too-many-ancestors",
+    "protected-access",
+    "cyclic-import",
+    "line-too-long",
+    "too-many-lines",
+    "no-member",
+    "too-few-public-methods",
+    "duplicate-code",
+    "too-many-return-statements",
+    "import-outside-toplevel",
+    "arguments-renamed",
+    "too-many-boolean-expressions",
+]
 
 limit_time_effect = False
-if os.environ.get('DRONE_BRANCH', '') in ['master', 'testing']:
+if os.environ.get("DRONE_BRANCH", "") in ["master", "testing"]:
     limit_time_effect = True
     print(f"Limiting time effect of 21 days as we are on {os.environ['DRONE_BRANCH']}")
 
-if os.environ.get('DRONE_TARGET_BRANCH', '') in ['master', 'testing']:
+if os.environ.get("DRONE_TARGET_BRANCH", "") in ["master", "testing"]:
     limit_time_effect = True
     print(f"Limiting time effect of 21 days as we are targetting {os.environ['DRONE_TARGET_BRANCH']}")
 
@@ -88,7 +101,7 @@ f = open(os.devnull, "w")
 old_stdout = sys.stdout
 sys.stdout = f
 
-results = Run(["volmdlr", "--output-format=json", "--reports=no"], do_exit=False)
+results = Run(["nurbs", "--output-format=json", "--reports=no"], do_exit=False)
 # `exit` is deprecated, use `do_exit` instead
 sys.stdout = old_stdout
 
@@ -113,7 +126,7 @@ if PYLINT_OBJECT_STATS:
 else:
     stats_by_msg = results.linter.stats["by_msg"]
 
-print(f'Errors / Allowed errors: {sum(stats_by_msg.values())} / {sum(MAX_ERROR_BY_TYPE.values())})')
+print(f"Errors / Allowed errors: {sum(stats_by_msg.values())} / {sum(MAX_ERROR_BY_TYPE.values())})")
 
 for error_type, number_errors in stats_by_msg.items():
     if error_type not in UNWATCHED_ERRORS:
@@ -131,15 +144,18 @@ for error_type, number_errors in stats_by_msg.items():
             error_detected = True
             print(
                 f"\nFix some {error_type} errors: {number_errors}/{max_errors} "
-                f"(time effect: {time_decrease_effect} errors)")
+                f"(time effect: {time_decrease_effect} errors)"
+            )
 
             messages = extract_messages_by_type(error_type)
             messages_to_show = sorted(random.sample(messages, min(30, len(messages))), key=lambda m: (m.path, m.line))
             for message in messages_to_show:
                 print(f"{message.path} line {message.line}: {message.msg}")
         elif number_errors < max_errors:
-            print(f"\nYou can lower number of {error_type} to {number_errors+time_decrease_effect}"
-                  f" (actual {base_errors})")
+            print(
+                f"\nYou can lower number of {error_type} to {number_errors+time_decrease_effect}"
+                f" (actual {base_errors})"
+            )
 
 for error_type in MAX_ERROR_BY_TYPE:
     if error_type not in stats_by_msg:

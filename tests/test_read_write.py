@@ -7,22 +7,17 @@
 """
 
 import os
+
 import pytest
+from geomdl import NURBS, BSpline, compatibility, exchange, exchange_vtk, multi, operations
 
-from geomdl import BSpline, NURBS
-from geomdl import multi
-from geomdl import exchange
-from geomdl import exchange_vtk
-from geomdl import compatibility
-from geomdl import operations
-
-FILE_NAME = 'testing'
+FILE_NAME = "testing"
 SAMPLE_SIZE = 25
 
 
 @pytest.fixture
 def bspline_curve3d():
-    """ Creates a B-Spline 3-dimensional curve instance """
+    """Creates a B-Spline 3-dimensional curve instance"""
     curve = BSpline.Curve()
     curve.degree = 2
     curve.ctrlpts = [[1, 1, 0], [2, 1, -1], [2, 2, 0]]
@@ -32,15 +27,13 @@ def bspline_curve3d():
 
 @pytest.fixture
 def bspline_surface():
-    """ Creates a B-Spline surface instance """
+    """Creates a B-Spline surface instance"""
     surf = BSpline.Surface()
     surf.degree_u = 2
     surf.degree_v = 2
     surf.ctrlpts_size_u = 3
     surf.ctrlpts_size_v = 3
-    surf.ctrlpts = [[0, 0, 0], [0, 1, 0], [0, 2, -3],
-                    [1, 0, 6], [1, 1, 0], [1, 2, 0],
-                    [2, 0, 0], [2, 1, 0], [2, 2, 3]]
+    surf.ctrlpts = [[0, 0, 0], [0, 1, 0], [0, 2, -3], [1, 0, 6], [1, 1, 0], [1, 2, 0], [2, 0, 0], [2, 1, 0], [2, 2, 3]]
     surf.knotvector_u = [0, 0, 0, 1, 1, 1]
     surf.knotvector_v = [0, 0, 0, 1, 1, 1]
     return surf
@@ -48,15 +41,13 @@ def bspline_surface():
 
 @pytest.fixture
 def nurbs_surface():
-    """ Creates a NURBS surface instance """
+    """Creates a NURBS surface instance"""
     surf = NURBS.Surface()
     surf.degree_u = 2
     surf.degree_v = 2
     surf.ctrlpts_size_u = 3
     surf.ctrlpts_size_v = 3
-    surf.ctrlpts = [[0, 0, 0], [0, 1, 0], [0, 2, -3],
-                    [1, 0, 6], [1, 1, 0], [1, 2, 0],
-                    [2, 0, 0], [2, 1, 0], [2, 2, 3]]
+    surf.ctrlpts = [[0, 0, 0], [0, 1, 0], [0, 2, -3], [1, 0, 6], [1, 1, 0], [1, 2, 0], [2, 0, 0], [2, 1, 0], [2, 2, 3]]
     # use the auto-generated weights vector
     surf.knotvector_u = [0, 0, 0, 1, 1, 1]
     surf.knotvector_v = [0, 0, 0, 1, 1, 1]
@@ -65,15 +56,26 @@ def nurbs_surface():
 
 @pytest.fixture
 def nurbs_surface_decompose():
-    """ Creates a NURBS surface instance (decomposable) """
+    """Creates a NURBS surface instance (decomposable)"""
     surf = NURBS.Surface()
     surf.degree_u = 2
     surf.degree_v = 2
     surf.ctrlpts_size_u = 3
     surf.ctrlpts_size_v = 4
-    surf.ctrlpts = [[0, 0, 0], [0, 1, 0], [0, 2, -3], [0, 3, 7],
-                    [1, 0, 6], [1, 1, 0], [1, 2, 0], [1, 3, 8],
-                    [2, 0, 0], [2, 1, 0], [2, 2, 3], [1, 3, 7]]
+    surf.ctrlpts = [
+        [0, 0, 0],
+        [0, 1, 0],
+        [0, 2, -3],
+        [0, 3, 7],
+        [1, 0, 6],
+        [1, 1, 0],
+        [1, 2, 0],
+        [1, 3, 8],
+        [2, 0, 0],
+        [2, 1, 0],
+        [2, 2, 3],
+        [1, 3, 7],
+    ]
     # use the auto-generated weights vector
     surf.knotvector_u = [0, 0, 0, 1, 1, 1]
     surf.knotvector_v = [0, 0, 0, 0.5, 1, 1, 1]

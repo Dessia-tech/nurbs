@@ -232,7 +232,7 @@ def test_vector_sum():
     vec2 = (4.0, 5.0, 6.0)
     result = [5.0, 7.0, 9.0]
     computed = linalg.vector_sum(vec1, vec2)
-    assert  result == computed
+    assert result == computed
 
 
 def test_is_vector_zero():

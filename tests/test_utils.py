@@ -7,10 +7,7 @@
 """
 
 import pytest
-from geomdl import utilities
-from geomdl import knotvector
-from geomdl import control_points
-from geomdl import utilities
+from geomdl import control_points, knotvector, utilities
 from geomdl.exceptions import GeomdlException
 
 GEOMDL_DELTA = 10e-6
@@ -136,7 +133,7 @@ def test_color_generator():
 
 
 def test_cpman_curve1():
-    """ Control Points Manager: get-set point (curve) """
+    """Control Points Manager: get-set point (curve)"""
     pt = [0.0, 0.2, 0.3]
     p = 3
     sz = 10
@@ -146,7 +143,7 @@ def test_cpman_curve1():
 
 
 def test_cpman_curve2():
-    """ Control Points Manager: get empty point (curve) """
+    """Control Points Manager: get empty point (curve)"""
     p = 5
     sz = 12
     cpman = control_points.CurveManager(sz)
@@ -154,7 +151,7 @@ def test_cpman_curve2():
 
 
 def test_cpman_curve3():
-    """ Control Points Manager: check for invalid index """
+    """Control Points Manager: check for invalid index"""
     p = 12
     sz = 5
     cpman = control_points.CurveManager(sz)
@@ -162,31 +159,31 @@ def test_cpman_curve3():
 
 
 def test_cpman_curve4():
-    """ Control Points Manager: get-set attachment (valid, list) """
+    """Control Points Manager: get-set attachment (valid, list)"""
     d = [0.0, 1.0, 2.0, 3.0]
     p = 5
     sz = 12
     cpman = control_points.CurveManager(sz, testdata=4)
     cpman.set_ptdata(dict(testdata=d), p)
-    retv1 = cpman.get_ptdata('testdata', p)
-    retv2 = cpman.get_ptdata('testdata', p + 1)
+    retv1 = cpman.get_ptdata("testdata", p)
+    retv2 = cpman.get_ptdata("testdata", p + 1)
     assert retv1[2] == 2.0
     assert retv2[2] == 0.0
 
 
 def test_cpman_curve5():
-    """ Control Points Manager: get-set attachment (invalid, list) """
+    """Control Points Manager: get-set attachment (invalid, list)"""
     d = [0.0, 1.0, 2.0, 3.0]
     p = 5
     sz = 12
     cpman = control_points.CurveManager(sz, testdata=4)
     cpman.set_ptdata(dict(testdata=d), p)
-    retv = cpman.get_ptdata('testdata2', p)
+    retv = cpman.get_ptdata("testdata2", p)
     assert retv == None
 
 
 def test_cpman_curve6():
-    """ Control Points Manager: get-set attachment (exception) """
+    """Control Points Manager: get-set attachment (exception)"""
     with pytest.raises(GeomdlException):
         d = [0.0, 1.0, 2.0, 3.0]
         p = 5
@@ -196,29 +193,29 @@ def test_cpman_curve6():
 
 
 def test_cpman_curve7():
-    """ Control Points Manager: get-set attachment (valid, float) """
+    """Control Points Manager: get-set attachment (valid, float)"""
     d = 13
     p = 5
     sz = 12
     cpman = control_points.CurveManager(sz, testdata=1)
     cpman.set_ptdata(dict(testdata=d), p)
-    assert cpman.get_ptdata('testdata', 5) == 13
+    assert cpman.get_ptdata("testdata", 5) == 13
 
 
 def test_cpman_curve8():
-    """ Control Points Manager: try to set invalid key """
+    """Control Points Manager: try to set invalid key"""
     with pytest.raises(GeomdlException):
         d = [0.0, 1.0, 2.0, 3.0]
         p = 5
         sz = 12
         cpman = control_points.CurveManager(sz, testdata=4)
-        cpman.set_ptdata({'testdata1': d}, p)
+        cpman.set_ptdata({"testdata1": d}, p)
 
 
 def test_cpman_surface1():
-    """ Control Points Manager: get-set point (surface) """
+    """Control Points Manager: get-set point (surface)"""
     pt = [1.0, 2.0, 3.0]
-    p = [2 ,3]
+    p = [2, 3]
     sz = [4, 3]
     cpman = control_points.SurfaceManager(*sz)
     cpman.set_ctrlpt(pt, *p)
@@ -226,7 +223,7 @@ def test_cpman_surface1():
 
 
 def test_cpman_volume1():
-    """ Control Points Manager: get-set point (volume) """
+    """Control Points Manager: get-set point (volume)"""
     pt = [1.0, 2.0, 3.0]
     p = [2, 3, 1]
     sz = [4, 3, 2]
