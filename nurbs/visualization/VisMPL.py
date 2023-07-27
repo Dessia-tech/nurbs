@@ -7,11 +7,13 @@
 
 """
 
+from nurbs import vis
+
+import numpy as np
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.tri as mpltri
-import numpy as np
-from nurbs import vis
 from matplotlib import animation
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
