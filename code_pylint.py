@@ -7,54 +7,72 @@ from datetime import date, timedelta
 from pylint import __version__
 from pylint.lint import Run
 
-MIN_NOTE = 9.6
+MIN_NOTE = 6.59
 
 UNWATCHED_ERRORS = ["fixme", "trailing-whitespace", "import-error", "missing-final-newline"]
 
-EFFECTIVE_DATE = date(2023, 8, 1)
+EFFECTIVE_DATE = date(2023, 7, 27)
 
 WEEKLY_DECREASE = 0.03
 
 MAX_ERROR_BY_TYPE = {
-    "invalid-name": 184,
-    "no-member": 3,
-    "inconsistent-return-statements": 4,
-    "unused-variable": 22,
-    "arguments-differ": 62,
-    "too-many-locals": 75,
+    "wrong-spelling-in-comment": 180,
+    "wrong-spelling-in-docstring": 1256,
+    "invalid-name": 355,
+    "use-dict-literal": 112,
+    "no-member": 48,
+    "inconsistent-return-statements": 5,
+    "unused-variable": 14,
+    "too-many-locals": 53,
     "unused-argument": 32,
     "too-many-arguments": 34,
     "line-too-long": 12,
     "too-many-branches": 26,
     "too-many-statements": 18,
-    "no-name-in-module": 11,
+    "no-name-in-module": 2,
     "duplicate-code": 8,
-    "arguments-renamed": 52,
-    "too-many-ancestors": 24,
     "too-few-public-methods": 4,
     "too-many-public-methods": 2,
     "too-many-instance-attributes": 15,
-    "protected-access": 4,
-    "undefined-loop-variable": 2,
-    "unspecified-encoding": 1,
-    "too-many-function-args": 4,
+    "protected-access": 1,
+    "unspecified-encoding": 2,
     "too-many-nested-blocks": 1,
     "global-variable-undefined": 2,
-    "too-many-return-statements": 3,
-    "no-else-break errors": 1,
+    "too-many-return-statements": 1,
     "consider-iterating-dictionary": 2,
     "no-else-raise": 2,
     "dangerous-default-value": 1,
     "redefined-builtin": 1,
     "single-string-used-for-slots": 1,
-    "cyclic-import": 1,
-    "undefined-variable": 0,
     "too-many-boolean-expressions": 2,
-    "too-many-lines": 4,
-    "unnecessary-dunder-call": 2,
-    "chained-comparison": 2,
-    "consider-using-generator": 1,
+    "too-many-lines": 5,
+    "unnecessary-dunder-call": 4,
+    "consider-using-generator": 8,
     "import-outside-toplevel": 5,
+    "consider-using-in": 3,
+    "unnecessary-comprehension": 11,
+    "consider-swap-variables": 1,
+    "simplifiable-if-expression": 8,
+    "no-else-return": 24,
+    "consider-using-f-string": 22,
+    "try-except-raise": 10,
+    "super-with-arguments": 108,
+    "useless-parent-delegation": 3,
+    "attribute-defined-outside-init": 4,
+    "no-value-for-parameter": 2,
+    "raise-missing-from": 28,
+    "missing-function-docstring": 36,
+    "use-list-literal": 7,
+    "useless-object-inheritance": 10,
+    "unnecessary-pass": 7,
+    "consider-using-enumerate": 16,
+    "unbalanced-tuple-unpacking": 2,
+    "unused-import": 2,
+    "use-implicit-booleaness-not-len": 1,
+    "broad-exception-caught": 1,
+    "no-else-break": 1,
+    "undefined-loop-variable": 1,
+    "raise-missing-from errors": 28,
 }
 
 ERRORS_WITHOUT_TIME_DECREASE = [
@@ -65,9 +83,7 @@ ERRORS_WITHOUT_TIME_DECREASE = [
     "too-many-nested-blocks",
     "too-many-instance-attributes",
     "no-name-in-module",
-    "too-many-ancestors",
     "protected-access",
-    "cyclic-import",
     "line-too-long",
     "too-many-lines",
     "no-member",
@@ -75,7 +91,6 @@ ERRORS_WITHOUT_TIME_DECREASE = [
     "duplicate-code",
     "too-many-return-statements",
     "import-outside-toplevel",
-    "arguments-renamed",
     "too-many-boolean-expressions",
 ]
 

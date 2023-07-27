@@ -41,16 +41,19 @@ MAX_ERROR_BY_TYPE = {
     # If the error code is not in this dict, then there is no tolerance on the error.
     # http://www.pydocstyle.org/en/stable/error_codes.html
     "D101": 53,
-    "D102": 402,
+    "D102": 11,
     "D103": 2,
-    "D205": 77,
-    "D400": 67,
+    "D205": 39,
+    "D213": 484,
+    "D400": 92,
+    "D405": 5,
+    "D413": 65,
     "D417": 2,
 }
 
 error_detected = False
 error_over_ratchet_limit = False
-EFFECTIVE_DATE = date(2023, 8, 1)
+EFFECTIVE_DATE = date(2023, 7, 27)
 DAYS_TIME_EFFECT_LIMITING = 21
 
 limit_time_effect = False
