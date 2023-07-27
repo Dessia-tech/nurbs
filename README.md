@@ -85,4 +85,3 @@ NURBS-Python (geomdl) is licensed under the terms of `MIT License <LICENSE>`_ an
 
 * ``six`` is licensed under the terms of `MIT License <https://github.com/benjaminp/six/blob/1.12.0/LICENSE>`_
 * ``backports.functools_lru_cache`` is licensed under the terms of `MIT License <https://github.com/jaraco/backports.functools_lru_cache/blob/1.5/LICENSE>`_
-
