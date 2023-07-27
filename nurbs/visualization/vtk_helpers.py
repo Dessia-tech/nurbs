@@ -56,7 +56,7 @@ def create_render_window(actors, callbacks, **kwargs):
     render_window.Render()
 
     # Set window name after render() is called
-    render_window.SetWindowName("geomdl")
+    render_window.SetWindowName("nurbs")
 
     if display_plot:
         # Render window interactor
