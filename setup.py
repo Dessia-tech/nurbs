@@ -185,9 +185,7 @@ def version_from_git_describe(version):
     for pre_release_segment in ["a", "b", "rc"]:
         if pre_release_segment in split_versions[-1]:
             if number_commits_ahead > 0:
-                split_versions[-1] = str(
-                    split_versions[-1].split(pre_release_segment)[0]
-                )
+                split_versions[-1] = str(split_versions[-1].split(pre_release_segment)[0])
                 if len(split_versions) == 2:
                     split_versions.append("0")
                 if len(split_versions) == 1:
@@ -251,7 +249,6 @@ def get_version():
 
 
 def get_branch():
-
     if isdir(join(dirname(__file__), ".git")):
         cmd = "git branch --show-current"
         try:
