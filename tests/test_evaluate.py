@@ -6,7 +6,7 @@
     Requires "pytest" to run.
 """
 import unittest
-from geomdl import BSpline
+from nurbs import BSpline
 
 SAMPLE_SIZE = 5
 C_DEGREE = 2

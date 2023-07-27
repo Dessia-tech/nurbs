@@ -7,7 +7,7 @@
 """
 
 from unittest import TestCase
-from geomdl import BSpline, convert, evaluators, helpers, linalg, operations
+from nurbs import BSpline, convert, evaluators, helpers, operations
 
 GEOMDL_DELTA = 0.001
 

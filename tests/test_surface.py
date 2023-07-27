@@ -7,9 +7,10 @@
 """
 
 import unittest
-from geomdl import BSpline, convert, evaluators, helpers
+from nurbs import BSpline, convert, evaluators, helpers
 
 GEOMDL_DELTA = 0.001
+
 
 class TestSurface(unittest.TestCase):
     def setUp(self):
