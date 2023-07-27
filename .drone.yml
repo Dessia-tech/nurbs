@@ -82,11 +82,13 @@ steps:
   image: python:3.9
   commands:
   - git fetch --tags
-  - pip install Cython
+  - pip install Cython pytest
   - python setup.py build_ext --inplace
   - python setup.py install
-  - cd doc
+  - cd docs
   - make html
+  - cd ../tests
+  - pytest
 
   volumes:
     # Mount pip cache from host
@@ -124,8 +126,8 @@ steps:
     event: push
   settings:
     host: austerlitz.dessia.tech
-    target: /var/www/documentation/volmdlr/
-    source: doc/build/html/*
+    target: /var/www/documentation/nurbs/
+    source: docs/_build/html/*
     strip_components: 3
     username: drone
     password:
@@ -138,7 +140,7 @@ steps:
   failure: ignore
   settings:
     host: magenta.dessia.tech
-    target: /var/www/cdn/volmdlr/coverage/${DRONE_BRANCH}
+    target: /var/www/cdn/nurbs/coverage/${DRONE_BRANCH}
     source: htmlcov/*
     strip_components: 1
     username: drone
