@@ -3,7 +3,7 @@ Knot Refinement
 
 .. versionadded:: 5.1
 
-Knot refinement is simply the operation of *inserting multiple knots at the same time*. NURBS-Python (geomdl) supports
+Knot refinement is simply the operation of *inserting multiple knots at the same time*. NURBS-Python (nurbs) supports
 knot refinement operation for the curves, surfaces and volumes via :func:`.operations.refine_knotvector` function.
 
 One of the interesting features of the :func:`.operations.refine_knotvector` function is the controlling of
@@ -15,10 +15,10 @@ The following code snippet and the figure illustrate a 2-dimensional spline curv
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl import exchange
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs import exchange
+    from nurbs.visualization import VisMPL
 
     # Create a curve instance
     curve = BSpline.Curve()
@@ -46,9 +46,9 @@ The following code snippet and the figure illustrate a 2-dimensional spline curv
 
 .. plot::
 
-    from geomdl import BSpline
-    from geomdl import operations
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import operations
+    from nurbs.visualization import VisMPL
 
     # Create a curve instance
     curve = BSpline.Curve()
@@ -80,10 +80,10 @@ illustrate the result of the knot refinement operation if ``density`` is set to 
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl import exchange
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs import exchange
+    from nurbs.visualization import VisMPL
 
     # Create a curve instance
     curve = BSpline.Curve()
@@ -111,9 +111,9 @@ illustrate the result of the knot refinement operation if ``density`` is set to 
 
 .. plot::
 
-    from geomdl import BSpline
-    from geomdl import operations
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import operations
+    from nurbs.visualization import VisMPL
 
     # Create a curve instance
     curve = BSpline.Curve()
@@ -145,10 +145,10 @@ to **3**.
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl import exchange
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs import exchange
+    from nurbs.visualization import VisMPL
 
     # Create a curve instance
     curve = BSpline.Curve()
@@ -176,9 +176,9 @@ to **3**.
 
 .. plot::
 
-    from geomdl import BSpline
-    from geomdl import operations
-    from geomdl.visualization import VisMPL
+    from nurbs import BSpline
+    from nurbs import operations
+    from nurbs.visualization import VisMPL
 
     # Create a curve instance
     curve = BSpline.Curve()
@@ -210,9 +210,9 @@ value of **3** for the u-direction. No refinement was applied for the v-directio
 .. code-block:: python
     :linenos:
 
-    from geomdl import NURBS
-    from geomdl import operations
-    from geomdl.visualization import VisMPL
+    from nurbs import NURBS
+    from nurbs import operations
+    from nurbs.visualization import VisMPL
 
 
     # Control points
@@ -249,9 +249,9 @@ value of **3** for the u-direction. No refinement was applied for the v-directio
 
 .. plot::
 
-    from geomdl import NURBS
-    from geomdl import operations
-    from geomdl.visualization import VisMPL
+    from nurbs import NURBS
+    from nurbs import operations
+    from nurbs.visualization import VisMPL
 
 
     # Control points

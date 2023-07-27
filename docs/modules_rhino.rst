@@ -6,15 +6,15 @@ to read and write .3dm files.
 
 ``rw3dm`` comes with the following list of programs:
 
-* ``on2json`` converts OpenNURBS .3dm files to geomdl JSON format
-* ``json2on`` converts geomdl JSON format to OpenNURBS .3dm files
+* ``on2json`` converts OpenNURBS .3dm files to nurbs JSON format
+* ``json2on`` converts nurbs JSON format to OpenNURBS .3dm files
 
 Use Cases
 =========
 
 * Import geometry data from .3dm files and use it with :func:`.exchange.import_json`
 * Export geometry data with :func:`.exchange.export_json` and convert to a .3dm file
-* Convert OpenNURBS file format to OBJ, STL, OFF and other formats supported by geomdl
+* Convert OpenNURBS file format to OBJ, STL, OFF and other formats supported by nurbs
 
 Installation
 ============
@@ -23,7 +23,7 @@ Please refer to the `rw3dm repository <https://github.com/orbingol/rw3dm>`_ for 
 The binary files can be downloaded under `Releases <https://github.com/orbingol/rw3dm/releases>`_
 section of the GitHub repository.
 
-Using with geomdl
+Using with nurbs
 =================
 
 The following code snippet illustrates importing the surface data converted from .3dm file:
@@ -31,9 +31,9 @@ The following code snippet illustrates importing the surface data converted from
 .. code-block:: python
     :linenos:
 
-    from geomdl import exchange
-    from geomdl import multi
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import exchange
+    from nurbs import multi
+    from nurbs.visualization import VisMPL as vis
 
     # Import converted data
     data = exchange.import_json("converted_rhino.json")

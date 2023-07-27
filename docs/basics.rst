@@ -23,7 +23,7 @@ an example to a 3-dimensional curve.
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
+    from nurbs import BSpline
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -47,7 +47,7 @@ The code snippet is updated to retrieve evaluated curve points.
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
+    from nurbs import BSpline
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -78,7 +78,7 @@ Getting the curve point at a specific parameter
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
+    from nurbs import BSpline
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -110,7 +110,7 @@ of evaluated points.
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
+    from nurbs import BSpline
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -144,7 +144,7 @@ Inserting a knot
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
+    from nurbs import BSpline
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -170,7 +170,7 @@ module.
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
+    from nurbs import BSpline
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -185,7 +185,7 @@ module.
     crv.knotvector = [0, 0, 0, 1, 1, 1]
 
     # Import Matplotlib visualization module
-    from geomdl.visualization import VisMPL
+    from nurbs.visualization import VisMPL
 
     # Set the visualization component of the curve
     crv.vis = VisMPL.VisCurve3D()
@@ -201,7 +201,7 @@ The following code snippet generates a B-Spline (non-rational) curve and convert
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
+    from nurbs import BSpline
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -216,7 +216,7 @@ The following code snippet generates a B-Spline (non-rational) curve and convert
     crv.knotvector = [0, 0, 0, 1, 1, 1]
 
     # Import convert module
-    from geomdl import convert
+    from nurbs import convert
 
     # BSpline to NURBS
     crv_rat = convert.bspline_to_nurbs(crv)
@@ -229,8 +229,8 @@ Knot vector generator is located in the :doc:`knotvector <module_knotvector>` mo
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
-    from geomdl import knotvector
+    from nurbs import BSpline
+    from nurbs import knotvector
 
     # Create the curve instance
     crv = BSpline.Curve()
@@ -252,9 +252,9 @@ Plotting multiple curves
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
-    from geomdl import multi
-    from geomdl import knotvector
+    from nurbs import BSpline
+    from nurbs import multi
+    from nurbs import knotvector
 
     # Create the curve instance #1
     crv1 = BSpline.Curve()
@@ -284,7 +284,7 @@ Plotting multiple curves
     mcrv = multi.CurveContainer(crv1, crv2)
 
     # Import Matplotlib visualization module
-    from geomdl.visualization import VisMPL
+    from nurbs.visualization import VisMPL
 
     # Set the visualization component of the curve container
     mcrv.vis = VisMPL.VisCurve3D()

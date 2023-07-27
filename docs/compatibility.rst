@@ -10,10 +10,10 @@ The following example illustrates the usage of :doc:`compatibility <module_compa
 .. code-block:: python
     :linenos:
 
-    from geomdl import NURBS
-    from geomdl import utilities as utils
-    from geomdl import compatibility as compat
-    from geomdl.visualization import VisMPL
+    from nurbs import NURBS
+    from nurbs import utilities as utils
+    from nurbs import compatibility as compat
+    from nurbs.visualization import VisMPL
 
     #
     # Surface exported from your CAD software

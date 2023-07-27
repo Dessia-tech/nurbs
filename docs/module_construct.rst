@@ -10,5 +10,5 @@ can be extracted to surfaces in all parametric directions.
 Function Reference
 ==================
 
-.. automodule:: geomdl.construct
+.. automodule:: nurbs.construct
     :members:

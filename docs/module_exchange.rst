@@ -43,7 +43,7 @@ The following functions work with **single or multiple curves and surfaces**:
 Function Reference
 ==================
 
-.. automodule:: geomdl.exchange
+.. automodule:: nurbs.exchange
     :members:
 
 VTK Support
@@ -51,5 +51,5 @@ VTK Support
 
 The following functions export control points and evaluated points as VTK files (in legacy format).
 
-.. automodule:: geomdl.exchange_vtk
+.. automodule:: nurbs.exchange_vtk
     :members:

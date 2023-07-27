@@ -8,13 +8,13 @@ configuration.
 Class Reference
 ===============
 
-.. automodule:: geomdl.vis.VisAbstract
+.. automodule:: nurbs.vis.VisAbstract
     :members:
     :undoc-members:
     :inherited-members:
     :show-inheritance:
 
-.. automodule:: geomdl.vis.VisConfigAbstract
+.. automodule:: nurbs.vis.VisConfigAbstract
     :members:
     :undoc-members:
     :inherited-members:

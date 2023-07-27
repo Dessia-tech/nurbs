@@ -13,10 +13,10 @@ The following example illustrates a sample usage of the B-Spline surface generat
 .. code-block:: python
     :linenos:
 
-    from geomdl import CPGen
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl.visualization import VisMPL
+    from nurbs import CPGen
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs.visualization import VisMPL
     from matplotlib import cm
 
     # Generate a plane with the dimensions 50x100
@@ -53,10 +53,10 @@ The following example illustrates a sample usage of the B-Spline surface generat
 
 .. plot::
 
-    from geomdl import CPGen
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl.visualization import VisMPL
+    from nurbs import CPGen
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs.visualization import VisMPL
     from matplotlib import cm
 
     # Generate a plane with the dimensions 50x100

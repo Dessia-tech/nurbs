@@ -12,6 +12,6 @@ This module provides common geometric operations for curves and surfaces. It inc
 Function Reference
 ==================
 
-.. automodule:: geomdl.operations
+.. automodule:: nurbs.operations
     :members:
     :undoc-members:

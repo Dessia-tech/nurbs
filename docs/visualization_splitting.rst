@@ -48,14 +48,14 @@ Bézier Decomposition
 ====================
 
 The following figures illustrate Bézier decomposition capabilities of NURBS-Python. Let's start with the most obvious
-one, a full circle with 9 control points. It also is possible to directly  generate this shape via ``geomdl.shapes``
+one, a full circle with 9 control points. It also is possible to directly  generate this shape via ``nurbs.shapes``
 module.
 
 .. image:: images/split_decompose_circle1.png
     :alt: 2D curve decomposition 1
 
 The following is a circular curve generated with 7 control points as illustrated on page 301 of *The NURBS Book*
-(2nd Edition) by Piegl and Tiller. There is also an option to generate this shape via ``geomdl.shapes`` module.
+(2nd Edition) by Piegl and Tiller. There is also an option to generate this shape via ``nurbs.shapes`` module.
 
 .. image:: images/split_decompose_circle2.png
     :alt: 2D curve decomposition 2

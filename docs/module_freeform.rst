@@ -11,14 +11,14 @@ Freeform Geometry
 Inheritance Diagram
 ===================
 
-.. inheritance-diagram:: geomdl.freeform
-    :top-classes: geomdl.abstract.Geometry
+.. inheritance-diagram:: nurbs.freeform
+    :top-classes: nurbs.abstract.Geometry
 
 
 Class Reference
 ===============
 
-.. autoclass:: geomdl.freeform.Freeform
+.. autoclass:: nurbs.freeform.Freeform
     :members:
     :undoc-members:
     :inherited-members:

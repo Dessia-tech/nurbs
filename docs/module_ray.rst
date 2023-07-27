@@ -7,5 +7,5 @@ by :py:class:`.Ray` class. This module also provides a function to compute inter
 Function and Class Reference
 ============================
 
-.. automodule:: geomdl.ray
+.. automodule:: nurbs.ray
     :members:

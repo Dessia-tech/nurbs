@@ -35,9 +35,9 @@ The following example demonstrates saving surfaces as .obj files:
     :linenos:
 
     # ex_bezier_surface.py
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl import exchange
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs import exchange
 
     # Create a BSpline surface instance
     surf = BSpline.Surface()
@@ -70,8 +70,8 @@ The following example combines :code:`shapes` module together with :code:`exchan
 .. code-block:: python
     :linenos:
 
-    from geomdl.shapes import surface
-    from geomdl import exchange
+    from nurbs.shapes import surface
+    from nurbs import exchange
 
     # Generate cylindirical surface
     surf = surface.cylinder(radius=5, height=12.5)
@@ -374,7 +374,7 @@ functions. For instance:
 .. code-block:: python
     :linenos:
 
-    from geomdl import exchange
+    from nurbs import exchange
 
     # Importing a .yaml file formatted as a Jinja2 template
     data = exchange.import_yaml("surface.yaml", jinja2=True)

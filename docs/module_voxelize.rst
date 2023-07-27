@@ -9,5 +9,5 @@ operations via `multiporcessing <https://docs.python.org/2/library/multiprocessi
 Function Reference
 ==================
 
-.. automodule:: geomdl.voxelize
+.. automodule:: nurbs.voxelize
     :members:
