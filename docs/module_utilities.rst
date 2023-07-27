@@ -8,7 +8,7 @@ Utilities
 
 The ``utilities`` module contains common utility functions for NURBS-Python library and its extensions.
 
-.. automodule:: geomdl.utilities
+.. automodule:: nurbs.utilities
     :members:
     :exclude-members: generate_knot_vector, check_knot_vector, normalize_knot_vector
 
@@ -19,7 +19,7 @@ Helpers
 The ``helpers`` module contains common functions required for evaluating both surfaces and curves, such as basis
 function computations, knot vector span finding, etc.
 
-.. automodule:: geomdl.helpers
+.. automodule:: nurbs.helpers
     :members:
 
 
@@ -32,5 +32,5 @@ Although most of the functions are designed for internal usage, the users can st
 advantage, especially the point and vector manipulation and generation functions. Functions related to point
 manipulation have ``point_`` prefix and the ones related to vectors have ``vector_`` prefix.
 
-.. automodule:: geomdl.linalg
+.. automodule:: nurbs.linalg
     :members:

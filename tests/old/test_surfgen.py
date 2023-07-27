@@ -3,11 +3,11 @@
     Released under The MIT License. See LICENSE file for details.
     Copyright (c) 2018 Onur Rauf Bingol
 
-    Tests geomdl.GPGen module. Requires "pytest" to run.
+    Tests nurbs.GPGen module. Requires "pytest" to run.
 """
 
 import pytest
-from geomdl import CPGen
+from nurbs import CPGen
 
 GRID_TOL = 10e-8
 

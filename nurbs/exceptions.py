@@ -9,7 +9,7 @@
 
 from ._utilities import export
 
-ERROR_PREFIX = "GEOMDL ERROR: "
+ERROR_PREFIX = "NURBS ERROR: "
 
 
 @export
@@ -21,7 +21,7 @@ class GeomdlException(Exception):
 
     .. code-example: python
 
-        from geomdl import exceptions
+        from nurbs import exceptions
 
         DEBUG = True
 

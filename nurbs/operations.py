@@ -908,7 +908,6 @@ def degree_operations(obj, param, **kwargs):
     if isinstance(obj, abstract.Surface):
         # u-direction
         if param[0] is not None and param[0] != 0:
-
             # If parameter is positive, apply degree elevation. Else, apply degree reduction
             if param[0] > 0:
                 pass
@@ -918,7 +917,6 @@ def degree_operations(obj, param, **kwargs):
 
         # v-direction
         if param[1] is not None and param[1] != 0:
-
             # If parameter is positive, apply degree elevation. Otherwise, apply degree reduction
             if param[1] > 0:
                 pass

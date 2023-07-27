@@ -6,5 +6,5 @@ The ``knotvector`` module provides utility functions related to knot vector gene
 Function Reference
 ==================
 
-.. automodule:: geomdl.knotvector
+.. automodule:: nurbs.knotvector
     :members:

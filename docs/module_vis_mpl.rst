@@ -8,7 +8,7 @@ This module provides `Matplotlib <https://matplotlib.org/>`_ visualization imple
 Class Reference
 ===============
 
-.. automodule:: geomdl.visualization.VisMPL
+.. automodule:: nurbs.visualization.VisMPL
     :members:
     :undoc-members:
     :exclude-members: mconf

@@ -6,13 +6,13 @@ NURBS Geometry
 Inheritance Diagram
 ===================
 
-.. inheritance-diagram:: geomdl.NURBS
-    :top-classes: geomdl.abstract.SplineGeometry
+.. inheritance-diagram:: nurbs.NURBS
+    :top-classes: nurbs.abstract.SplineGeometry
 
 NURBS Curve
 ===========
 
-.. autoclass:: geomdl.NURBS.Curve
+.. autoclass:: nurbs.NURBS.Curve
     :members:
     :exclude-members: init_cache, next
     :undoc-members:
@@ -22,7 +22,7 @@ NURBS Curve
 NURBS Surface
 =============
 
-.. autoclass:: geomdl.NURBS.Surface
+.. autoclass:: nurbs.NURBS.Surface
     :members:
     :exclude-members: init_cache, next
     :undoc-members:
@@ -34,7 +34,7 @@ NURBS Volume
 
 .. versionadded:: 5.0
 
-.. autoclass:: geomdl.NURBS.Volume
+.. autoclass:: nurbs.NURBS.Volume
     :members:
     :exclude-members: init_cache, next
     :undoc-members:

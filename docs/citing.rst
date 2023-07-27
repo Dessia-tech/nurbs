@@ -6,7 +6,7 @@ Citing NURBS-Python
 Article
 =======
 
-We have published an article outlining the design and features of NURBS-Python (geomdl) on an open-access Elsevier
+We have published an article outlining the design and features of NURBS-Python (nurbs) on an open-access Elsevier
 journal `SoftwareX <https://www.sciencedirect.com/journal/softwarex>`_ in the January-June 2019 issue.
 
 Please refer to the following DOI link to access the article: https://doi.org/10.1016/j.softx.2018.12.005
@@ -16,7 +16,7 @@ BibTex
 
 You can use the following BibTeX entry to cite the NURBS-Python paper::
 
-    @article{bingol2019geomdl,
+    @article{bingol2019nurbs,
       title={{NURBS-Python}: An open-source object-oriented {NURBS} modeling framework in {Python}},
       author={Bingol, Onur Rauf and Krishnamurthy, Adarsh},
       journal={{SoftwareX}},

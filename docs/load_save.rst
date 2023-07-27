@@ -14,9 +14,9 @@ The following code snippet illustrates a B-spline curve generation and its JSON 
 .. code-block:: python
     :linenos:
 
-    from geomdl import BSpline
-    from geomdl import utilities
-    from geomdl import exchange
+    from nurbs import BSpline
+    from nurbs import utilities
+    from nurbs import exchange
 
     # Create a B-Spline curve instance
     curve = BSpline.Curve()
@@ -39,8 +39,8 @@ a container object:
 .. code-block:: python
     :linenos:
 
-    from geomdl import multi
-    from geomdl import exchange
+    from nurbs import multi
+    from nurbs import exchange
 
     # Import curve from a JSON file
     curve_list = exchange.import_json("curve.json")

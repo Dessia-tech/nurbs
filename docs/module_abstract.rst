@@ -7,13 +7,13 @@ therefore, it provides an easy way to extend the library in the most proper way.
 Inheritance Diagram
 ===================
 
-.. inheritance-diagram:: geomdl.abstract
-    :top-classes: geomdl.abstract.GeomdlBase
+.. inheritance-diagram:: nurbs.abstract
+    :top-classes: nurbs.abstract.nurbsBase
 
 Abstract Curve
 ==============
 
-.. autoclass:: geomdl.abstract.Curve
+.. autoclass:: nurbs.abstract.Curve
     :members:
     :inherited-members:
     :exclude-members: next
@@ -22,7 +22,7 @@ Abstract Curve
 Abstract Surface
 ================
 
-.. autoclass:: geomdl.abstract.Surface
+.. autoclass:: nurbs.abstract.Surface
     :members:
     :inherited-members:
     :exclude-members: next
@@ -31,7 +31,7 @@ Abstract Surface
 Abstract Volume
 ===============
 
-.. autoclass:: geomdl.abstract.Volume
+.. autoclass:: nurbs.abstract.Volume
     :members:
     :inherited-members:
     :exclude-members: next
@@ -42,25 +42,25 @@ Low Level API
 
 The following classes provide the low level API for the geometry abstract base.
 
-* :py:class:`.GeomdlBase`
+* :py:class:`.nurbsBase`
 * :py:class:`.Geometry`
 * :py:class:`.SplineGeometry`
 
 :py:class:`.Geometry` abstract base class can be used for implementation of any geometry object, whereas
 :py:class:`.SplineGeometry` abstract base class is designed specifically for spline geometries, including basis splines.
 
-.. autoclass:: geomdl.abstract.GeomdlBase
+.. autoclass:: nurbs.abstract.nurbsBase
     :members:
     :inherited-members:
     :show-inheritance:
 
-.. autoclass:: geomdl.abstract.Geometry
+.. autoclass:: nurbs.abstract.Geometry
     :members:
     :inherited-members:
     :exclude-members: next
     :show-inheritance:
 
-.. autoclass:: geomdl.abstract.SplineGeometry
+.. autoclass:: nurbs.abstract.SplineGeometry
     :members:
     :inherited-members:
     :exclude-members: next

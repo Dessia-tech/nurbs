@@ -6,13 +6,13 @@ B-Spline Geometry
 Inheritance Diagram
 ===================
 
-.. inheritance-diagram:: geomdl.BSpline
-    :top-classes: geomdl.abstract.SplineGeometry
+.. inheritance-diagram:: nurbs.BSpline
+    :top-classes: nurbs.abstract.SplineGeometry
 
 B-Spline Curve
 ==============
 
-.. autoclass:: geomdl.BSpline.Curve
+.. autoclass:: nurbs.BSpline.Curve
     :members:
     :undoc-members:
     :inherited-members:
@@ -22,7 +22,7 @@ B-Spline Curve
 B-Spline Surface
 ================
 
-.. autoclass:: geomdl.BSpline.Surface
+.. autoclass:: nurbs.BSpline.Surface
     :members:
     :undoc-members:
     :inherited-members:
@@ -34,7 +34,7 @@ B-Spline Volume
 
 .. versionadded:: 5.0
 
-.. autoclass:: geomdl.BSpline.Volume
+.. autoclass:: nurbs.BSpline.Volume
     :members:
     :undoc-members:
     :inherited-members:

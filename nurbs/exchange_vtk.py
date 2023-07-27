@@ -32,7 +32,7 @@ def export_polydata_str(obj, **kwargs):
     """
     # Get keyword arguments
     point_type = kwargs.get("point_type", "evalpts")
-    file_title = kwargs.get("title", "geomdl " + repr(obj))  # file title
+    file_title = kwargs.get("title", "nurbs " + repr(obj))  # file title
     tessellate = kwargs.get("tessellate", False)
 
     # Input validation

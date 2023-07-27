@@ -20,7 +20,7 @@ __all__ = []
 class VisConfigAbstract(object):
     """Abstract base class for user configuration of the visualization module
 
-    Defines an abstract base for NURBS-Python (geomdl) visualization configuration.
+    Defines an abstract base for NURBS-Python (nurbs) visualization configuration.
     """
 
     def __init__(self, **kwargs):
@@ -31,7 +31,7 @@ class VisConfigAbstract(object):
 class VisAbstract(object):
     """Abstract base class for visualization
 
-    Defines an abstract base for NURBS-Python (geomdl) visualization modules.
+    Defines an abstract base for NURBS-Python (nurbs) visualization modules.
 
     :param config: configuration class
     :type config: VisConfigAbstract

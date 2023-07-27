@@ -14,8 +14,8 @@ property. For instance, the following code snippet changes the evaluator of a B-
 
 .. code-block:: python
 
-    from geomdl import BSpline
-    from geomdl import evaluators
+    from nurbs import BSpline
+    from nurbs import evaluators
 
     crv = BSpline.Curve()
     cevaltr = evaluators.CurveEvaluator2()
@@ -39,12 +39,12 @@ method also takes additional arguments, such as the parametric position and the 
 Inheritance Diagram
 ===================
 
-.. inheritance-diagram:: geomdl.evaluators
+.. inheritance-diagram:: nurbs.evaluators
 
 Abstract Base
 =============
 
-.. autoclass:: geomdl.evaluators.AbstractEvaluator
+.. autoclass:: nurbs.evaluators.AbstractEvaluator
     :members:
     :undoc-members:
     :inherited-members:
@@ -53,19 +53,19 @@ Abstract Base
 Curve Evaluators
 ================
 
-.. autoclass:: geomdl.evaluators.CurveEvaluator
+.. autoclass:: nurbs.evaluators.CurveEvaluator
     :members:
     :undoc-members:
     :inherited-members:
     :show-inheritance:
 
-.. autoclass:: geomdl.evaluators.CurveEvaluatorRational
+.. autoclass:: nurbs.evaluators.CurveEvaluatorRational
     :members:
     :undoc-members:
     :inherited-members:
     :show-inheritance:
 
-.. autoclass:: geomdl.evaluators.CurveEvaluator2
+.. autoclass:: nurbs.evaluators.CurveEvaluator2
     :members:
     :undoc-members:
     :inherited-members:
@@ -74,19 +74,19 @@ Curve Evaluators
 Surface Evaluators
 ==================
 
-.. autoclass:: geomdl.evaluators.SurfaceEvaluator
+.. autoclass:: nurbs.evaluators.SurfaceEvaluator
     :members:
     :undoc-members:
     :inherited-members:
     :show-inheritance:
 
-.. autoclass:: geomdl.evaluators.SurfaceEvaluatorRational
+.. autoclass:: nurbs.evaluators.SurfaceEvaluatorRational
     :members:
     :undoc-members:
     :inherited-members:
     :show-inheritance:
 
-.. autoclass:: geomdl.evaluators.SurfaceEvaluator2
+.. autoclass:: nurbs.evaluators.SurfaceEvaluator2
     :members:
     :undoc-members:
     :inherited-members:
@@ -95,13 +95,13 @@ Surface Evaluators
 Volume Evaluators
 =================
 
-.. autoclass:: geomdl.evaluators.VolumeEvaluator
+.. autoclass:: nurbs.evaluators.VolumeEvaluator
     :members:
     :undoc-members:
     :inherited-members:
     :show-inheritance:
 
-.. autoclass:: geomdl.evaluators.VolumeEvaluatorRational
+.. autoclass:: nurbs.evaluators.VolumeEvaluatorRational
     :members:
     :undoc-members:
     :inherited-members:

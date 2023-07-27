@@ -2,18 +2,18 @@ ACIS Importer
 ^^^^^^^^^^^^^
 
 The **ACIS importer**, ``rwsat`` uses `3D ACIS Modeler <https://www.spatial.com/>`_
-to convert .sat files to geomdl JSON format.
+to convert .sat files to nurbs JSON format.
 
 ``rwsat`` comes with the following list of programs:
 
-* ``sat2json`` converts ACIS .sat files to geomdl JSON format
+* ``sat2json`` converts ACIS .sat files to nurbs JSON format
 * ``satgen`` generates sample geometries
 
 Use Cases
 =========
 
 * Import geometry data from .sat files and use it with :func:`.exchange.import_json`
-* Convert ACIS file format to OBJ, STL, OFF and other formats supported by geomdl
+* Convert ACIS file format to OBJ, STL, OFF and other formats supported by nurbs
 
 Installation
 ============
@@ -21,7 +21,7 @@ Installation
 Please refer to the `rwsat repository <https://github.com/orbingol/rwsat>`_ for installation options.
 Due to ACIS licensing, no binary files are distributed within the repository.
 
-Using with geomdl
+Using with nurbs
 =================
 
 The following code snippet illustrates importing the surface data converted from .sat file:
@@ -29,9 +29,9 @@ The following code snippet illustrates importing the surface data converted from
 .. code-block:: python
     :linenos:
 
-    from geomdl import exchange
-    from geomdl import multi
-    from geomdl.visualization import VisMPL as vis
+    from nurbs import exchange
+    from nurbs import multi
+    from nurbs.visualization import VisMPL as vis
 
     # Import converted data
     data = exchange.import_json("converted_acis.json")

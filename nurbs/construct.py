@@ -360,8 +360,8 @@ def extract_isosurface(pvol):
     .. code-block:: python
         :linenos:
 
-        from geomdl import construct, multi
-        from geomdl.visualization import VisMPL
+        from nurbs import construct, multi
+        from nurbs.visualization import VisMPL
 
         # Assuming that "myvol" variable stores your spline volume information
         isosrf = construct.extract_isosurface(myvol)

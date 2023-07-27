@@ -13,7 +13,7 @@ class.
 Grid
 ====
 
-.. autoclass:: geomdl.CPGen.Grid
+.. autoclass:: nurbs.CPGen.Grid
     :members:
     :undoc-members:
     :inherited-members:
@@ -23,7 +23,7 @@ Grid
 Weighted Grid
 =============
 
-.. autoclass:: geomdl.CPGen.GridWeighted
+.. autoclass:: nurbs.CPGen.GridWeighted
     :members:
     :undoc-members:
     :inherited-members:

@@ -8,5 +8,5 @@ Sweeping
 Function Reference
 ==================
 
-.. automodule:: geomdl.sweeping
+.. automodule:: nurbs.sweeping
     :members:

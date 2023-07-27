@@ -15,7 +15,7 @@ This module provides the following geometric and topological entities:
 Class Reference
 ===============
 
-.. automodule:: geomdl.elements
+.. automodule:: nurbs.elements
     :members:
     :undoc-members:
     :inherited-members:

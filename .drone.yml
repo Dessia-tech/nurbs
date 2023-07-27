@@ -4,7 +4,7 @@ type: docker
 name: default
 
 steps:
-- name: merge master on testing
+- name: merge master on dev
   image: alpine/git
   when:
     event: push
@@ -12,26 +12,11 @@ steps:
   commands:
   - cd /tmp
   - git clone $DRONE_GIT_HTTP_URL
-  - cd volmdlr
+  - cd nurbs
   - git checkout master
-  - git fetch origin testing
-  - git checkout testing
-  - git merge master
-  - git push
-
-- name: merge testing on dev
-  image: alpine/git
-  when:
-    event: push
-    branch: testing
-  commands:
-  - cd /tmp
-  - git clone $DRONE_GIT_HTTP_URL
-  - cd volmdlr
-  - git checkout testing
   - git fetch origin dev
   - git checkout dev
-  - git merge testing
+  - git merge master
   - git push
 
 - name: notify by email
@@ -82,13 +67,18 @@ steps:
   image: python:3.9
   commands:
   - git fetch --tags
-  - pip install Cython pytest sphinx sphinx-rtd-theme
+  - pip install Cython pytest sphinx sphinx-rtd-theme matplotlib coverage
   - python setup.py build_ext --inplace
   - python setup.py install
   - cd docs
   - make html
   - cd ../tests
-  - pytest
+  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs -m pytest
+  - cd ..
+  - coverage json
+  - coverage report
+  - coverage html
+  - python coverage.py
 
   volumes:
     # Mount pip cache from host

@@ -1,11 +1,11 @@
 Motivation
 ^^^^^^^^^^
 
-NURBS-Python (geomdl) is a self-contained, object-oriented pure Python B-Spline and NURBS library with implementations
+NURBS-Python (nurbs) is a self-contained, object-oriented pure Python B-Spline and NURBS library with implementations
 of curve, surface and volume generation and evaluation algorithms. It also provides convenient and easy-to-use data
 structures for storing curve, surface and volume descriptions.
 
-Some significant features of NURBS-Python (geomdl):
+Some significant features of NURBS-Python (nurbs):
 
 * Self-contained, object-oriented, extensible and highly customizable API
 * Convenient data structures for storing curve, surface and volume descriptions
@@ -21,12 +21,12 @@ Some significant features of NURBS-Python (geomdl):
 * Pure Python, no external C/C++ or FORTRAN library dependencies
 * Python compatibility: 2.7.x, 3.4.x and later
 * For higher performance, optional *Compile with Cython* options are also available
-* Easy to install via `pip <https://pypi.org/project/geomdl/>`_ or `conda <https://anaconda.org/orbingol/geomdl>`_
+* Easy to install via `pip <https://pypi.org/project/nurbs/>`_ or `conda <https://anaconda.org/orbingol/nurbs>`_
 * `Docker images <https://hub.docker.com/r/idealabisu/nurbs-python>`_ are available
-* ``geomdl-shapes`` module for generating common spline and analytic geometries
-* ``geomdl-cli`` module for using the library from the command line
+* ``nurbs-shapes`` module for generating common spline and analytic geometries
+* ``nurbs-cli`` module for using the library from the command line
 
-NURBS-Python (geomdl) contains the following fundamental geometric algorithms:
+NURBS-Python (nurbs) contains the following fundamental geometric algorithms:
 
 * Point evaluation
 * Derivative evaluation

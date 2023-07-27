@@ -15,7 +15,7 @@ __license__ = "MIT"
 __description__ = "Object-oriented B-Spline and NURBS evaluation library"
 __keywords__ = "NURBS B-Spline curve surface CAD modeling visualization surface-generator"
 
-# Support for "from geomdl import *"
+# Support for "from nurbs import *"
 # @see: https://stackoverflow.com/a/41895257
 # @see: https://stackoverflow.com/a/35710527
 __all__ = [
@@ -42,5 +42,5 @@ __all__ = [
 
 
 def geomdl_version():
-    """Returns geomdl full version as a tuple"""
+    """Returns nurbs full version as a tuple"""
     return tuple(__version__.split("."))

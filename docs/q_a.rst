@@ -48,8 +48,8 @@ Why two packages on PyPI?
 =========================
 
 Prior to NURBS-Python v4.0.0, the PyPI project name was `NURBS-Python <https://pypi.org/project/NURBS-Python/>`_.
-The latest version of this package is v3.9.0 which is an alias for the `geomdl <https://pypi.org/project/geomdl/>`_
-package. To get the latest features and bug fixes, please use `geomdl <https://pypi.org/project/geomdl/>`_ package
+The latest version of this package is v3.9.0 which is an alias for the `nurbs <https://pypi.org/project/nurbs/>`_
+package. To get the latest features and bug fixes, please use `nurbs <https://pypi.org/project/nurbs/>`_ package
 and update whenever a new version is released. The simplest way to check if you are using the latest version is
 
 .. code-block:: console
@@ -59,7 +59,7 @@ and update whenever a new version is released. The simplest way to check if you 
 Minimum Requirements
 ====================
 
-NURBS-Python (geomdl) is tested with Python versions 2.7.x, 3.4.x and higher.
+NURBS-Python (nurbs) is tested with Python versions 2.7.x, 3.4.x and higher.
 
 Help and Support
 ================
@@ -97,8 +97,8 @@ feature applicable to curves but not surfaces and volumes, such a pull request w
 feature to surfaces and volumes. Similarly, if you change a single module and/or the function you use most frequently,
 but that change is affecting the library as a whole, your pull request will be put on hold.
 
-If you are not interested in such level of contributions, it is suggested to create a separate module and add ``geomdl``
-as its dependency. If you create a module which uses ``geomdl``, please let the developers know via emailing
+If you are not interested in such level of contributions, it is suggested to create a separate module and add ``nurbs``
+as its dependency. If you create a module which uses ``nurbs``, please let the developers know via emailing
 ``nurbs-python@googlegroups.com`` and you may be credited as a contributor.
 
 Documentation references to the text books

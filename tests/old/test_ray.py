@@ -1,6 +1,6 @@
 import pytest
-from geomdl import ray
-from geomdl.ray import Ray, RayIntersection
+from nurbs import ray
+from nurbs.ray import Ray, RayIntersection
 
 
 def test_ray_intersect():

@@ -16,41 +16,41 @@ Install via Pip
 ===============
 
 The easiest method to install/upgrade NURBS-Python is using `pip <https://pip.pypa.io/en/stable/>`_. The following
-commands will download and install NURBS-Python from `Python Package Index <https://pypi.org/project/geomdl>`_.
+commands will download and install NURBS-Python from `Python Package Index <https://pypi.org/project/nurbs>`_.
 
 .. code-block:: console
 
-    $ pip install --user geomdl
+    $ pip install --user nurbs
 
 Upgrading to the latest version:
 
 .. code-block:: console
 
-    $ pip install geomdl --upgrade
+    $ pip install nurbs --upgrade
 
 Installing a specific version:
 
 .. code-block:: console
 
-    $ pip install --user geomdl==5.0.0
+    $ pip install --user nurbs==5.0.0
 
 Install via Conda
 =================
 
 NURBS-Python can also be installed/upgraded via `conda <https://conda.io/>`_ package manager from the
-`Anaconda Cloud <https://anaconda.org/orbingol/geomdl>`_ repository.
+`Anaconda Cloud <https://anaconda.org/orbingol/nurbs>`_ repository.
 
 Installing:
 
 .. code-block:: console
 
-    $ conda install -c orbingol geomdl
+    $ conda install -c orbingol nurbs
 
 Upgrading to the latest version:
 
 .. code-block:: console
 
-    $ conda upgrade -c orbingol geomdl
+    $ conda upgrade -c orbingol nurbs
 
 If you are experiencing problems with this method, you can try to upgrade ``conda`` package itself before
 installing the NURBS-Python library.
@@ -88,7 +88,7 @@ would be enough to update the library to the latest version.
 Checking Installation
 =====================
 
-If you would like to check if you have installed the package correctly, you may try to print ``geomdl.__version__``
+If you would like to check if you have installed the package correctly, you may try to print ``nurbs.__version__``
 variable after import. The following example illustrates installation check on a Windows PowerShell instance::
 
     Windows PowerShell
@@ -97,8 +97,8 @@ variable after import. The following example illustrates installation check on a
     PS C:\> python
     Python 3.6.2 (v3.6.2:5fd33b5, Jul  8 2017, 04:57:36) [MSC v.1900 64 bit (AMD64)] on win32
     Type "help", "copyright", "credits" or "license" for more information.
-    >>> import geomdl
-    >>> geomdl.__version__
+    >>> import nurbs
+    >>> nurbs.__version__
     '4.0.2'
     >>>
 
@@ -148,9 +148,9 @@ After the successful execution of the command, the you can import and use the co
     :linenos:
 
     # Importing NURBS module
-    from geomdl.core import NURBS
+    from nurbs.core import NURBS
     # Importing visualization module
-    from geomdl.visualization import VisMPL as vis
+    from nurbs.visualization import VisMPL as vis
 
     # Creating a curve instance
     crv = NURBS.Curve()
@@ -173,7 +173,7 @@ Docker Containers
 =================
 
 A collection of Docker containers is provided on `Docker Hub <https://hub.docker.com/r/idealabisu/nurbs-python/>`_
-containing NURBS-Python, Cython-compiled core and the `command-line application <https://geomdl-cli.readthedocs.io>`_.
+containing NURBS-Python, Cython-compiled core and the `command-line application <https://nurbs-cli.readthedocs.io>`_.
 To get started, first install `Docker <https://www.docker.com/>`_ and then run the following on the Docker command
 prompt to pull the image prepared with Python v3.5:
 
@@ -190,7 +190,7 @@ After pulling your preferred image, run the following command:
 
 .. code-block:: console
 
-    $ docker run --rm -it --name geomdl -p 8000:8000 idealabisu/nurbs-python:py35
+    $ docker run --rm -it --name nurbs -p 8000:8000 idealabisu/nurbs-python:py35
 
 In all images, Matplotlib is set to use ``webagg`` backend by default. Please follow the instructions on the command
 line to view your figures.
