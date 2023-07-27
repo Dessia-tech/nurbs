@@ -11,18 +11,7 @@ import json
 MIN_FILE_COVERAGE = 54.9
 MIN_PROJECT_COVERAGE = 60
 
-untracked_modules = ['volmdlr/templates.py',
-                     'volmdlr/code_aster.py',
-                     'volmdlr/core_compiled.py',
-                     'volmdlr/bspline_compiled.py',
-                     "volmdlr/bspline_fitting.py",
-                     "volmdlr/bspline_evaluators.py",
-                     'volmdlr/mesh.py',
-                     'volmdlr/gmsh_vm.py',
-                     'models/__init__.py',
-                     'models/contours.py',
-                     'models/bspline_curves.py'
-                     ]
+untracked_modules = []
 
 print('untracked modules:', untracked_modules)
 
