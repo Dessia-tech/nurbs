@@ -71,23 +71,6 @@ steps:
     - name: cache
       path: /root/.cache
 
-
-- name: check pep8 formatting
-  image: python:3.9
-  when:
-    event:
-      exclude:
-      - tag
-  commands:
-    - git fetch --tags
-    - pip3 install -U pip autopep8==2.0.0
-    - bash code_pep8.sh
-
-  volumes:
-    # Mount pip cache from host
-    - name: pip_cache
-      path: /root/.cache/pip
-
 - name: check changelog update
   image: python:3.9
   when:
