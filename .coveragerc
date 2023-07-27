@@ -1,17 +1,4 @@
 [run]
-branch = True
-source = geomdl
-
-[report]
-exclude_lines =
-    if self.debug:
-    pragma: no cover
-    raise NotImplementedError
-    if __name__ == .__main__.:
-ignore_errors = True
-omit =
-    tests/*
-    docs/*
-    setup.py
-    geomdl/__init__.py
-    geomdl/visualization/*
+plugins =
+    Cython.Coverage
+source=nurbs
