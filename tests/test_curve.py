@@ -295,4 +295,3 @@ class TestCurve(TestCase):
 
                 self.assertAlmostEqual(evalpt[0], res[0], delta=GEOMDL_DELTA)
                 self.assertAlmostEqual(evalpt[1], res[1], delta=GEOMDL_DELTA)
-

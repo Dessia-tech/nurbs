@@ -65,8 +65,30 @@ class TestSurface(unittest.TestCase):
         self.spline_surf.set_ctrlpts(ctrlpts, 6, 6)
 
         # Set knot vectors
-        self.spline_surf.knotvector_u = [0.0, 0.0, 0.0, 0.0, 0.33, 0.66, 1.0, 1.0, 1.0, 1.0]
-        self.spline_surf.knotvector_v = [0.0, 0.0, 0.0, 0.0, 0.33, 0.66, 1.0, 1.0, 1.0, 1.0]
+        self.spline_surf.knotvector_u = [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.33,
+            0.66,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+        ]
+        self.spline_surf.knotvector_v = [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.33,
+            0.66,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+        ]
 
         self.nurbs_surf = convert.bspline_to_nurbs(self.spline_surf)
 
@@ -85,10 +107,16 @@ class TestSurface(unittest.TestCase):
         self.assertEqual(self.spline_surf.dimension, 3)
 
     def test_bspline_surface_knot_vector_u(self):
-        self.assertEqual(self.spline_surf.knotvector_u, [0.0, 0.0, 0.0, 0.0, 0.33, 0.66, 1.0, 1.0, 1.0, 1.0])
+        self.assertEqual(
+            self.spline_surf.knotvector_u,
+            [0.0, 0.0, 0.0, 0.0, 0.33, 0.66, 1.0, 1.0, 1.0, 1.0],
+        )
 
     def test_bspline_surface_knot_vector_v(self):
-        self.assertEqual(self.spline_surf.knotvector_v, [0.0, 0.0, 0.0, 0.0, 0.33, 0.66, 1.0, 1.0, 1.0, 1.0])
+        self.assertEqual(
+            self.spline_surf.knotvector_v,
+            [0.0, 0.0, 0.0, 0.0, 0.33, 0.66, 1.0, 1.0, 1.0, 1.0],
+        )
 
     def test_bspline_surface_eval(self):
         test_cases = [
@@ -103,7 +131,8 @@ class TestSurface(unittest.TestCase):
             ((0.6, 1.0), (3.533, 25.0, -4.224)),
             ((1.0, 0.0), (25.0, -25.0, -10.0)),
             ((1.0, 0.8), (25.0, 11.636, -2.751)),
-            ((1.0, 1.0), (25.0, 25.0, -10.0))]
+            ((1.0, 1.0), (25.0, 25.0, -10.0)),
+        ]
 
         for param, res in test_cases:
             with self.subTest(param=param):
@@ -234,7 +263,11 @@ class TestSurface(unittest.TestCase):
                 (0.95, 0.75),
                 2,
                 [
-                    [[20.8948, 9.3097, -2.4845], [-1.1347e-14, 43.7672, -15.0153], [-5.0393e-30, 100.1022, -74.1165]],
+                    [
+                        [20.8948, 9.3097, -2.4845],
+                        [-1.1347e-14, 43.7672, -15.0153],
+                        [-5.0393e-30, 100.1022, -74.1165],
+                    ],
                     [
                         [76.2308, -1.6965e-15, 18.0372],
                         [9.8212e-15, -5.9448e-15, -158.5462],

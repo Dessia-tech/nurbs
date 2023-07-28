@@ -66,7 +66,9 @@ class TestHelpers(unittest.TestCase):
         knot = 5.0 / 2.0
 
         to_check = helpers.basis_function_all(degree, knot_vector, span, knot)
-        interm = [helpers.basis_function(_, knot_vector, span, knot) + [None] * (degree - _) for _ in range(0, degree + 1)]
+        interm = [
+            helpers.basis_function(_, knot_vector, span, knot) + [None] * (degree - _) for _ in range(0, degree + 1)
+        ]
         result = [list(_) for _ in zip(*interm)]  # Transposing to the same format as to_check
 
         self.assertAlmostEqual(to_check[0][0], result[0][0], delta=GEOMDL_DELTA)
