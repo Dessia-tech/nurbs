@@ -221,7 +221,7 @@ cdef double* basis_function_one_c(int degree, double[:] knot_vector, int span, d
 
     for j in range(degree + span + 1):
         N[j] = 0.0
-         # Initialize the zeroth degree basis functions
+    # Initialize the zero th degree basis functions
     for j in range(degree + 1):
         if knot_vector[span + j] <= knot < knot_vector[span + j + 1]:
             N[j] = 1.0
@@ -327,7 +327,7 @@ cpdef list basis_function_all(int degree, list knot_vector, int span, double kno
         b_func = basis_function_c(i, np.array(knot_vector, dtype=np.float64), span, knot)
         for j in range(0, i + 1):
             N[j][i] = b_func[j]
-        free(b_func) # Don't forget to free the dynamically allocated memory
+        free(b_func)  # free the dynamically allocated memory
     return N
 
 
@@ -356,7 +356,7 @@ cpdef list basis_function_ders(int degree, list knot_vector, int span, double kn
     cdef double saved, temp, d
     cdef double[:] left = np.ones(degree + 1, dtype=np.float64)
     cdef double[:] right = np.ones(degree + 1, dtype=np.float64)
-    cdef double[:,:] ndu = np.ones((degree + 1, degree + 1), dtype=np.float64) # N[0][0] = 1.0 by definition
+    cdef double[:, :] ndu = np.ones((degree + 1, degree + 1), dtype=np.float64)  # N[0][0] = 1.0 by definition
 
     for j in range(1, degree + 1):
         left[j] = knot - knot_vector[span + 1 - j]
@@ -443,7 +443,7 @@ cpdef list basis_function_ders_one(int degree, list knot_vector, int span, doubl
     :return: basis function derivatives
     :rtype: list
     """
-    cdef int i, j, k, jj
+    cdef int j, k, jj
     cdef double Uleft, Uright
     cdef double saved, temp
     cdef list ND
@@ -579,8 +579,8 @@ def knot_insertion(degree, knotvector, ctrlpts, u, **kwargs):
     k = kwargs.get("span", find_span_linear(degree, knotvector, len(ctrlpts), u))  # knot span
 
     # Initialize variables
-    np = len(ctrlpts)
-    nq = np + num
+    n_p = len(ctrlpts)
+    nq = n_p + num
 
     # Initialize new control points array (control points may be weighted or not)
     ctrlpts_new = [[] for _ in range(nq)]
@@ -591,7 +591,7 @@ def knot_insertion(degree, knotvector, ctrlpts, u, **kwargs):
     # Save unaltered control points
     for i in range(0, k - degree + 1):
         ctrlpts_new[i] = ctrlpts[i]
-    for i in range(k - s, np):
+    for i in range(k - s, n_p):
         ctrlpts_new[i + num] = ctrlpts[i]
 
     # Start filling the temporary local array which will be used to update control points during knot insertion
@@ -994,13 +994,13 @@ def knot_refinement(degree, knotvector, ctrlpts, **kwargs):
             k -= 1
             i -= 1
         new_ctrlpts[k - degree - 1] = deepcopy(new_ctrlpts[k - degree])
-        for l in range(1, degree + 1):
-            idx = k - degree + l
-            alpha = new_kv[k + l] - X[j]
+        for ii in range(1, degree + 1):
+            idx = k - degree + ii
+            alpha = new_kv[k + ii] - X[j]
             if abs(alpha) < tol:
                 new_ctrlpts[idx - 1] = deepcopy(new_ctrlpts[idx])
             else:
-                alpha = alpha / (new_kv[k + l] - knotvector[i - degree + l])
+                alpha = alpha / (new_kv[k + ii] - knotvector[i - degree + ii])
                 if isinstance(ctrlpts[0][0], float):
                     new_ctrlpts[idx - 1] = [
                         alpha * p1 + (1.0 - alpha) * p2 for p1, p2 in zip(new_ctrlpts[idx - 1], new_ctrlpts[idx])

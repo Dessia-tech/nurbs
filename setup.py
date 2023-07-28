@@ -339,7 +339,11 @@ data = dict(
     install_requires=[],
     tests_require=["pytest>=3.6.0"],
     cmdclass={"install": InstallCommand, "test": PyTest, "clean": SetuptoolsClean},
-    ext_modules=cythonize(["nurbs/helpers.pyx",]),
+    ext_modules=cythonize(
+        [
+            "nurbs/helpers.pyx",
+        ]
+    ),
     zip_safe=False,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
