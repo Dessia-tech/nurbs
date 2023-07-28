@@ -72,11 +72,10 @@ steps:
   - python setup.py install
   - cd docs
   - make html
+  - cd ../pytest
+  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs -m pytest
   - cd ../tests
   - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs -m unittest discover -v
-  - cd pytest/
-  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs -m pytest
-  - cd ..
   - cd ..
   - coverage json
   - coverage report
