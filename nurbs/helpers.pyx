@@ -17,7 +17,7 @@ try:
     from functools import lru_cache
 except ImportError:
     from nurbs.functools_lru_cache import lru_cache
-import cython
+
 import numpy as np
 from libc.stdlib cimport malloc, free
 
@@ -378,7 +378,7 @@ cpdef list basis_function_ders(int degree, list knot_vector, int span, double kn
         ders[0][j] = ndu[j][degree]
 
     # Start calculating derivatives
-    cdef double[:,:] a = np.ones((2, degree + 1), dtype=np.float64)
+    cdef double[:, :] a = np.ones((2, degree + 1), dtype=np.float64)
     # Loop over function index
     for r in range(0, degree + 1):
         # Alternate rows in array a
@@ -1229,9 +1229,9 @@ def surface_deriv_cpts(dim, degree, kv, cpts, cpsize, rs, ss, deriv_order=0):
             )
 
             # Copy into output
-            for l in range(1, dd + 1):
-                for j in range(0, s - l + 1):
-                    PKL[k][l][i][j] = PKuv[l][j]
+            for ii in range(1, dd + 1):
+                for j in range(0, s - ii + 1):
+                    PKL[k][ii][i][j] = PKuv[ii][j]
 
     # Return control points
     return PKL
