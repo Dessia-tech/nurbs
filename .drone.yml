@@ -67,13 +67,14 @@ steps:
   image: python:3.9
   commands:
   - git fetch --tags
+  - pip install Cython sphinx sphinx_rtd_theme coverage nbformat nbconvert
   - pip install Cython pytest sphinx sphinx-rtd-theme matplotlib coverage
   - python setup.py build_ext --inplace
   - python setup.py install
   - cd docs
   - make html
   - cd ../tests
-  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs -m pytest
+  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source volmdlr -m unittest discover -v
   - cd ..
   - coverage json
   - coverage report

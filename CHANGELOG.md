@@ -1,5 +1,7 @@
 # geomdl Changelog
 
+## nurbs v0.1
+
 ## v5.3.0 released on 2020-08-05
 
 * Deprecated some methods that produce incorrect results
