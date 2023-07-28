@@ -74,6 +74,7 @@ steps:
   - make html
   - cd ../tests
   - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs -m pytest
+  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source volmdlr -a -m unittest discover -v
   - cd ..
   - coverage json
   - coverage report

@@ -5,7 +5,7 @@
 
     Requires "pytest" to run.
 """
-
+import unittest
 from nurbs import BSpline
 
 SAMPLE_SIZE = 5
@@ -21,68 +21,71 @@ S_KV_U = [0, 0, 0, 1, 1, 1]
 S_KV_V = [0, 0, 0, 1, 1, 1]
 
 
-def test_bspline_curve2d_evaluate():
-    curve = BSpline.Curve()
-    curve.degree = C_DEGREE
-    curve.ctrlpts = C_CTRLPTS2D
-    curve.knotvector = C_KV
-    curve.sample_size = SAMPLE_SIZE
+class TestEvaluate(unittest.TestCase):
+    def test_bspline_curve2d_evaluate(self):
+        curve = BSpline.Curve()
+        curve.degree = C_DEGREE
+        curve.ctrlpts = C_CTRLPTS2D
+        curve.knotvector = C_KV
+        curve.sample_size = SAMPLE_SIZE
 
-    # Expected output
-    res = [[1.0, 1.0], [1.4375, 1.0625], [1.75, 1.25], [1.9375, 1.5625], [2.0, 2.0]]
+        # Expected output
+        res = [[1.0, 1.0], [1.4375, 1.0625], [1.75, 1.25], [1.9375, 1.5625], [2.0, 2.0]]
 
-    assert curve.evalpts == res
+        self.assertEqual(curve.evalpts, res)
+
+    def test_bspline_curve3d_evaluate(self):
+        curve = BSpline.Curve()
+        curve.degree = C_DEGREE
+        curve.ctrlpts = C_CTRLPTS3D
+        curve.knotvector = C_KV
+        curve.sample_size = SAMPLE_SIZE
+
+        # Expected output
+        res = [[1.0, 1.0, 0.0], [1.4375, 1.0625, -0.375], [1.75, 1.25, -0.5], [1.9375, 1.5625, -0.375], [2.0, 2.0, 0.0]]
+
+        self.assertEqual(curve.evalpts, res)
+
+    def test_bspline_surface_evaluate(self):
+        surf = BSpline.Surface()
+        surf.degree_u = S_DEGREE_U
+        surf.degree_v = S_DEGREE_V
+        surf.set_ctrlpts(S_CTRLPTS, 3, 3)
+        surf.knotvector_u = S_KV_U
+        surf.knotvector_v = S_KV_V
+        surf.sample_size = SAMPLE_SIZE
+
+        # Expected output
+        res = [
+            [0.0, 0.0, 0.0],
+            [0.0, 0.5, -0.1875],
+            [0.0, 1.0, -0.75],
+            [0.0, 1.5, -1.6875],
+            [0.0, 2.0, -3.0],
+            [0.5, 0.0, 2.25],
+            [0.5, 0.5, 1.171875],
+            [0.5, 1.0, 0.1875],
+            [0.5, 1.5, -0.703125],
+            [0.5, 2.0, -1.5],
+            [1.0, 0.0, 3.0],
+            [1.0, 0.5, 1.6875],
+            [1.0, 1.0, 0.75],
+            [1.0, 1.5, 0.1875],
+            [1.0, 2.0, 0.0],
+            [1.5, 0.0, 2.25],
+            [1.5, 0.5, 1.359375],
+            [1.5, 1.0, 0.9375],
+            [1.5, 1.5, 0.984375],
+            [1.5, 2.0, 1.5],
+            [2.0, 0.0, 0.0],
+            [2.0, 0.5, 0.1875],
+            [2.0, 1.0, 0.75],
+            [2.0, 1.5, 1.6875],
+            [2.0, 2.0, 3.0],
+        ]
+
+        self.assertEqual(surf.evalpts, res)
 
 
-def test_bspline_curve3d_evaluate():
-    curve = BSpline.Curve()
-    curve.degree = C_DEGREE
-    curve.ctrlpts = C_CTRLPTS3D
-    curve.knotvector = C_KV
-    curve.sample_size = SAMPLE_SIZE
-
-    # Expected output
-    res = [[1.0, 1.0, 0.0], [1.4375, 1.0625, -0.375], [1.75, 1.25, -0.5], [1.9375, 1.5625, -0.375], [2.0, 2.0, 0.0]]
-
-    assert curve.evalpts == res
-
-
-def test_bspline_surface_evaluate():
-    surf = BSpline.Surface()
-    surf.degree_u = S_DEGREE_U
-    surf.degree_v = S_DEGREE_V
-    surf.set_ctrlpts(S_CTRLPTS, 3, 3)
-    surf.knotvector_u = S_KV_U
-    surf.knotvector_v = S_KV_V
-    surf.sample_size = SAMPLE_SIZE
-
-    # Expected output
-    res = [
-        [0.0, 0.0, 0.0],
-        [0.0, 0.5, -0.1875],
-        [0.0, 1.0, -0.75],
-        [0.0, 1.5, -1.6875],
-        [0.0, 2.0, -3.0],
-        [0.5, 0.0, 2.25],
-        [0.5, 0.5, 1.171875],
-        [0.5, 1.0, 0.1875],
-        [0.5, 1.5, -0.703125],
-        [0.5, 2.0, -1.5],
-        [1.0, 0.0, 3.0],
-        [1.0, 0.5, 1.6875],
-        [1.0, 1.0, 0.75],
-        [1.0, 1.5, 0.1875],
-        [1.0, 2.0, 0.0],
-        [1.5, 0.0, 2.25],
-        [1.5, 0.5, 1.359375],
-        [1.5, 1.0, 0.9375],
-        [1.5, 1.5, 0.984375],
-        [1.5, 2.0, 1.5],
-        [2.0, 0.0, 0.0],
-        [2.0, 0.5, 0.1875],
-        [2.0, 1.0, 0.75],
-        [2.0, 1.5, 1.6875],
-        [2.0, 2.0, 3.0],
-    ]
-
-    assert surf.evalpts == res
+if __name__ == "__main__":
+    unittest.main()

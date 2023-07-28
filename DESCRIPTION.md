@@ -44,5 +44,3 @@ Please refer to the `documentation <http://nurbs-python.readthedocs.io/>`_ for m
 ## License
 
 **geomdl** is licensed under the terms of the `MIT License <https://github.com/orbingol/NURBS-Python/blob/master/LICENSE>`_.
-
-
