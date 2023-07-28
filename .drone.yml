@@ -73,11 +73,10 @@ steps:
   - cd docs
   - make html
   - cd ../pytest
-  - coverage run --rcfile=../.coveragerc --data-file=../pytest_coverage.data --source nurbs -m pytest
+  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs -m pytest
   - cd ../tests
-  - coverage run --rcfile=../.coveragerc --data-file=../unittest_coverage.data --source nurbs -m unittest discover -v
+  - coverage run --rcfile=../.coveragerc --data-file=../.coverage --source nurbs --append unittest discover -v
   - cd ..
-  - coverage combine --rcfile=.coveragerc --append
   - coverage json
   - coverage report
   - coverage html
