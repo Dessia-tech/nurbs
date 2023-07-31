@@ -1,5 +1,6 @@
 """
 .. module:: convert
+
     :platform: Unix, Windows
     :synopsis: Helper module for converting rational and non-rational geometries to each other
 

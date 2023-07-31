@@ -1,5 +1,6 @@
 """
 .. module:: _utilities
+
     :platform: Unix, Windows
     :synopsis: Defines internal utility functions, such as decorators, context managers and similar
 

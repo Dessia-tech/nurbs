@@ -1,5 +1,6 @@
 """
 .. module:: freeform
+
     :platform: Unix, Windows
     :synopsis: Provides freeform geometry classes
 

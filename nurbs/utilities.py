@@ -1,5 +1,6 @@
 """
 .. module:: utilities
+
     :platform: Unix, Windows
     :synopsis: Provides common utility functions
 

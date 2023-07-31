@@ -1,5 +1,6 @@
 """
 .. module:: compatibility
+
     :platform: Unix, Windows
     :synopsis: Provides compatibility functions for CAD interoperability
 

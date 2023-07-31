@@ -1,5 +1,6 @@
 """
 .. module:: trimming
+
     :platform: Unix, Windows
     :synopsis: Provides helper functions for surface trimming
 
@@ -420,6 +421,15 @@ def detect_sense(curve, tol):
 
 
 def detect_ccw(pt1, pt2, pt3, tol):
+    """
+    Detect ccw.
+
+    :param pt1:
+    :param pt2:
+    :param pt3:
+    :param tol:
+    :return:
+    """
     vec1 = linalg.vector_generate(pt1, pt2)
     vec2 = linalg.vector_generate(pt2, pt3)
     cross = linalg.vector_cross(vec1, vec2)
@@ -431,6 +441,7 @@ def detect_ccw(pt1, pt2, pt3, tol):
 
 
 def detect_intersection(start_pt, end_pt, test_pt, tol):
+    """Detect intersection."""
     dist_num = abs(
         ((end_pt[1] - start_pt[1]) * test_pt[0])
         - ((end_pt[0] - start_pt[0]) * test_pt[1])

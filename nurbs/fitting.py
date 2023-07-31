@@ -1,5 +1,6 @@
 """
 .. module:: interpolate
+
     :platform: Unix, Windows
     :synopsis: Provides curve and surface fitting functions
 

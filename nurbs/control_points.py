@@ -1,5 +1,6 @@
 """
 .. module:: control_points
+
     :platform: Unix, Windows
     :synopsis: Provides helper classes for managing control points
 

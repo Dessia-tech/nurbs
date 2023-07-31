@@ -23,6 +23,17 @@ class TestHelpers(unittest.TestCase):
 
         self.assertEqual(to_check, result)
 
+    def test_find_span_linear(self):
+        degree = 2
+        knot_vector = [0, 0, 0, 1, 2, 3, 4, 4, 5, 5, 5]
+        num_ctrlpts = len(knot_vector) - degree - 1
+        knot = 5.0 / 2.0
+
+        to_check = helpers.find_span_linear(degree, knot_vector, num_ctrlpts, knot)
+        result = 4  # Value from The Nurbs Book p.68
+
+        self.assertEqual(to_check, result)
+
     def test_basis_function(self):
         degree = 2
         knot_vector = [0, 0, 0, 1, 2, 3, 4, 4, 5, 5, 5]

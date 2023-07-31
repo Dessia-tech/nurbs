@@ -1,5 +1,6 @@
 """
 .. module:: BSpline
+
     :platform: Unix, Windows
     :synopsis: Provides data storage and evaluation functionality for non-rational spline geometries
 
@@ -103,11 +104,13 @@ class Curve(abstract.Curve):
         return None
 
     def evaluate(self, **kwargs):
-        """Evaluates the curve.
+        """
+        Evaluates the curve.
 
         The evaluated points are stored in :py:attr:`evalpts` property.
 
-        Keyword arguments:
+        Keyword Arguments:
+
             * ``start``: start parameter
             * ``stop``: stop parameter
 
@@ -220,9 +223,11 @@ class Curve(abstract.Curve):
         return self._evaluator.derivatives(self.data, parpos=u, deriv_order=order)
 
     def insert_knot(self, param, **kwargs):
-        """Inserts the knot and updates the control points array and the knot vector.
+        """
+        Inserts the knot and updates the control points array and the knot vector.
 
         Keyword Arguments:
+
             * ``num``: Number of knot insertions. *Default: 1*
 
         :param param: knot to be inserted
@@ -255,6 +260,7 @@ class Curve(abstract.Curve):
         """Removes the knot and updates the control points array and the knot vector.
 
         Keyword Arguments:
+
             * ``num``: Number of knot removals. *Default: 1*
 
         :param param: knot to be removed
@@ -569,11 +575,13 @@ class Surface(abstract.Surface):
         self.reset(evalpts=True)
 
     def evaluate(self, **kwargs):
-        """Evaluates the surface.
+        """
+        Evaluates the surface.
 
         The evaluated points are stored in :py:attr:`evalpts` property.
 
-        Keyword arguments:
+        Keyword Arguments:
+
             * ``start_u``: start parameter on the u-direction
             * ``stop_u``: stop parameter on the u-direction
             * ``start_v``: start parameter on the v-direction
@@ -679,9 +687,11 @@ class Surface(abstract.Surface):
         return self._evaluator.derivatives(self.data, parpos=(u, v), deriv_order=order)
 
     def insert_knot(self, u=None, v=None, **kwargs):
-        """Inserts knot(s) on the u- or v-directions
+        """
+        Inserts knot(s) on the u- or v-directions.
 
         Keyword Arguments:
+
             * ``num_u``: Number of knot insertions on the u-direction. *Default: 1*
             * ``num_v``: Number of knot insertions on the v-direction. *Default: 1*
 
@@ -715,9 +725,11 @@ class Surface(abstract.Surface):
             self.evaluate()
 
     def remove_knot(self, u=None, v=None, **kwargs):
-        """Inserts knot(s) on the u- or v-directions
+        """
+        Inserts knot(s) on the u- or v-directions.
 
         Keyword Arguments:
+
             * ``num_u``: Number of knot removals on the u-direction. *Default: 1*
             * ``num_v``: Number of knot removals on the v-direction. *Default: 1*
 
@@ -834,36 +846,14 @@ class Volume(abstract.Volume):
         self._insert_knot_func = kwargs.get("insert_knot_func", operations.insert_knot)
         self._remove_knot_func = kwargs.get("remove_knot_func", operations.remove_knot)
 
-    def save(self, file_name):
-        """Saves the volume as a pickled file.
-
-        .. deprecated:: 5.2.4
-
-            Use :func:`.exchange.export_json()` instead.
-
-        :param file_name: name of the file to be saved
-        :type file_name: str
-        """
-        return None
-
-    def load(self, file_name):
-        """Loads the volume from a pickled file.
-
-        .. deprecated:: 5.2.4
-
-            Use :func:`.exchange.import_json()` instead.
-
-        :param file_name: name of the file to be loaded
-        :type file_name: str
-        """
-        return None
-
     def evaluate(self, **kwargs):
-        """Evaluates the volume.
+        """
+        Evaluates the volume.
 
         The evaluated points are stored in :py:attr:`evalpts` property.
 
-        Keyword arguments:
+        Keyword Arguments:
+
             * ``start_u``: start parameter on the u-direction
             * ``stop_u``: stop parameter on the u-direction
             * ``start_v``: start parameter on the v-direction

@@ -1,5 +1,6 @@
 """
 .. module:: _voxelize
+
     :platform: Unix, Windows
     :synopsis: Helper functions for voxelization module
 

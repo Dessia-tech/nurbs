@@ -11,6 +11,8 @@ from subprocess import CalledProcessError, check_output
 from setuptools import Extension, setup
 from setuptools.command.install import install as install_command
 from setuptools.command.test import test as test_command
+from Cython.Build import cythonize  # isort: skip This prevent a build bug
+
 
 # Global variables to control generation of optional Cython-compiled library core module
 BUILD_FROM_CYTHON = False
@@ -337,7 +339,11 @@ data = dict(
     install_requires=[],
     tests_require=["pytest>=3.6.0"],
     cmdclass={"install": InstallCommand, "test": PyTest, "clean": SetuptoolsClean},
-    ext_modules=ext_modules,
+    ext_modules=cythonize(
+        [
+            "nurbs/helpers.pyx",
+        ]
+    ),
     zip_safe=False,
     classifiers=[
         "Development Status :: 5 - Production/Stable",

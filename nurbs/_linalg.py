@@ -1,5 +1,6 @@
 """
 .. module:: _linalg
+
     :platform: Unix, Windows
     :synopsis: Helper functions for linear algebra module
 

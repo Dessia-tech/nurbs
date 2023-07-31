@@ -1,5 +1,6 @@
 """
 .. module:: exceptions
+
     :platform: Unix, Windows
     :synopsis: Defines custom exceptions
 

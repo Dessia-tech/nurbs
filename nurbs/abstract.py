@@ -1,5 +1,6 @@
 """
 .. module:: abstract
+
     :platform: Unix, Windows
     :synopsis: Provides abstract base classes for representing the geometries
 
