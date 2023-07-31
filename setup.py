@@ -342,6 +342,7 @@ data = dict(
     ext_modules=cythonize(
         [
             "nurbs/helpers.pyx",
+            "nurbs/linalg.pyx",
         ]
     ),
     zip_safe=False,
