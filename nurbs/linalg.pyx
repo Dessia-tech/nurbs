@@ -534,6 +534,7 @@ def triangle_center(tri, uv=False):
     mid = [float(m) / 3.0 for m in mid]
     return tuple(mid)
 
+
 cdef double binomial_coefficient_c(int k, int i):
     """
     Computes the binomial coefficient (denoted by *k choose i*).
@@ -791,9 +792,9 @@ def convex_hull(points):
         return hull
 
     points = sorted(points)
-    l = reduce(keep_left, points, [])
+    l_param = reduce(keep_left, points, [])
     u = reduce(keep_left, reversed(points), [])
-    return l.extend(u[i] for i in range(1, len(u) - 1)) or l
+    return l_param.extend(u[i] for i in range(1, len(u) - 1)) or l_param
 
 
 def is_left(point0, point1, point2):
