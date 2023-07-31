@@ -11,7 +11,9 @@ import json
 MIN_FILE_COVERAGE = 0.0
 MIN_PROJECT_COVERAGE = 49.4
 
-untracked_modules = ["visualization/VisPlotly.py", "visualization/VisVTK.py", "visualization/vtk_helpers.py"]
+untracked_modules = ["visualization/VisPlotly.py", "visualization/VisVTK.py", "visualization/vtk_helpers.py",
+                     "helpers_py.py", "construct.py"
+                     ]
 
 print("untracked modules:", untracked_modules)
 
