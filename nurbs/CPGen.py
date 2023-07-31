@@ -1,5 +1,6 @@
 """
-.. module:: CPGen
+.. module:: CPGen.
+
     :platform: Unix, Windows
     :synopsis: A simple control points grid generator for parametric surfaces
 

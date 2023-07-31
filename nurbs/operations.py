@@ -1,5 +1,6 @@
 """
 .. module:: operations
+
     :platform: Unix, Windows
     :synopsis: Provides geometric operations for spline geometry classes
 

@@ -1,6 +1,7 @@
 # cython: language_level=3
 """
 .. module:: helpers
+
     :platform: Unix, Windows
     :synopsis: Provides spline evaluation helper functions
 

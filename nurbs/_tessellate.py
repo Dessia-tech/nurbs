@@ -1,5 +1,6 @@
 """
 .. module:: _tessellate
+
     :platform: Unix, Windows
     :synopsis: Helper functions for tessellation operations
 

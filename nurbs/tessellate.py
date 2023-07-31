@@ -1,5 +1,6 @@
 """
 .. module:: tessellate
+
     :platform: Unix, Windows
     :synopsis: Provides tessellation classes for surface triangulation
 

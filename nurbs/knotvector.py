@@ -1,5 +1,6 @@
 """
 .. module:: knotvector
+
     :platform: Unix, Windows
     :synopsis: Provides utility functions related to knot vector generation and validation
 

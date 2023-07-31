@@ -1,5 +1,6 @@
 """
 .. module:: sweeping
+
     :platform: Unix, Windows
     :synopsis: Provides functions for generating swept geometries
 

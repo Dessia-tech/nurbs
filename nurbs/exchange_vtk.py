@@ -1,5 +1,6 @@
 """
 .. module:: exchange_vtk
+
     :platform: Unix, Windows
     :synopsis: Provides exchange capabilities for VTK file formats
 

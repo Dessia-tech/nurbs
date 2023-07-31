@@ -1,5 +1,6 @@
 """
 .. module:: _exchange
+
     :platform: Unix, Windows
     :synopsis: Helper functions for exchange module
 

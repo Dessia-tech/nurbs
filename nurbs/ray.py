@@ -1,5 +1,6 @@
 """
 .. module:: ray
+
     :platform: Unix, Windows
     :synopsis: Provides ray data structures and operations
 

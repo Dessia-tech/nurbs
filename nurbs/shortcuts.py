@@ -1,5 +1,6 @@
 """
 .. module:: _shortcuts
+
     :platform: Unix, Windows
     :synopsis: Provides shortcut functions for creating new instances of the nurbs classes
 

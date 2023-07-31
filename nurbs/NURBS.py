@@ -1,5 +1,6 @@
 """
-.. module:: NURBS
+.. module:: NURBS.
+
     :platform: Unix, Windows
     :synopsis: Provides data storage and evaluation functionality for rational spline geometries
 
@@ -86,12 +87,14 @@ class Curve(BSpline.Curve):
         self.init_cache()
 
     def __deepcopy__(self, memo):
+        """Defines deepcopy."""
         # Call parent method
         result = super(Curve, self).__deepcopy__(memo)
         result.init_cache()
         return result
 
     def init_cache(self):
+        """Init cache."""
         self._cache["ctrlpts"] = self._init_array()
         self._cache["weights"] = self._init_array()
 
@@ -296,6 +299,7 @@ class Surface(BSpline.Surface):
         return result
 
     def init_cache(self):
+        """Init cache."""
         self._cache["ctrlpts"] = self._init_array()
         self._cache["weights"] = self._init_array()
 

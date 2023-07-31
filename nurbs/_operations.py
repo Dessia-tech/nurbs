@@ -1,5 +1,6 @@
 """
 .. module:: _operations
+
     :platform: Unix, Windows
     :synopsis: Helper functions for operations module
 

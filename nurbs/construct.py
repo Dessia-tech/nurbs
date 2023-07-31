@@ -1,5 +1,6 @@
 """
 .. module:: construct
+
     :platform: Unix, Windows
     :synopsis: Provides functions for constructing and extracting spline geometries
 
@@ -12,12 +13,15 @@ from .exceptions import GeomdlException
 
 
 def construct_surface(direction, *args, **kwargs):
-    """Generates surfaces from curves.
+    """
+    Generates surfaces from curves.
 
     Arguments:
+
         * ``args``: a list of curve instances
 
     Keyword Arguments (optional):
+
         * ``degree``: degree of the 2nd parametric direction
         * ``knotvector``: knot vector of the 2nd parametric direction
         * ``rational``: flag to generate rational surfaces
