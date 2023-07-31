@@ -16,8 +16,7 @@ untracked_modules = [
     "nurbs/visualization/VisVTK.py",
     "nurbs/visualization/vtk_helpers.py",
     "nurbs/helpers_py.py",
-    "nurbs/linalg_py.py"
-    "nurbs/construct.py",
+    "nurbs/linalg_py.py" "nurbs/construct.py",
 ]
 
 print("untracked modules:", untracked_modules)
