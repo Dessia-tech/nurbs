@@ -67,6 +67,7 @@ steps:
   image: python:3.9
   commands:
   - git fetch --tags
+  - pip install Cython pytest sphinx sphinx-rtd-theme matplotlib coverage
   - pip install Cython sphinx sphinx_rtd_theme coverage nbformat nbconvert
   - python setup.py build_ext --inplace
   - python setup.py install
