@@ -326,7 +326,8 @@ class SurfaceEvaluator(AbstractEvaluator):
                 eval_points.append(spt)
         return eval_points
 
-    def derivatives(self, degree, knotvector, ctrlpts, size, dimension, parpos, deriv_order):
+    def derivatives(self, tuple degree, tuple knotvector, tuple ctrlpts, tuple size, int dimension,
+                    tuple parpos, int deriv_order):
         """
         Evaluates the n-th order derivatives at the input parametric position.
 
@@ -345,45 +346,52 @@ class SurfaceEvaluator(AbstractEvaluator):
         # cdef tuple ctrlpts = datadict["control_points"]
         # cdef tuple size = datadict["size"]
         # cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
+        cdef int degree_u = degree[0], degree_v = degree[1]
+        cdef int size_u = size[0], size_v = size[1]
+        cdef double u = parpos[0], v = parpos[1]
+        cdef list knotvector_u = knotvector[0]
+        cdef list knotvector_v = knotvector[1]
         cdef int pdimension = 2
 
-        cdef int idx, k, li, s, r, i, dd, cu, cv
+        cdef int k, li, s, r, i, dd, cu, cv
         # Algorithm A3.6
-        cdef int[2] d = [min(degree[0], deriv_order), min(degree[1], deriv_order)]
+        cdef int[2] d = [min(degree_u, deriv_order), min(degree_u, deriv_order)]
 
         cdef list SKL = [[[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)] for _ in range(deriv_order + 1)]
 
         # span = [0 for _ in range(pdimension)]
-        cdef int[2] span = [0, 1]
-        cdef list basisdrv = [[] for _ in range(pdimension)]
-        for idx in range(pdimension):
-            span[idx] = self._span_func(degree[idx], knotvector[idx], size[idx], parpos[idx])
-            basisdrv[idx] = helpers.basis_function_ders(degree[idx], knotvector[idx], span[idx], parpos[idx], d[idx])
-        # span_u = self._span_func(degree[0], knotvector[0], size[0], parpos[0])
-        # basisdrv_u = helpers.basis_function_ders(degree[0], knotvector[0], span[0], parpos[0], d[0])
+        # cdef int[2] span = [0, 0]
+        # cdef list basisdrv = [[] for _ in range(pdimension)]
+        # for idx in range(pdimension):
+        #     span[idx] = self._span_func(degree[idx], knotvector[idx], size[idx], parpos[idx])
+        #     basisdrv[idx] = helpers.basis_function_ders(degree[idx], knotvector[idx], span[idx], parpos[idx], d[idx])
+        cdef int span_u = helpers.find_span_linear(degree_u, knotvector_u, size_u, u)
+        cdef int span_v = helpers.find_span_linear(degree_v, knotvector_v, size_v, v)
+        cdef list basisdrv_u = helpers.basis_function_ders(degree_u, knotvector_u, span_u, u, d[0])
+        cdef list basisdrv_v = helpers.basis_function_ders(degree_v, knotvector_v, span_v, v, d[1])
         cdef list t = [0.0] * dimension
         cdef list cp = [0.0] * dimension
         cdef list tmp = [0.0] * dimension
-        cdef list temp = [[0.0 for _ in range(dimension)] for _ in range(degree[1] + 1)]
+        cdef list temp = [[0.0 for _ in range(dimension)] for _ in range(degree_v + 1)]
         for k in range(0, d[0] + 1):
-            temp = [[0.0 for _ in range(dimension)] for _ in range(degree[1] + 1)]
-            for s in range(0, degree[1] + 1):
+            temp = [[0.0 for _ in range(dimension)] for _ in range(degree_v + 1)]
+            for s in range(0, degree_v + 1):
                 tmp = temp[s]
-                for r in range(0, degree[0] + 1):
-                    cu = span[0] - degree[0] + r
-                    cv = span[1] - degree[1] + s
-                    cp = ctrlpts[cv + (size[1] * cu)]
+                for r in range(0, degree_u + 1):
+                    cu = span_u - degree_u + r
+                    cv = span_v - degree_v + s
+                    cp = ctrlpts[cv + (size_v * cu)]
                     for i in range(dimension):
-                        t[i] = tmp[i] + (basisdrv[0][k][r] * cp[i])
+                        t[i] = tmp[i] + (basisdrv_u[k][r] * cp[i])
                     temp[s][:] = t
 
             dd = min(deriv_order, d[1])
             for li in range(0, dd + 1):
-                for s in range(0, degree[1] + 1):
+                for s in range(0, degree_v + 1):
                     elem = SKL[k][li]
                     tmp = temp[s]
                     for i in range(dimension):
-                        t[i] = elem[i] + (basisdrv[1][li][s] * tmp[i])
+                        t[i] = elem[i] + (basisdrv_v[li][s] * tmp[i])
                     SKL[k][li][:] = t
         return SKL
 
@@ -433,7 +441,8 @@ class SurfaceEvaluatorRational(SurfaceEvaluator):
 
         return eval_points
 
-    def derivatives(self, degree, knotvector, ctrlpts, size, dimension, parpos, deriv_order):
+    def derivatives(self, tuple degree, tuple knotvector, tuple ctrlpts, tuple size, int dimension,
+                    tuple parpos, int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -450,40 +459,49 @@ class SurfaceEvaluatorRational(SurfaceEvaluator):
         # Call the parent function to evaluate A(u) and w(u) derivatives
         cdef list SKLw = super(SurfaceEvaluatorRational, self).derivatives(degree, knotvector, ctrlpts, size,
                                                                            dimension, parpos, deriv_order)
-        print(SKLw)
         # Generate an empty list of derivatives
         cdef list SKL = [[[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)] for _ in range(deriv_order + 1)]
 
         # Algorithm A4.4
-        cdef int i, j, k, kk
-        cdef list v, v2
-        cdef double tmp, drv
+
+
+        cdef int i, j, k, li, ii
+
+        cdef list tmp = [0.0] * (dimension - 1)
+        cdef list drv = [0.0] * (dimension - 1)
+        cdef list v = [0.0] * (dimension - 1)
+        cdef list v2 = [0.0] * (dimension - 1)
+        cdef list res = [0.0] * (dimension - 1)
+        # Algorithm A4.4
         for k in range(0, deriv_order + 1):
-            # for l in range(0, deriv_order - k + 1):
-            for kk in range(0, deriv_order + 1):
+            for li in range(0, deriv_order + 1):
                 # Deep copying might seem a little overkill but we also want to avoid same pointer issues too
-                v = copy.deepcopy(SKLw[k][kk])
-
-                for j in range(1, kk + 1):
-                    v[:] = [
-                        tmp - (linalg.binomial_coefficient(kk, j) * SKLw[0][j][-1] * drv)
-                        for tmp, drv in zip(v, SKL[k][kk - j])
-                    ]
+                # v = copy.deepcopy(SKLw[k][l])
+                v = [value for value in SKLw[k][li]]
+                for j in range(1, li + 1):
+                    drv = SKL[k][li - j]
+                    for ii in range(dimension - 1):
+                        tmp[ii] = v[ii] - (linalg.binomial_coefficient(li, j) * SKLw[0][j][-1] * drv[ii])
+                    v[:] = tmp
                 for i in range(1, k + 1):
-                    v[:] = [
-                        tmp - (linalg.binomial_coefficient(k, i) * SKLw[i][0][-1] * drv)
-                        for tmp, drv in zip(v, SKL[k - i][kk])
-                    ]
+                    drv = SKL[k - i][li]
+                    for ii in range(dimension - 1):
+                        tmp[ii] = v[ii] - (linalg.binomial_coefficient(k, i) * SKLw[i][0][-1] * drv[ii])
+                    v[:] = tmp
                     v2 = [0.0 for _ in range(dimension - 1)]
-                    for j in range(1, kk + 1):
-                        v2[:] = [
-                            tmp + (linalg.binomial_coefficient(kk, j) * SKLw[i][j][-1] * drv)
-                            for tmp, drv in zip(v2, SKL[k - i][kk - j])
-                        ]
-                    v[:] = [tmp - (linalg.binomial_coefficient(k, i) * tmp2) for tmp, tmp2 in zip(v, v2)]
+                    for j in range(1, li + 1):
+                        drv = SKL[k - i][li - j]
+                        for ii in range(dimension - 1):
+                            tmp[ii] = v2[ii] + (linalg.binomial_coefficient(li, j) * SKLw[i][j][-1] * drv[ii])
+                        v2[:] = tmp
+                    for ii in range(dimension - 1):
+                        tmp[ii] = v[ii] - (linalg.binomial_coefficient(k, i) * v2[ii])
+                    v[:] = tmp
 
-                SKL[k][kk][:] = [tmp / SKLw[0][0][-1] for tmp in v[0 : (dimension - 1)]]
+                for i in range(dimension - 1):
+                    res[i] = v[i] / SKLw[0][0][-1]
 
+                SKL[k][li][:] = res
         # Return S(u,v) derivatives
         return SKL
 
@@ -725,8 +743,8 @@ class SurfaceEvaluator2(SurfaceEvaluator):
         super(SurfaceEvaluator2, self).__init__(**kwargs)
         self._span_func = kwargs.get("find_span_func", helpers.find_span_linear)
 
-    def derivatives(self, list degree, list knotvector, list ctrlpts, list size, int dimension, list parpos,
-                    int deriv_order):
+    def derivatives(self, tuple degree, tuple knotvector, tuple ctrlpts, tuple size, int dimension,
+                    tuple parpos, int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -744,7 +762,7 @@ class SurfaceEvaluator2(SurfaceEvaluator):
         # ctrlpts = datadict["control_points"]
         # size = datadict["size"]
         # dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
-        pdimension = 2
+        cdef int pdimension = 2
 
         SKL = [[[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)] for _ in range(deriv_order + 1)]
 

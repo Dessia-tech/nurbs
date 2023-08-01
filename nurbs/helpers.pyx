@@ -352,12 +352,17 @@ cpdef list basis_function_ders(int degree, list knot_vector, int span, double kn
     :rtype: list
     """
     # Initialize variables
-    cdef int j, k, r
+    cdef int i, j, k, r
     cdef int s1, s2, j1, j2, pk, rk
     cdef double saved, temp, d
-    cdef double[:] left = np.ones(degree + 1, dtype=np.float64)
-    cdef double[:] right = np.ones(degree + 1, dtype=np.float64)
-    cdef double[:, :] ndu = np.ones((degree + 1, degree + 1), dtype=np.float64)  # N[0][0] = 1.0 by definition
+    cdef double *left = <double *>malloc((degree + 1) * sizeof(double))
+    cdef double *right = <double *>malloc((degree + 1) * sizeof(double))
+    for i in range(degree + 1):
+        left[i] = 1.0
+        right[i] = 1.0
+    # cdef list left = [1.0 for _ in range(degree + 1)]
+    # cdef list right = [1.0 for _ in range(degree + 1)]
+    cdef list ndu = [[1.0 for _ in range(degree + 1)] for _ in range(degree + 1)]  # N[0][0] = 1.0 by definition
 
     for j in range(1, degree + 1):
         left[j] = knot - knot_vector[span + 1 - j]
@@ -372,14 +377,16 @@ cpdef list basis_function_ders(int degree, list knot_vector, int span, double kn
             ndu[r][j] = saved + (right[r + 1] * temp)
             saved = left[j - r] * temp
         ndu[j][j] = saved
-
+    free(left)
+    free(right)
     # Load the basis functions
     cdef list ders = [[0.0 for _ in range(degree + 1)] for _ in range((min(degree, order) + 1))]
     for j in range(0, degree + 1):
         ders[0][j] = ndu[j][degree]
 
     # Start calculating derivatives
-    cdef double[:, :] a = np.ones((2, degree + 1), dtype=np.float64)
+    # cdef double[:, :] a = np.ones((2, degree + 1), dtype=np.float64)
+    cdef list a = [[1.0 for _ in range(degree + 1)] for _ in range(2)]
     # Loop over function index
     for r in range(0, degree + 1):
         # Alternate rows in array a
@@ -1189,7 +1196,6 @@ def surface_deriv_cpts(dim, degree, kv, cpts, cpsize, rs, ss, deriv_order=0):
     :return: control points of the derivative surface over the input knot span ranges
     :rtype: list
     """
-    print("NOT GOOD!!!")
     # Initialize return value (control points)
     PKL = [
         [
