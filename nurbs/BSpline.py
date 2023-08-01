@@ -222,9 +222,15 @@ class Curve(abstract.Curve):
         if self.rational:
             dimension += 1
         # Evaluate and return the derivative at knot u
-        return self._evaluator.derivatives(self.degree, self._knot_vector[0],
-                                           self._control_points, self._control_points_size[0], dimension, parpos=u,
-                                           deriv_order=order)
+        return self._evaluator.derivatives(
+            self.degree,
+            self._knot_vector[0],
+            self._control_points,
+            self._control_points_size[0],
+            dimension,
+            parpos=u,
+            deriv_order=order,
+        )
 
     def insert_knot(self, param, **kwargs):
         """
@@ -690,9 +696,15 @@ class Surface(abstract.Surface):
         if self.rational:
             dimension += 1
         # Evaluate and return the derivatives
-        return self._evaluator.derivatives(tuple(self.degree), tuple(self._knot_vector),
-                                           tuple(self._control_points), tuple(self._control_points_size), dimension,
-                                           parpos=(u, v), deriv_order=order)
+        return self._evaluator.derivatives(
+            tuple(self.degree),
+            tuple(self._knot_vector),
+            tuple(self._control_points),
+            tuple(self._control_points_size),
+            dimension,
+            parpos=(u, v),
+            deriv_order=order,
+        )
 
     def insert_knot(self, u=None, v=None, **kwargs):
         """
