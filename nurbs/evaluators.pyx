@@ -107,7 +107,7 @@ class CurveEvaluator(AbstractEvaluator):
         """
         # Geometry data from datadict
         cdef int degree = datadict["degree"][0]
-        cdef tuple knotvector = datadict["knotvector"][0]
+        cdef list knotvector = datadict["knotvector"][0]
         cdef tuple ctrlpts = datadict["control_points"]
         cdef int size = datadict["size"][0]
         cdef int sample_size = datadict["sample_size"][0]
@@ -138,7 +138,8 @@ class CurveEvaluator(AbstractEvaluator):
 
         return eval_points
 
-    def derivatives(self, datadict, parpos, deriv_order=0):
+    def derivatives(self, int degree, list knotvector, list ctrlpts, int size, int dimension, double parpos,
+                    int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -151,11 +152,11 @@ class CurveEvaluator(AbstractEvaluator):
         :rtype: list
         """
         # Geometry data from datadict
-        cdef int degree = datadict["degree"][0]
-        cdef list knotvector = datadict["knotvector"][0]
-        cdef tuple ctrlpts = datadict["control_points"]
-        cdef int size = datadict["size"][0]
-        cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
+        # cdef int degree = datadict["degree"][0]
+        # cdef list knotvector = datadict["knotvector"][0]
+        # cdef tuple ctrlpts = datadict["control_points"]
+        # cdef int size = datadict["size"][0]
+        # cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
 
         # Algorithm A3.2
         cdef int du = min(degree, deriv_order)
@@ -219,7 +220,8 @@ class CurveEvaluatorRational(CurveEvaluator):
 
         return eval_points
 
-    def derivatives(self, datadict, parpos, deriv_order=0, **kwargs):
+    def derivatives(self, int degree, list knotvector, list ctrlpts, int size, int dimension, double parpos,
+                    int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -231,10 +233,10 @@ class CurveEvaluatorRational(CurveEvaluator):
         :return: evaluated derivatives
         :rtype: list
         """
-        cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
 
         # Call the parent function to evaluate A(u) and w(u) derivatives
-        cdef list CKw = super(CurveEvaluatorRational, self).derivatives(datadict, parpos, deriv_order, **kwargs)
+        cdef list CKw = super(CurveEvaluatorRational, self).derivatives(degree, knotvector, ctrlpts, size,
+                                                                        dimension, parpos, deriv_order)
 
         # Algorithm A4.2
         cdef list CK = [[0.0 for _ in range(dimension - 1)] for _ in range(deriv_order + 1)]
