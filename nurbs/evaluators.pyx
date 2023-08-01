@@ -326,7 +326,7 @@ class SurfaceEvaluator(AbstractEvaluator):
                 eval_points.append(spt)
         return eval_points
 
-    def derivatives(self, datadict, parpos, deriv_order=0, **kwargs):
+    def derivatives(self, degree, knotvector, ctrlpts, size, dimension, parpos, deriv_order):
         """
         Evaluates the n-th order derivatives at the input parametric position.
 
@@ -340,12 +340,12 @@ class SurfaceEvaluator(AbstractEvaluator):
         :rtype: list
         """
         # Geometry data from datadict
-        cdef int[2] degree = datadict["degree"]
-        cdef tuple knotvector = datadict["knotvector"]
-        cdef tuple ctrlpts = datadict["control_points"]
-        cdef tuple size = datadict["size"]
-        cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
-        cdef int pdimension = datadict["pdimension"]
+        # cdef int[2] degree = datadict["degree"]
+        # cdef tuple knotvector = datadict["knotvector"]
+        # cdef tuple ctrlpts = datadict["control_points"]
+        # cdef tuple size = datadict["size"]
+        # cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
+        cdef int pdimension = 2
 
         cdef int idx, k, li, s, r, i, dd, cu, cv
         # Algorithm A3.6
@@ -359,7 +359,8 @@ class SurfaceEvaluator(AbstractEvaluator):
         for idx in range(pdimension):
             span[idx] = self._span_func(degree[idx], knotvector[idx], size[idx], parpos[idx])
             basisdrv[idx] = helpers.basis_function_ders(degree[idx], knotvector[idx], span[idx], parpos[idx], d[idx])
-
+        # span_u = self._span_func(degree[0], knotvector[0], size[0], parpos[0])
+        # basisdrv_u = helpers.basis_function_ders(degree[0], knotvector[0], span[0], parpos[0], d[0])
         cdef list t = [0.0] * dimension
         cdef list cp = [0.0] * dimension
         cdef list tmp = [0.0] * dimension
@@ -432,7 +433,7 @@ class SurfaceEvaluatorRational(SurfaceEvaluator):
 
         return eval_points
 
-    def derivatives(self, datadict, parpos, deriv_order=0, **kwargs):
+    def derivatives(self, degree, knotvector, ctrlpts, size, dimension, parpos, deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -444,10 +445,11 @@ class SurfaceEvaluatorRational(SurfaceEvaluator):
         :return: evaluated derivatives
         :rtype: list
         """
-        cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
+        # cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
 
         # Call the parent function to evaluate A(u) and w(u) derivatives
-        cdef list SKLw = super(SurfaceEvaluatorRational, self).derivatives(datadict, parpos, deriv_order, **kwargs)
+        cdef list SKLw = super(SurfaceEvaluatorRational, self).derivatives(degree, knotvector, ctrlpts, size,
+                                                                           dimension, parpos, deriv_order)
         print(SKLw)
         # Generate an empty list of derivatives
         cdef list SKL = [[[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)] for _ in range(deriv_order + 1)]
@@ -662,7 +664,8 @@ class CurveEvaluator2(CurveEvaluator):
         super(CurveEvaluator2, self).__init__(**kwargs)
         self._span_func = kwargs.get("find_span_func", helpers.find_span_linear)
 
-    def derivatives(self, datadict, parpos, deriv_order=0, **kwargs):
+    def derivatives(self, int degree, list knotvector, list ctrlpts, int size, int dimension, double parpos,
+                    int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -674,26 +677,27 @@ class CurveEvaluator2(CurveEvaluator):
         :return: evaluated derivatives
         :rtype: list
         """
-        # Geometry data from datadict
-        degree = datadict["degree"][0]
-        knotvector = datadict["knotvector"][0]
-        ctrlpts = datadict["control_points"]
-        size = datadict["size"][0]
-        dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
+        # # Geometry data from datadict
+        # degree = datadict["degree"][0]
+        # knotvector = datadict["knotvector"][0]
+        # ctrlpts = datadict["control_points"]
+        # size = datadict["size"][0]
+        # dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
 
         # Algorithm A3.4
-        du = min(degree, deriv_order)
+        cdef int du = min(degree, deriv_order)
 
-        CK = [[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)]
+        cdef list CK = [[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)]
 
-        span = self._span_func(degree, knotvector, size, parpos)
-        bfuns = helpers.basis_function_all(degree, knotvector, span, parpos)
+        cdef int span = self._span_func(degree, knotvector, size, parpos)
+        cdef list bfuns = helpers.basis_function_all(degree, knotvector, span, parpos)
 
         # Algorithm A3.3
         PK = helpers.curve_deriv_cpts(
             dimension, degree, knotvector, ctrlpts, rs=((span - degree), span), deriv_order=du
         )
-
+        cdef unsigned int k, j
+        cdef double elem, drv_ctl_p
         for k in range(0, du + 1):
             for j in range(0, degree - k + 1):
                 CK[k][:] = [elem + (bfuns[j][degree - k] * drv_ctl_p) for elem, drv_ctl_p in zip(CK[k], PK[k][j])]
@@ -721,7 +725,8 @@ class SurfaceEvaluator2(SurfaceEvaluator):
         super(SurfaceEvaluator2, self).__init__(**kwargs)
         self._span_func = kwargs.get("find_span_func", helpers.find_span_linear)
 
-    def derivatives(self, datadict, parpos, deriv_order=0, **kwargs):
+    def derivatives(self, list degree, list knotvector, list ctrlpts, list size, int dimension, list parpos,
+                    int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -734,12 +739,12 @@ class SurfaceEvaluator2(SurfaceEvaluator):
         :rtype: list
         """
         # Geometry data from datadict
-        degree = datadict["degree"]
-        knotvector = datadict["knotvector"]
-        ctrlpts = datadict["control_points"]
-        size = datadict["size"]
-        dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
-        pdimension = datadict["pdimension"]
+        # degree = datadict["degree"]
+        # knotvector = datadict["knotvector"]
+        # ctrlpts = datadict["control_points"]
+        # size = datadict["size"]
+        # dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
+        pdimension = 2
 
         SKL = [[[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)] for _ in range(deriv_order + 1)]
 
