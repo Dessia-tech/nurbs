@@ -340,7 +340,7 @@ data = dict(
     tests_require=["pytest>=3.6.0"],
     cmdclass={"install": InstallCommand, "test": PyTest, "clean": SetuptoolsClean},
     ext_modules=cythonize(
-        [
+        [   "nurbs/evaluators.pyx",
             "nurbs/helpers.pyx",
             "nurbs/linalg.pyx",
         ]

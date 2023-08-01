@@ -1189,6 +1189,7 @@ def surface_deriv_cpts(dim, degree, kv, cpts, cpsize, rs, ss, deriv_order=0):
     :return: control points of the derivative surface over the input knot span ranges
     :rtype: list
     """
+    print("NOT GOOD!!!")
     # Initialize return value (control points)
     PKL = [
         [

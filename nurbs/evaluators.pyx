@@ -152,7 +152,7 @@ class CurveEvaluator(AbstractEvaluator):
         """
         # Geometry data from datadict
         cdef int degree = datadict["degree"][0]
-        cdef tuple knotvector = datadict["knotvector"][0]
+        cdef list knotvector = datadict["knotvector"][0]
         cdef tuple ctrlpts = datadict["control_points"]
         cdef int size = datadict["size"][0]
         cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
@@ -446,13 +446,14 @@ class SurfaceEvaluatorRational(SurfaceEvaluator):
 
         # Call the parent function to evaluate A(u) and w(u) derivatives
         cdef list SKLw = super(SurfaceEvaluatorRational, self).derivatives(datadict, parpos, deriv_order, **kwargs)
-
+        print(SKLw)
         # Generate an empty list of derivatives
         cdef list SKL = [[[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)] for _ in range(deriv_order + 1)]
 
         # Algorithm A4.4
         cdef int i, j, k, kk
-        cdef list v, v2, tmp, drv
+        cdef list v, v2
+        cdef double tmp, drv
         for k in range(0, deriv_order + 1):
             # for l in range(0, deriv_order - k + 1):
             for kk in range(0, deriv_order + 1):
