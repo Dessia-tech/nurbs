@@ -1,4 +1,5 @@
 # cython: language_level=3
+# distutils: language=c++
 """
 .. module:: helpers
 
@@ -20,10 +21,13 @@ except ImportError:
     from nurbs.functools_lru_cache import lru_cache
 
 import numpy as np
-from libc.stdlib cimport malloc, free
+from cython cimport cdivision
+from cython cimport boundscheck, wraparound
+from libcpp.vector cimport vector
+from cpython.mem cimport PyMem_Malloc, PyMem_Realloc, PyMem_Free
 
 
-def find_span_binsearch(int degree, list knot_vector, int num_ctrlpts, double knot, **kwargs):
+def find_span_binsearch(int degree, vector[double] knot_vector, int num_ctrlpts, double knot, **kwargs):
     """Finds the span of the knot over the input knot vector using binary search.
 
     Implementation of Algorithm A2.1 from The NURBS Book by Piegl & Tiller.
@@ -62,7 +66,7 @@ def find_span_binsearch(int degree, list knot_vector, int num_ctrlpts, double kn
     # The round function could return unexpected results, so we add the floating point with some small number
     # This addition would solve the issues caused by the division operation and how Python stores float numbers.
     # E.g. round(13/2) = 6 (expected to see 7)
-    mid = int(round(mid + tol))
+    mid = int(linalg.round_c(mid + tol))
 
     # Search for the span
     while (knot < knot_vector[mid]) or (knot >= knot_vector[mid + 1]):
@@ -75,7 +79,9 @@ def find_span_binsearch(int degree, list knot_vector, int num_ctrlpts, double kn
     return mid
 
 
-def find_span_linear(int degree, list knot_vector, int num_ctrlpts, double knot):
+@boundscheck(False)
+@wraparound(False)
+def find_span_linear(int degree, vector[double] knot_vector, int num_ctrlpts, double knot):
     """ Finds the span of a single knot over the knot vector using linear search.
 
     Alternative implementation for the Algorithm A2.1 from The NURBS Book by Piegl & Tiller.
@@ -97,8 +103,9 @@ def find_span_linear(int degree, list knot_vector, int num_ctrlpts, double knot)
 
     return span - 1
 
-
-def find_spans(int degree, list knot_vector, int num_ctrlpts, list knots, func = find_span_linear):
+@boundscheck(False)
+@wraparound(False)
+def find_spans(int degree, vector[double] knot_vector, int num_ctrlpts, list knots, func = find_span_linear):
     """Finds spans of a list of knots over the knot vector.
 
     :param degree: degree, :math:`p`
@@ -115,15 +122,15 @@ def find_spans(int degree, list knot_vector, int num_ctrlpts, list knots, func =
     :rtype: list
     """
     cdef int i
-    cdef list spans = []
+    cdef vector[int] spans = []
 
     for i in range(len(knots)):
-        spans.append(func(degree, knot_vector, num_ctrlpts, knots[i]))
+        spans.push_back(func(degree, knot_vector, num_ctrlpts, knots[i]))
 
     return spans
 
 
-def find_multiplicity(double knot, list knot_vector, **kwargs):
+def find_multiplicity(double knot, vector[double] knot_vector, **kwargs):
     """Finds knot multiplicity over the knot vector.
 
     Keyword Arguments:
@@ -148,11 +155,13 @@ def find_multiplicity(double knot, list knot_vector, **kwargs):
 
     return mult
 
-
-cdef double* basis_function_c(int degree, double[:] knot_vector, int span, double knot):
-    cdef double *left = <double *>malloc((degree + 1) * sizeof(double))
-    cdef double *right = <double *>malloc((degree + 1) * sizeof(double))
-    cdef double *N = <double *>malloc((degree + 1) * sizeof(double))
+@boundscheck(False)
+@wraparound(False)
+@cdivision(True)
+cdef double* basis_function_c(int degree, vector[double] knot_vector, int span, double knot):
+    cdef double *left = <double *>PyMem_Malloc((degree + 1) * sizeof(double))
+    cdef double *right = <double *>PyMem_Malloc((degree + 1) * sizeof(double))
+    cdef double *N = <double *>PyMem_Malloc((degree + 1) * sizeof(double))
 
     # Initialize N[0] to 1.0 by definition
     N[0] = 1.0
@@ -172,12 +181,12 @@ cdef double* basis_function_c(int degree, double[:] knot_vector, int span, doubl
 
         N[j] = saved
 
-    free(left)
-    free(right)
+    PyMem_Free(left)
+    PyMem_Free(right)
     return N
 
 
-cpdef list basis_function(int degree, list knot_vector, int span, double knot):
+cpdef list basis_function(int degree, vector[double] knot_vector, int span, double knot):
     """Computes the non-vanishing basis functions for a single parameter.
 
     Implementation of Algorithm A2.2 from The NURBS Book by Piegl & Tiller.
@@ -195,14 +204,14 @@ cpdef list basis_function(int degree, list knot_vector, int span, double knot):
     :return: basis functions
     :rtype: list
     """
-    cdef double *result = basis_function_c(degree, np.array(knot_vector, dtype=np.float64), span, knot)
+    cdef double *result = basis_function_c(degree, knot_vector, span, knot)
     # Convert the C array to a Python list before returning
     cdef list result_list = [result[i] for i in range(degree + 1)]
-    free(result)  # Don't forget to free the dynamically allocated memory
+    PyMem_Free(result)  # Free the dynamically allocated memory
     return result_list
 
 
-cdef double* basis_function_one_c(int degree, double[:] knot_vector, int span, double knot):
+cdef double* basis_function_one_c(int degree, vector[double] knot_vector, int span, double knot):
     # Special case at boundaries
     if (
         (span == 0 and knot == knot_vector[0])
@@ -218,7 +227,7 @@ cdef double* basis_function_one_c(int degree, double[:] knot_vector, int span, d
     cdef int j, k
     cdef double Uleft, Uright
     cdef double saved, temp
-    cdef double *N = <double *>malloc((degree + span + 1) * sizeof(double))
+    cdef double *N = <double *>PyMem_Malloc((degree + span + 1) * sizeof(double))
 
     for j in range(degree + span + 1):
         N[j] = 0.0
@@ -268,11 +277,11 @@ cpdef double basis_function_one(int degree, list knot_vector, int span, double k
     """
     cdef double *result_list = basis_function_one_c(degree, np.array(knot_vector, dtype=np.float64), span, knot)
     cdef double result = result_list[0]
-    free(result_list)  # Don't forget to free the dynamically allocated memory
+    PyMem_Free(result_list)  # Free the dynamically allocated memory
     return result
 
 
-cpdef list basis_functions(int degree, list knot_vector, list spans, list knots):
+cpdef list basis_functions(int degree, vector[double] knot_vector, list spans, list knots):
     """Computes the non-vanishing basis functions for a list of parameters.
 
     Wrapper for :func:`.helpers.basis_function` to process multiple span
@@ -290,11 +299,11 @@ cpdef list basis_functions(int degree, list knot_vector, list spans, list knots)
     :return: basis functions
     :rtype: list
     """
-    cdef list basis = []
+    cdef vector[vector[double]] basis = []
     cdef int span
     cdef double knot
     for span, knot in zip(spans, knots):
-        basis.append(basis_function(degree, knot_vector, span, knot))
+        basis.push_back(basis_function(degree, knot_vector, span, knot))
     return basis
 
 
@@ -328,11 +337,13 @@ cpdef list basis_function_all(int degree, list knot_vector, int span, double kno
         b_func = basis_function_c(i, np.array(knot_vector, dtype=np.float64), span, knot)
         for j in range(0, i + 1):
             N[j][i] = b_func[j]
-        free(b_func)  # free the dynamically allocated memory
+        PyMem_Free(b_func)  # free the dynamically allocated memory
     return N
 
-
-cpdef list basis_function_ders(int degree, list knot_vector, int span, double knot, int order):
+@boundscheck(False)
+@wraparound(False)
+@cdivision(True)
+cpdef vector[vector[double]] basis_function_ders(int degree, vector[double] knot_vector, int span, double knot, int order):
     """
     Computes derivatives of the basis functions for a single parameter.
 
@@ -355,15 +366,15 @@ cpdef list basis_function_ders(int degree, list knot_vector, int span, double kn
     cdef int i, j, k, r
     cdef int s1, s2, j1, j2, pk, rk
     cdef double saved, temp, d
-    cdef double *left = <double *>malloc((degree + 1) * sizeof(double))
-    cdef double *right = <double *>malloc((degree + 1) * sizeof(double))
+    cdef double *left = <double *>PyMem_Malloc((degree + 1) * sizeof(double))
+    cdef double *right = <double *>PyMem_Malloc((degree + 1) * sizeof(double))
     for i in range(degree + 1):
         left[i] = 1.0
         right[i] = 1.0
     # cdef list left = [1.0 for _ in range(degree + 1)]
     # cdef list right = [1.0 for _ in range(degree + 1)]
-    cdef list ndu = [[1.0 for _ in range(degree + 1)] for _ in range(degree + 1)]  # N[0][0] = 1.0 by definition
-
+    # cdef list ndu = [[1.0 for _ in range(degree + 1)] for _ in range(degree + 1)]  # N[0][0] = 1.0 by definition
+    cdef vector[vector[double]] ndu = [[1.0 for _ in range(degree + 1)] for _ in range(degree + 1)]
     for j in range(1, degree + 1):
         left[j] = knot - knot_vector[span + 1 - j]
         right[j] = knot_vector[span + j] - knot
@@ -377,16 +388,18 @@ cpdef list basis_function_ders(int degree, list knot_vector, int span, double kn
             ndu[r][j] = saved + (right[r + 1] * temp)
             saved = left[j - r] * temp
         ndu[j][j] = saved
-    free(left)
-    free(right)
+    PyMem_Free(left)
+    PyMem_Free(right)
     # Load the basis functions
-    cdef list ders = [[0.0 for _ in range(degree + 1)] for _ in range((min(degree, order) + 1))]
+    # cdef list ders = [[0.0 for _ in range(degree + 1)] for _ in range((min(degree, order) + 1))]
+    cdef vector[vector[double]] ders = [[0.0 for _ in range(degree + 1)] for _ in range((min(degree, order) + 1))]
     for j in range(0, degree + 1):
         ders[0][j] = ndu[j][degree]
 
     # Start calculating derivatives
     # cdef double[:, :] a = np.ones((2, degree + 1), dtype=np.float64)
-    cdef list a = [[1.0 for _ in range(degree + 1)] for _ in range(2)]
+    # cdef list a = [[1.0 for _ in range(degree + 1)] for _ in range(2)]
+    cdef vector[vector[double]] a = [[1.0 for _ in range(degree + 1)] for _ in range(2)]
     # Loop over function index
     for r in range(0, degree + 1):
         # Alternate rows in array a

@@ -714,7 +714,7 @@ class CurveEvaluator2(CurveEvaluator):
         PK = helpers.curve_deriv_cpts(
             dimension, degree, knotvector, ctrlpts, rs=((span - degree), span), deriv_order=du
         )
-        cdef unsigned int k, j
+        cdef int k, j
         cdef double elem, drv_ctl_p
         for k in range(0, du + 1):
             for j in range(0, degree - k + 1):
