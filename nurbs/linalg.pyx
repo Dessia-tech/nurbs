@@ -20,7 +20,7 @@ try:
     from functools import lru_cache
 except ImportError:
     from nurbs.functools_lru_cache import lru_cache
-from cpython.mem cimport PyMem_Malloc, PyMem_Realloc, PyMem_Free
+from cpython.mem cimport PyMem_Malloc, PyMem_Free
 from cython cimport cdivision
 import cython.cimports.libc.math as math_c
 
@@ -535,6 +535,7 @@ def triangle_center(tri, uv=False):
         mid = [m + v for m, v in zip(mid, vert)]
     mid = [float(m) / 3.0 for m in mid]
     return tuple(mid)
+
 
 @cdivision(True)
 cdef double binomial_coefficient_c(int k, int i):

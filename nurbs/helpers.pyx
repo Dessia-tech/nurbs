@@ -24,7 +24,7 @@ import numpy as np
 from cython cimport cdivision
 from cython cimport boundscheck, wraparound
 from libcpp.vector cimport vector
-from cpython.mem cimport PyMem_Malloc, PyMem_Realloc, PyMem_Free
+from cpython.mem cimport PyMem_Malloc, PyMem_Free
 
 
 def find_span_binsearch(int degree, vector[double] knot_vector, int num_ctrlpts, double knot, **kwargs):
@@ -103,6 +103,7 @@ def find_span_linear(int degree, vector[double] knot_vector, int num_ctrlpts, do
 
     return span - 1
 
+
 @boundscheck(False)
 @wraparound(False)
 def find_spans(int degree, vector[double] knot_vector, int num_ctrlpts, list knots, func = find_span_linear):
@@ -154,6 +155,7 @@ def find_multiplicity(double knot, vector[double] knot_vector, **kwargs):
             mult += 1
 
     return mult
+
 
 @boundscheck(False)
 @wraparound(False)
@@ -340,10 +342,12 @@ cpdef list basis_function_all(int degree, list knot_vector, int span, double kno
         PyMem_Free(b_func)  # free the dynamically allocated memory
     return N
 
+
 @boundscheck(False)
 @wraparound(False)
 @cdivision(True)
-cpdef vector[vector[double]] basis_function_ders(int degree, vector[double] knot_vector, int span, double knot, int order):
+cpdef vector[vector[double]] basis_function_ders(int degree, vector[double] knot_vector,
+                                                 int span, double knot, int order):
     """
     Computes derivatives of the basis functions for a single parameter.
 
