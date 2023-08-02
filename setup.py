@@ -345,7 +345,7 @@ data = dict(
             "nurbs/helpers.pyx",
             "nurbs/linalg.pyx",
         ],
-        annotate=True
+        annotate=True,
     ),
     zip_safe=False,
     classifiers=[

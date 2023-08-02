@@ -737,18 +737,21 @@ class Surface(abstract.Surface):
 
         delta_bound_x = max_bound_x - min_bound_x
         delta_bound_y = max_bound_y - min_bound_y
-        x0s = [((min_bound_x + max_bound_x) / 2, (min_bound_y + max_bound_y) / 2),
-               ((min_bound_x + max_bound_x) / 2, min_bound_y + delta_bound_y / 10),
-               ((min_bound_x + max_bound_x) / 2, max_bound_y - delta_bound_y / 10),
-               ((min_bound_x + max_bound_x) / 4, min_bound_y + delta_bound_y / 10),
-               (max_bound_x - delta_bound_x / 4, min_bound_y + delta_bound_y / 10),
-               ((min_bound_x + max_bound_x) / 4, max_bound_y - delta_bound_y / 10),
-               (max_bound_x - delta_bound_x / 4, max_bound_y - delta_bound_y / 10),
-               (min_bound_x + delta_bound_x / 10, min_bound_y + delta_bound_y / 10),
-               (min_bound_x + delta_bound_x / 10, max_bound_y - delta_bound_y / 10),
-               (max_bound_x - delta_bound_x / 10, min_bound_y + delta_bound_y / 10),
-               (max_bound_x - delta_bound_x / 10, max_bound_y - delta_bound_y / 10),
-               (0.33333333, 0.009), (0.5555555, 0.0099)]
+        x0s = [
+            ((min_bound_x + max_bound_x) / 2, (min_bound_y + max_bound_y) / 2),
+            ((min_bound_x + max_bound_x) / 2, min_bound_y + delta_bound_y / 10),
+            ((min_bound_x + max_bound_x) / 2, max_bound_y - delta_bound_y / 10),
+            ((min_bound_x + max_bound_x) / 4, min_bound_y + delta_bound_y / 10),
+            (max_bound_x - delta_bound_x / 4, min_bound_y + delta_bound_y / 10),
+            ((min_bound_x + max_bound_x) / 4, max_bound_y - delta_bound_y / 10),
+            (max_bound_x - delta_bound_x / 4, max_bound_y - delta_bound_y / 10),
+            (min_bound_x + delta_bound_x / 10, min_bound_y + delta_bound_y / 10),
+            (min_bound_x + delta_bound_x / 10, max_bound_y - delta_bound_y / 10),
+            (max_bound_x - delta_bound_x / 10, min_bound_y + delta_bound_y / 10),
+            (max_bound_x - delta_bound_x / 10, max_bound_y - delta_bound_y / 10),
+            (0.33333333, 0.009),
+            (0.5555555, 0.0099),
+        ]
 
         # Sort the initial conditions
         x0s.sort(key=f)
@@ -766,9 +769,9 @@ class Surface(abstract.Surface):
         #     x0s.insert(0, self.surface.vertices[index].uv)
         results = []
         for x0 in x0s:
-            res = minimize(fun, x0=np.array(x0), jac=True,
-                           bounds=[(min_bound_x, max_bound_x),
-                                   (min_bound_y, max_bound_y)])
+            res = minimize(
+                fun, x0=np.array(x0), jac=True, bounds=[(min_bound_x, max_bound_x), (min_bound_y, max_bound_y)]
+            )
             if res.fun <= tol:
                 return res.x
 
