@@ -9,8 +9,6 @@
 """
 
 import pickle
-import numpy as np
-from scipy.optimize import minimize
 
 from . import _utilities as utl
 from . import abstract, evaluators, operations, tessellate, utilities
@@ -707,77 +705,6 @@ class Surface(abstract.Surface):
             parpos=(u, v),
             deriv_order=order,
         )
-
-    def point3d_to_2d(self, point3d, tol=1e-6):
-        """
-        Evaluates the parametric coordinates (u, v) of a 3D point (x, y, z).
-
-        :param point3d: A 3D point to be evaluated.
-        :type point3d: list
-        :param tol: Tolerance to accept the results.
-        :type tol: float
-        :return: The parametric coordinates (u, v) of the point.
-        :rtype: :class:`volmdlr.Point2D`
-        """
-        point = np.array(point3d, dtype=np.float64)
-
-        def f(x):
-            evaluated_point = np.array(self.evaluate_single((x[0], x[1])), dtype=np.float64)
-            return np.linalg.norm(point - evaluated_point)
-
-        def fun(x):
-            derivatives = self.derivatives(x[0], x[1], 1)
-            r = np.array(derivatives[0][0], dtype=np.float64) - point
-            f_value = np.linalg.norm(r) + 1e-32
-            jacobian = np.array([r.dot(derivatives[1][0]) / f_value, r.dot(derivatives[0][1]) / f_value])
-            return f_value, jacobian
-
-        min_bound_x, max_bound_x = self.domain[0]
-        min_bound_y, max_bound_y = self.domain[1]
-
-        delta_bound_x = max_bound_x - min_bound_x
-        delta_bound_y = max_bound_y - min_bound_y
-        x0s = [
-            ((min_bound_x + max_bound_x) / 2, (min_bound_y + max_bound_y) / 2),
-            ((min_bound_x + max_bound_x) / 2, min_bound_y + delta_bound_y / 10),
-            ((min_bound_x + max_bound_x) / 2, max_bound_y - delta_bound_y / 10),
-            ((min_bound_x + max_bound_x) / 4, min_bound_y + delta_bound_y / 10),
-            (max_bound_x - delta_bound_x / 4, min_bound_y + delta_bound_y / 10),
-            ((min_bound_x + max_bound_x) / 4, max_bound_y - delta_bound_y / 10),
-            (max_bound_x - delta_bound_x / 4, max_bound_y - delta_bound_y / 10),
-            (min_bound_x + delta_bound_x / 10, min_bound_y + delta_bound_y / 10),
-            (min_bound_x + delta_bound_x / 10, max_bound_y - delta_bound_y / 10),
-            (max_bound_x - delta_bound_x / 10, min_bound_y + delta_bound_y / 10),
-            (max_bound_x - delta_bound_x / 10, max_bound_y - delta_bound_y / 10),
-            (0.33333333, 0.009),
-            (0.5555555, 0.0099),
-        ]
-
-        # Sort the initial conditions
-        x0s.sort(key=f)
-        matrix = np.array(self.evalpts, dtype=np.float64)
-
-        # Calculate distances
-        distances = np.linalg.norm(matrix - point, axis=1)
-
-        # Find the minimal index
-        index = np.argmin(distances)
-        # Find the parametric coordinates of the point
-        # if self.x_periodicity or self.y_periodicity:
-        x0s.insert(1, self.vertices[index].uv)
-        # else:
-        #     x0s.insert(0, self.surface.vertices[index].uv)
-        results = []
-        for x0 in x0s:
-            res = minimize(
-                fun, x0=np.array(x0), jac=True, bounds=[(min_bound_x, max_bound_x), (min_bound_y, max_bound_y)]
-            )
-            if res.fun <= tol:
-                return res.x
-
-            results.append((res.x, res.fun))
-
-        return min(results, key=lambda r: r[1])[0]
 
     def insert_knot(self, u=None, v=None, **kwargs):
         """
