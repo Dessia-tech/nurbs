@@ -1,5 +1,6 @@
 """
 .. module:: linalg
+
     :platform: Unix, Windows
     :synopsis: Provides linear algebra utility functions
 

@@ -469,6 +469,7 @@ class Volume(BSpline.Volume):
         return result
 
     def init_cache(self):
+        """Init cache."""
         self._cache["ctrlpts"] = self._init_array()
         self._cache["weights"] = self._init_array()
 

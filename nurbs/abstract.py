@@ -234,6 +234,7 @@ class Geometry(GeomdlBase):
         return self
 
     def next(self):
+        """Next."""
         return self.__next__()
 
     def __next__(self):
