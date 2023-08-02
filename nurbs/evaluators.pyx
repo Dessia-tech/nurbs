@@ -120,7 +120,7 @@ class CurveEvaluator(AbstractEvaluator):
         cdef list basis = helpers.basis_functions(degree, knotvector, spans, knots)
 
         cdef list eval_points = []
-        cdef i, idx
+        cdef int i, idx
         cdef list crvpt
         cdef double crv_p, ctl_p
         for idx in range(len(knots)):
