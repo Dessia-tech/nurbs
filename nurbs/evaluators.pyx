@@ -1,4 +1,5 @@
 # cython: language_level=3
+# distutils: language=c++
 """
 .. module:: evaluators
     :platform: Unix, Windows
@@ -12,6 +13,9 @@ import abc
 
 from nurbs import _utilities as utl
 from nurbs import helpers, linalg
+from cython cimport cdivision
+from cython cimport boundscheck, wraparound
+from libcpp.vector cimport vector
 
 
 @utl.add_metaclass(abc.ABCMeta)
@@ -134,8 +138,8 @@ class CurveEvaluator(AbstractEvaluator):
 
         return eval_points
 
-    def derivatives(self, int degree, list knotvector, list ctrlpts, int size, int dimension, double parpos,
-                    int deriv_order):
+    def derivatives(self, int degree, vector[double] knotvector, vector[vector[double]] ctrlpts,
+                    int size, int dimension, double parpos, int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -157,16 +161,17 @@ class CurveEvaluator(AbstractEvaluator):
         # Algorithm A3.2
         cdef int du = min(degree, deriv_order)
 
-        cdef list CK = [[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)]
+        cdef vector[vector[double]] CK = [[0.0 for _ in range(dimension)] for _ in range(deriv_order + 1)]
 
         cdef int span = self._span_func(degree, knotvector, size, parpos)
-        cdef list bfunsders = helpers.basis_function_ders(degree, knotvector, span, parpos, du)
+        cdef vector[vector[double]] bfunsders = helpers.basis_function_ders(degree, knotvector, span, parpos, du)
 
-        cdef int k, j
-        cdef double drv, ctl_pt
+        cdef int k, j, i
+        cdef size_t n = CK[0].size()
         for k in range(0, du + 1):
             for j in range(0, degree + 1):
-                CK[k][:] = [drv + (bfunsders[k][j] * ctl_pt) for drv, ctl_pt in zip(CK[k], ctrlpts[span - degree + j])]
+                for i in range(n):
+                    CK[k][i] = CK[k][i] + (bfunsders[k][j] * ctrlpts[span - degree + j][i])
 
         # Return the derivatives
         return CK
@@ -216,8 +221,8 @@ class CurveEvaluatorRational(CurveEvaluator):
 
         return eval_points
 
-    def derivatives(self, int degree, list knotvector, list ctrlpts, int size, int dimension, double parpos,
-                    int deriv_order):
+    def derivatives(self, int degree, vector[double] knotvector, vector[vector[double]] ctrlpts,
+                    int size, int dimension, double parpos, int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
 
         :param datadict: data dictionary containing the necessary variables
@@ -231,19 +236,26 @@ class CurveEvaluatorRational(CurveEvaluator):
         """
 
         # Call the parent function to evaluate A(u) and w(u) derivatives
-        cdef list CKw = super(CurveEvaluatorRational, self).derivatives(degree, knotvector, ctrlpts, size,
-                                                                        dimension, parpos, deriv_order)
-
+        cdef vector[vector[double]] CKw = super(CurveEvaluatorRational, self).derivatives(degree, knotvector, ctrlpts,
+                                                              size, dimension, parpos,
+                                                              deriv_order)
         # Algorithm A4.2
-        cdef list CK = [[0.0 for _ in range(dimension - 1)] for _ in range(deriv_order + 1)]
-        cdef int k
-        cdef list v
+        cdef vector[vector[double]] CK = [[0.0 for _ in range(dimension - 1)] for _ in range(deriv_order + 1)]
+        cdef int k, i, j
+        cdef vector[double] v
+        v.reserve((dimension - 1))
+        cdef double binomial_coeff
 
         for k in range(0, deriv_order + 1):
-            v = [val for val in CKw[k][0 : (dimension - 1)]]
+            for j in range(dimension - 1):
+                v[j] = CKw[k][j]
             for i in range(1, k + 1):
-                v[:] = [tmp - (linalg.binomial_coefficient(k, i) * CKw[i][-1] * drv) for tmp, drv in zip(v, CK[k - i])]
-            CK[k][:] = [tmp / CKw[0][-1] for tmp in v]
+                binomial_coeff = linalg.binomial_coefficient(k, i)
+                for j in range(dimension - 1):
+                    v[j] -= binomial_coeff * CKw[i][dimension - 1] * CK[k - i][j]
+            binomial_coeff = 1.0 / CKw[0][dimension - 1]
+            for j in range(dimension - 1):
+                CK[k][j] = v[j] * binomial_coeff
 
         # Return C(u) derivatives
         return CK
