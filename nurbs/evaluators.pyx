@@ -138,6 +138,8 @@ class CurveEvaluator(AbstractEvaluator):
 
         return eval_points
 
+    @boundscheck(False)
+    @wraparound(False)
     def derivatives(self, int degree, vector[double] knotvector, vector[vector[double]] ctrlpts,
                     int size, int dimension, double parpos, int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
@@ -221,6 +223,9 @@ class CurveEvaluatorRational(CurveEvaluator):
 
         return eval_points
 
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(True)
     def derivatives(self, int degree, vector[double] knotvector, vector[vector[double]] ctrlpts,
                     int size, int dimension, double parpos, int deriv_order):
         """Evaluates the n-th order derivatives at the input parametric position.
@@ -237,8 +242,8 @@ class CurveEvaluatorRational(CurveEvaluator):
 
         # Call the parent function to evaluate A(u) and w(u) derivatives
         cdef vector[vector[double]] CKw = super(CurveEvaluatorRational, self).derivatives(degree, knotvector, ctrlpts,
-                                                              size, dimension, parpos,
-                                                              deriv_order)
+                                                                                          size, dimension, parpos,
+                                                                                          deriv_order)
         # Algorithm A4.2
         cdef vector[vector[double]] CK = [[0.0 for _ in range(dimension - 1)] for _ in range(deriv_order + 1)]
         cdef int k, i, j
