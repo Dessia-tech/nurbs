@@ -304,11 +304,6 @@ class SurfaceEvaluator(AbstractEvaluator):
         stop = kwargs.get("stop", [1.0 for _ in range(pdimension)])
 
         # Algorithm A3.5
-        # cdef list knots
-        # cdef list spans = [[] for _ in range(pdimension)]
-        # cdef list basis = [[] for _ in range(pdimension)]
-        cdef int idx
-        # for idx in range(pdimension):
         cdef vector[double] knots_u = linalg.linspace(start[0], stop[0], sample_size[0], decimals=precision)
         cdef vector[int] spans_u = helpers.find_spans(degree[0], knotvector[0], size[0], knots_u, self._span_func)
         cdef vector[vector[double]] basis_u = helpers.basis_functions(degree[0], knotvector[0], spans_u, knots_u)
@@ -460,8 +455,6 @@ class SurfaceEvaluatorRational(SurfaceEvaluator):
         :return: evaluated derivatives
         :rtype: list
         """
-        # cdef int dimension = datadict["dimension"] + 1 if datadict["rational"] else datadict["dimension"]
-
         # Call the parent function to evaluate A(u) and w(u) derivatives
         cdef list SKLw = super(SurfaceEvaluatorRational, self).derivatives(degree, knotvector, ctrlpts, size,
                                                                            dimension, parpos, deriv_order)
@@ -486,18 +479,19 @@ class SurfaceEvaluatorRational(SurfaceEvaluator):
                 for j in range(1, li + 1):
                     drv = SKL[k][li - j]
                     for ii in range(dimension - 1):
-                        tmp[ii] = v[ii] - (linalg.binomial_coefficient(li, j) * SKLw[0][j][dimension-1] * drv[ii])
+                        tmp[ii] = v[ii] - (linalg.binomial_coefficient(li, j) * SKLw[0][j][dimension - 1] * drv[ii])
                     v[:] = tmp
                 for i in range(1, k + 1):
                     drv = SKL[k - i][li]
                     for ii in range(dimension - 1):
-                        tmp[ii] = v[ii] - (linalg.binomial_coefficient(k, i) * SKLw[i][0][dimension-1] * drv[ii])
+                        tmp[ii] = v[ii] - (linalg.binomial_coefficient(k, i) * SKLw[i][0][dimension - 1] * drv[ii])
                     v[:] = tmp
                     v2 = [0.0 for _ in range(dimension - 1)]
                     for j in range(1, li + 1):
                         drv = SKL[k - i][li - j]
                         for ii in range(dimension - 1):
-                            tmp[ii] = v2[ii] + (linalg.binomial_coefficient(li, j) * SKLw[i][j][dimension-1] * drv[ii])
+                            tmp[ii] = v2[ii] + (linalg.binomial_coefficient(li, j) *
+                                                SKLw[i][j][dimension - 1] * drv[ii])
                         v2[:] = tmp
                     for ii in range(dimension - 1):
                         tmp[ii] = v[ii] - (linalg.binomial_coefficient(k, i) * v2[ii])

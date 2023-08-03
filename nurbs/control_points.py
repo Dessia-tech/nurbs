@@ -1,5 +1,5 @@
 """
-.. module:: control_points
+.. module:: control_points.
 
     :platform: Unix, Windows
     :synopsis: Provides helper classes for managing control points
@@ -264,6 +264,7 @@ class CurveManager(AbstractManager):
         super(CurveManager, self).__init__(*args, **kwargs)
 
     def find_index(self, *args):
+        """Find index."""
         super(CurveManager, self).find_index(*args)
         return args[0]
 

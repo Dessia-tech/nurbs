@@ -1,5 +1,5 @@
 """
-.. module:: BSpline
+.. module:: BSpline.
 
     :platform: Unix, Windows
     :synopsis: Provides data storage and evaluation functionality for non-rational spline geometries
