@@ -106,7 +106,8 @@ def find_span_linear(int degree, vector[double] knot_vector, int num_ctrlpts, do
 
 @boundscheck(False)
 @wraparound(False)
-def find_spans(int degree, vector[double] knot_vector, int num_ctrlpts, list knots, func = find_span_linear):
+cpdef vector[int] find_spans(int degree, vector[double] knot_vector, int num_ctrlpts, list knots,
+                             func = find_span_linear):
     """Finds spans of a list of knots over the knot vector.
 
     :param degree: degree, :math:`p`
@@ -283,7 +284,8 @@ cpdef double basis_function_one(int degree, list knot_vector, int span, double k
     return result
 
 
-cpdef list basis_functions(int degree, vector[double] knot_vector, list spans, list knots):
+cpdef vector[vector[double]] basis_functions(int degree, vector[double] knot_vector, vector[int] spans,
+                                             vector[double] knots):
     """Computes the non-vanishing basis functions for a list of parameters.
 
     Wrapper for :func:`.helpers.basis_function` to process multiple span
@@ -375,10 +377,8 @@ cpdef vector[vector[double]] basis_function_ders(int degree, vector[double] knot
     for i in range(degree + 1):
         left[i] = 1.0
         right[i] = 1.0
-    # cdef list left = [1.0 for _ in range(degree + 1)]
-    # cdef list right = [1.0 for _ in range(degree + 1)]
-    # cdef list ndu = [[1.0 for _ in range(degree + 1)] for _ in range(degree + 1)]  # N[0][0] = 1.0 by definition
-    cdef vector[vector[double]] ndu = [[1.0 for _ in range(degree + 1)] for _ in range(degree + 1)]
+
+    cdef vector[vector[double]] ndu = vector[vector[double]](degree + 1, vector[double](degree + 1, 1.0))
     for j in range(1, degree + 1):
         left[j] = knot - knot_vector[span + 1 - j]
         right[j] = knot_vector[span + j] - knot
@@ -395,15 +395,13 @@ cpdef vector[vector[double]] basis_function_ders(int degree, vector[double] knot
     PyMem_Free(left)
     PyMem_Free(right)
     # Load the basis functions
-    # cdef list ders = [[0.0 for _ in range(degree + 1)] for _ in range((min(degree, order) + 1))]
-    cdef vector[vector[double]] ders = [[0.0 for _ in range(degree + 1)] for _ in range((min(degree, order) + 1))]
+    cdef vector[vector[double]] ders = \
+    vector[vector[double]]((min(degree, order) + 1), vector[double](degree + 1, 0.0))
     for j in range(0, degree + 1):
         ders[0][j] = ndu[j][degree]
 
     # Start calculating derivatives
-    # cdef double[:, :] a = np.ones((2, degree + 1), dtype=np.float64)
-    # cdef list a = [[1.0 for _ in range(degree + 1)] for _ in range(2)]
-    cdef vector[vector[double]] a = [[1.0 for _ in range(degree + 1)] for _ in range(2)]
+    cdef vector[vector[double]] a = vector[vector[double]](2, vector[double](degree + 1, 1.0))
     # Loop over function index
     for r in range(0, degree + 1):
         # Alternate rows in array a
