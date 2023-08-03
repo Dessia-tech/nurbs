@@ -308,8 +308,6 @@ cpdef vector[vector[double]] basis_functions(int degree, vector[double] knot_vec
     :rtype: list
     """
     cdef vector[vector[double]] basis
-    cdef int span
-    cdef double knot
     cdef size_t i, n = len(spans)
     for i in range(n):
         basis.push_back(basis_function(degree, knot_vector, spans[i], knots[i]))
@@ -400,8 +398,8 @@ cpdef vector[vector[double]] basis_function_ders(int degree, vector[double] knot
     PyMem_Free(left)
     PyMem_Free(right)
     # Load the basis functions
-    cdef vector[vector[double]] ders = \
-                                      vector[vector[double]]((min(degree, order) + 1), vector[double](degree + 1, 0.0))
+    cdef vector[vector[double]] ders = vector[vector[double]]((min(degree, order) + 1), vector[double](degree + 1,
+                                                                                                       0.0))
     for j in range(0, degree + 1):
         ders[0][j] = ndu[j][degree]
 
