@@ -106,7 +106,7 @@ def find_span_linear(int degree, vector[double] knot_vector, int num_ctrlpts, do
 
 @boundscheck(False)
 @wraparound(False)
-cpdef vector[int] find_spans(int degree, vector[double] knot_vector, int num_ctrlpts, list knots,
+cpdef vector[int] find_spans(int degree, vector[double] knot_vector, int num_ctrlpts, vector[double] knots,
                              func = find_span_linear):
     """Finds spans of a list of knots over the knot vector.
 
@@ -124,7 +124,7 @@ cpdef vector[int] find_spans(int degree, vector[double] knot_vector, int num_ctr
     :rtype: list
     """
     cdef int i
-    cdef vector[int] spans = []
+    cdef vector[int] spans
 
     for i in range(len(knots)):
         spans.push_back(func(degree, knot_vector, num_ctrlpts, knots[i]))
@@ -189,7 +189,9 @@ cdef double* basis_function_c(int degree, vector[double] knot_vector, int span, 
     return N
 
 
-cpdef list basis_function(int degree, vector[double] knot_vector, int span, double knot):
+@boundscheck(False)
+@wraparound(False)
+cpdef vector[double] basis_function(int degree, vector[double] knot_vector, int span, double knot):
     """Computes the non-vanishing basis functions for a single parameter.
 
     Implementation of Algorithm A2.2 from The NURBS Book by Piegl & Tiller.
@@ -209,7 +211,7 @@ cpdef list basis_function(int degree, vector[double] knot_vector, int span, doub
     """
     cdef double *result = basis_function_c(degree, knot_vector, span, knot)
     # Convert the C array to a Python list before returning
-    cdef list result_list = [result[i] for i in range(degree + 1)]
+    cdef vector[double] result_list = [result[i] for i in range(degree + 1)]
     PyMem_Free(result)  # Free the dynamically allocated memory
     return result_list
 
@@ -284,6 +286,8 @@ cpdef double basis_function_one(int degree, list knot_vector, int span, double k
     return result
 
 
+@boundscheck(False)
+@wraparound(False)
 cpdef vector[vector[double]] basis_functions(int degree, vector[double] knot_vector, vector[int] spans,
                                              vector[double] knots):
     """Computes the non-vanishing basis functions for a list of parameters.
@@ -303,11 +307,12 @@ cpdef vector[vector[double]] basis_functions(int degree, vector[double] knot_vec
     :return: basis functions
     :rtype: list
     """
-    cdef vector[vector[double]] basis = []
+    cdef vector[vector[double]] basis
     cdef int span
     cdef double knot
-    for span, knot in zip(spans, knots):
-        basis.push_back(basis_function(degree, knot_vector, span, knot))
+    cdef size_t i, n = len(spans)
+    for i in range(n):
+        basis.push_back(basis_function(degree, knot_vector, spans[i], knots[i]))
     return basis
 
 
@@ -396,7 +401,7 @@ cpdef vector[vector[double]] basis_function_ders(int degree, vector[double] knot
     PyMem_Free(right)
     # Load the basis functions
     cdef vector[vector[double]] ders = \
-    vector[vector[double]]((min(degree, order) + 1), vector[double](degree + 1, 0.0))
+                                      vector[vector[double]]((min(degree, order) + 1), vector[double](degree + 1, 0.0))
     for j in range(0, degree + 1):
         ders[0][j] = ndu[j][degree]
 
