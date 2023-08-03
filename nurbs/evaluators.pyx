@@ -168,11 +168,10 @@ class CurveEvaluator(AbstractEvaluator):
         cdef int span = self._span_func(degree, knotvector, size, parpos)
         cdef vector[vector[double]] bfunsders = helpers.basis_function_ders(degree, knotvector, span, parpos, du)
 
-        cdef int k, j, i
-        cdef size_t n = CK[0].size()
+        cdef size_t k, j, i
         for k in range(0, du + 1):
             for j in range(0, degree + 1):
-                for i in range(n):
+                for i in range(dimension):
                     CK[k][i] = CK[k][i] + (bfunsders[k][j] * ctrlpts[span - degree + j][i])
 
         # Return the derivatives
