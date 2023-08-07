@@ -20,8 +20,7 @@ from ._utilities import export
 from cython.cimports.libcpp.vector import vector
 
 
-
-def interpolate_curve(points: cython.list, degree:cython.int, **kwargs: dict) -> BSpline:
+def interpolate_curve(points: cython.list, degree: cython.int, **kwargs: dict) -> BSpline:
     """Curve interpolation through the data points.
 
     Please refer to Algorithm A9.1 on The NURBS Book (2nd Edition), pp.369-370 for details.
@@ -370,7 +369,9 @@ def approximate_surface(points, size_u, size_v, degree_u, degree_v, **kwargs):
 @cython.cdivision
 @cython.wraparound(False)
 @cython.boundscheck(False)
-def compute_knot_vector(degree: cython.int, num_points: cython.size_t, params: cython.double[:]) -> vector[cython.double]:
+def compute_knot_vector(
+    degree: cython.int, num_points: cython.size_t, params: cython.double[:]
+) -> vector[cython.double]:
     """Computes a knot vector from the parameter list using averaging method.
 
     Please refer to the Equation 9.8 on The NURBS Book (2nd Edition), pp.365 for details.
@@ -437,8 +438,7 @@ def compute_knot_vector2(degree, num_dpts, num_cpts, params):
 
 @cython.cfunc
 @cython.cdivision
-def compute_params_curve(points: np.ndarray[np.double_t, ndim == 2],
-                         centripetal:  cython.bint = False):
+def compute_params_curve(points: np.ndarray[np.double_t, ndim == 2], centripetal: cython.bint = False):
     """Computes ū_k for curves.
 
     Please refer to the Equations 9.4 and 9.5 for chord length parametrization, and Equation 9.6 for centripetal method
@@ -471,7 +471,6 @@ def compute_params_curve(points: np.ndarray[np.double_t, ndim == 2],
         uk[i] = np.sum(cds[0 : i + 1]) / d
 
     return uk
-
 
 
 def compute_params_surface(points, size_u, size_v, centripetal=False):
@@ -527,8 +526,9 @@ def compute_params_surface(points, size_u, size_v, centripetal=False):
 
 
 @cython.cfunc
-def _build_coeff_matrix(degree: cython.int, knotvector: vector[cython.double], params: cython.double[:],
-                        num_points: cython.size_t) -> cython.double[:, :]:
+def _build_coeff_matrix(
+    degree: cython.int, knotvector: vector[cython.double], params: cython.double[:], num_points: cython.size_t
+) -> cython.double[:, :]:
     """Builds the coefficient matrix for global interpolation.
 
     This function only uses data points to build the coefficient matrix. Please refer to The NURBS Book (2nd Edition),
@@ -557,7 +557,6 @@ def _build_coeff_matrix(degree: cython.int, knotvector: vector[cython.double], p
         basis_func = helpers.basis_function(degree, knotvector, span, params[i])
         for j in range(span - degree, span + 1):
             matrix_a[i][j] = basis_func[j - (span - degree)]
-
 
     # Return coefficient matrix
     return matrix_a
