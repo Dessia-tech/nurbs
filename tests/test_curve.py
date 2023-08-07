@@ -7,7 +7,10 @@
 """
 
 from unittest import TestCase
-from nurbs import BSpline, convert, evaluators, helpers, operations
+
+import numpy as np
+
+from nurbs import BSpline, convert, evaluators, fitting, helpers, operations
 
 GEOMDL_DELTA = 0.001
 
@@ -295,3 +298,21 @@ class TestCurve(TestCase):
 
                 self.assertAlmostEqual(evalpt[0], res[0], delta=GEOMDL_DELTA)
                 self.assertAlmostEqual(evalpt[1], res[1], delta=GEOMDL_DELTA)
+
+    def test_interpolate_curve(self):
+        # The NURBS Book Ex9.1
+        points = [[0, 0], [3, 4], [-1, 4], [-4, 0], [-4, -3]]
+        degree = 3  # cubic curve
+
+        # Do global curve interpolation
+        curve = fitting.interpolate_curve(points, degree)
+        expected_ctrlpts = [
+            [0.0, 0.0],
+            [7.3169635171119936, 3.6867775257587367],
+            [-2.958130565851424, 6.678276528176592],
+            [-4.494953466891109, -0.6736915062424752],
+            [-4.0, -3.0],
+        ]
+        for point, expected_point in zip(curve.ctrlpts, expected_ctrlpts):
+            self.assertAlmostEqual(point[0], expected_point[0], delta=GEOMDL_DELTA)
+            self.assertAlmostEqual(point[1], expected_point[1], delta=GEOMDL_DELTA)

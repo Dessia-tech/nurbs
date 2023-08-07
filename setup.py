@@ -342,6 +342,7 @@ data = dict(
     ext_modules=cythonize(
         [
             "nurbs/evaluators.pyx",
+            "nurbs/fitting.py",
             "nurbs/helpers.pyx",
             "nurbs/linalg.pyx",
         ],
