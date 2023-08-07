@@ -1,5 +1,6 @@
 """
 .. module:: evaluators
+
     :platform: Unix, Windows
     :synopsis: Provides spline evaluator classes
 

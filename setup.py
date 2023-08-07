@@ -341,9 +341,11 @@ data = dict(
     cmdclass={"install": InstallCommand, "test": PyTest, "clean": SetuptoolsClean},
     ext_modules=cythonize(
         [
+            "nurbs/evaluators.pyx",
             "nurbs/helpers.pyx",
             "nurbs/linalg.pyx",
-        ]
+        ],
+        annotate=True,
     ),
     zip_safe=False,
     classifiers=[

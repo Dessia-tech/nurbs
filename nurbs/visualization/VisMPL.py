@@ -323,7 +323,7 @@ class VisSurface(vis.VisAbstract):
         This function only animates the triangulated surface. There will be no other elements, such as control points
         grid or bounding box.
 
-        Keyword arguments:
+        Keyword Arguments:
             * ``colormap``: applies colormap to the surface
 
         Colormaps are a visualization feature of Matplotlib. They can be used for several types of surface plots via
@@ -423,7 +423,7 @@ class VisSurface(vis.VisAbstract):
     def render(self, **kwargs):
         """Plots the surface and the control points grid.
 
-        Keyword arguments:
+        Keyword Arguments:
             * ``colormap``: applies colormap to the surface
 
         Colormaps are a visualization feature of Matplotlib. They can be used for several types of surface plots via

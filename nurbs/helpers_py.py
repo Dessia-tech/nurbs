@@ -1,5 +1,6 @@
 """
 .. module:: helpers
+
     :platform: Unix, Windows
     :synopsis: Provides spline evaluation helper functions
 

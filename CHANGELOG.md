@@ -2,6 +2,7 @@
 
 ## nurbs v0.1
 - helpers module compilation
+- evaluator module compilation
 
 ## v5.3.0 released on 2020-08-05
 

@@ -20,7 +20,9 @@ try:
     from functools import lru_cache
 except ImportError:
     from nurbs.functools_lru_cache import lru_cache
-from libc.stdlib cimport malloc, free
+from cpython.mem cimport PyMem_Malloc, PyMem_Free
+from cython cimport cdivision
+import cython.cimports.libc.math as math_c
 
 
 def vector_cross(vector1, vector2):
@@ -535,18 +537,10 @@ def triangle_center(tri, uv=False):
     return tuple(mid)
 
 
+@cdivision(True)
 cdef double binomial_coefficient_c(int k, int i):
     """
     Computes the binomial coefficient (denoted by *k choose i*).
-
-    Please see the following website for details: http://mathworld.wolfram.com/BinomialCoefficient.html
-
-    :param k: size of the set of distinct elements
-    :type k: int
-    :param i: size of the subsets
-    :type i: int
-    :return: combination of *k* and *i*
-    :rtype: float
     """
     # Special case
     if i > k:
@@ -557,7 +551,7 @@ cdef double binomial_coefficient_c(int k, int i):
     cdef int j
     cdef double result = 1.0
     for j in range(i):
-        result *= (k - j) / (i - j)
+        result *= (float(k - j) / float(i - j))
     return result
 
 
@@ -717,24 +711,45 @@ def lu_factor(matrix_a, b):
     return x
 
 
+@cdivision(True)
+cpdef double round_c(double num, int digits=0):
+    cdef double multiplier = math_c.pow(10.0, digits)
+    return float(math_c.round(num * multiplier)) / multiplier
+
+
 def linspace(double start, double stop, int num, int decimals=18):
+    """Returns a list of evenly spaced numbers over a specified interval.
+
+    Inspired from Numpy's linspace function: https://github.com/numpy/numpy/blob/master/numpy/core/function_base.py
+
+    :param start: starting value
+    :type start: float
+    :param stop: end value
+    :type stop: float
+    :param num: number of samples to generate
+    :type num: int
+    :param decimals: number of significands
+    :type decimals: int
+    :return: a list of equally spaced numbers
+    :rtype: list
+    """
     cdef double delta
     cdef int div, x
     cdef double step = 0.0
-    cdef double *result = <double *>malloc(num * sizeof(double))
+    cdef double *result = <double *>PyMem_Malloc(num * sizeof(double))
 
     if abs(start - stop) <= 10e-8:
         return [start]
 
     div = num - 1
     delta = stop - start
-
-    for x in range(num):
-        step = start + (x * delta / div)
-        result[x] = round(step, decimals)
-    cdef list result_list = [result[i] for i in range(num)]
-    free(result)  # Don't forget to free the dynamically allocated memory
-    return result_list
+    try:
+        for x in range(num):
+            step = start + (x * delta / div)
+            result[x] = round_c(step, decimals)
+        return [result[i] for i in range(num)]
+    finally:
+        PyMem_Free(result)  # Free the dynamically allocated memory
 
 
 def frange(start, stop, step=1.0):
